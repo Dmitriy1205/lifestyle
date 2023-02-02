@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/common/themes/theme.dart';
 import 'package:lifestyle/presentation/bloc/auth/auth_cubit.dart';
+import 'package:lifestyle/presentation/bloc/welcome/welcome_cubit.dart';
 import 'package:lifestyle/presentation/screens/main_screen.dart';
-import 'package:lifestyle/presentation/screens/sign_in.dart';
-import 'package:lifestyle/presentation/screens/sign_up.dart';
+import 'package:lifestyle/presentation/screens/welcome_screen.dart';
 
 import '../common/services/service_locator.dart';
 import 'bloc/sign_in/sign_in_cubit.dart';
@@ -26,6 +26,9 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<SignInCubit>(),
         ),
+        BlocProvider(
+          create: (context) => sl<WelcomeCubit>(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -33,7 +36,7 @@ class App extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state.isSignedIn == false) {
-              return SignUp();
+              return WelcomeScreen();
             }
             return MainScreen();
           },

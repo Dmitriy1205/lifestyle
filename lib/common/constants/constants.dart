@@ -26,4 +26,6 @@ class AppText {
   static const String support = 'Support';
   static const String logout = 'Logout';
   static const String password = 'Password';
+
+  static const String videoPath = 'assets/videos/video.MP4';
 }

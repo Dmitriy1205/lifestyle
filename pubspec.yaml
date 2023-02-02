@@ -46,6 +46,7 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   google_sign_in: ^5.4.4
   jiffy: ^5.0.0
+  video_player: ^2.5.1
 
   #firebase
   firebase_core: ^2.4.1
@@ -83,6 +84,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/videos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

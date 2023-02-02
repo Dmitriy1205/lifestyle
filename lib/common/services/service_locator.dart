@@ -7,6 +7,7 @@ import '../../presentation/bloc/auth/auth_cubit.dart';
 import '../../presentation/bloc/profile/profile_cubit.dart';
 import '../../presentation/bloc/sign_in/sign_in_cubit.dart';
 import '../../presentation/bloc/sign_up/sign_up_cubit.dart';
+import '../../presentation/bloc/welcome/welcome_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -22,4 +23,5 @@ Future<void> init() async {
   sl.registerFactory(() => SignUpCubit(authRepository: sl()));
   sl.registerFactory(() => GoogleAuthCubit(authRepository: sl()));
   sl.registerFactory(() => ProfileCubit(authRepository: sl()));
+  sl.registerFactory(() => WelcomeCubit());
 }
