@@ -21,8 +21,8 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final UserCredential userCredential = await auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw BadRequestException(
@@ -58,7 +58,7 @@ class AuthRepository {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
+          await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
@@ -76,5 +76,15 @@ class AuthRepository {
   Future<void> logout() async {
     await auth.signOut();
     await GoogleSignIn().signOut();
+  }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw BadRequestException(message: e.message!);
+    } on Exception catch (e) {
+      throw BadRequestException(message: e.toString());
+    }
   }
 }

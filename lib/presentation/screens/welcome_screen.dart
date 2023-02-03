@@ -20,13 +20,14 @@ class WelcomeScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: GestureDetector(
                 onTap: () {
+                  context.read<WelcomeCubit>().close();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (_) => SignUp(),
                     ),
                   );
-                  context.read<WelcomeCubit>().close();
+                  // context.read<WelcomeCubit>().close();
                 },
                 child: state.controller!.value.isInitialized
                     ? AspectRatio(

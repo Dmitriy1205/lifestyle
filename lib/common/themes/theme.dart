@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData themeData = ThemeData(
-    scaffoldBackgroundColor:Color(0xFFFFFFFF) ,
+    colorScheme: ThemeData().colorScheme.copyWith(primary: Color(0xFF10284D)),
+    scaffoldBackgroundColor: Color(0xFFFFFFFF),
     textSelectionTheme: TextSelectionThemeData(cursorColor: Color(0xFF10284D)),
-
     inputDecorationTheme: InputDecorationTheme(
-      focusColor:Color(0xFF10284D) ,
+      focusColor: Color(0xFF10284D),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
         color: Color(0xFF898D94),
@@ -18,12 +18,12 @@ class AppTheme {
       ),
       errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFFFF0000),
-          )),
+        color: Color(0xFFFF0000),
+      )),
       focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFFFF0000),
-          )),
+        color: Color(0xFFFF0000),
+      )),
     ),
     useMaterial3: true,
     fontFamily: 'Lato',

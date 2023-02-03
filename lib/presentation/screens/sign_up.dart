@@ -49,10 +49,11 @@ class _SignUpState extends State<SignUp> {
               } else if (state.status!.isError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    backgroundColor: Colors.red,
+                    backgroundColor: AppColors.red,
                     duration: Duration(seconds: 5),
                     content: Text(
                       state.status!.errorMessage.toString(),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 );

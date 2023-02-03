@@ -48,10 +48,11 @@ class _SignInState extends State<SignIn> {
               } else if (state.status!.isError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    backgroundColor: Colors.red,
+                    backgroundColor: AppColors.red,
                     duration: Duration(seconds: 5),
                     content: Text(
                       state.status!.errorMessage.toString(),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 );
@@ -103,6 +104,7 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                               validator: context.validateEmailAddress,
+
                             ),
                             SizedBox(
                               height: 15,
