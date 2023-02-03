@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1076669634018',
     projectId: 'lifestyle-e8a2d',
     storageBucket: 'lifestyle-e8a2d.appspot.com',
+    androidClientId: '1076669634018-r4nim8872i3ligooobajkf0u7b7aip4r.apps.googleusercontent.com',
     iosClientId: '1076669634018-veiu8dkpck6da8u0vkah5hsinmm0g950.apps.googleusercontent.com',
     iosBundleId: 'com.example.lifestyle',
   );
