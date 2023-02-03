@@ -104,7 +104,6 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                               validator: context.validateEmailAddress,
-
                             ),
                             SizedBox(
                               height: 15,
@@ -126,24 +125,22 @@ class _SignInState extends State<SignIn> {
                                 ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    if (state.isObscure) {
-                                      context
-                                          .read<SignInCubit>()
-                                          .showPass(false);
-                                    } else if (!state.isObscure) {
-                                      context
-                                          .read<SignInCubit>()
-                                          .showPass(true);
-                                    }
+                                    state.isObscure
+                                        ? context
+                                            .read<SignInCubit>()
+                                            .showPass(!state.isObscure)
+                                        : context
+                                            .read<SignInCubit>()
+                                            .showPass(!state.isObscure);
                                   },
                                   icon: state.isObscure
                                       ? FaIcon(
-                                    FontAwesomeIcons.eye,
-                                    color: AppColors.disabled,
-                                  )
+                                          FontAwesomeIcons.eye,
+                                          color: AppColors.disabled,
+                                        )
                                       : FaIcon(
-                                    FontAwesomeIcons.solidEye,
-                                  ),
+                                          FontAwesomeIcons.solidEye,
+                                        ),
                                 ),
                               ),
                               validator: (value) {

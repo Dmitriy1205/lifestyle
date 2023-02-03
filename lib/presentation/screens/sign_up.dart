@@ -126,15 +126,13 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    if (state.isObscure) {
-                                      context
-                                          .read<SignUpCubit>()
-                                          .showPass(false);
-                                    } else if (!state.isObscure) {
-                                      context
-                                          .read<SignUpCubit>()
-                                          .showPass(true);
-                                    }
+                                    state.isObscure
+                                        ? context
+                                            .read<SignUpCubit>()
+                                            .showPass(!state.isObscure)
+                                        : context
+                                            .read<SignUpCubit>()
+                                            .showPass(!state.isObscure);
                                   },
                                   icon: state.isObscure
                                       ? FaIcon(

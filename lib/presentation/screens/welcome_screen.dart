@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/presentation/bloc/welcome/welcome_cubit.dart';
-import 'package:lifestyle/presentation/screens/sign_up.dart';
+import 'package:lifestyle/presentation/screens/sign_in.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../common/constants/colors.dart';
@@ -24,7 +24,7 @@ class WelcomeScreen extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => SignUp(),
+                      builder: (_) => SignIn(),
                     ),
                   );
                   // context.read<WelcomeCubit>().close();

@@ -15,7 +15,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   Future<void> send(String email) async {
     emit(state.copyWith(status: Status.loading()));
     try {
-      authRepository.resetPassword(email);
+      await authRepository.resetPassword(email);
       emit(state.copyWith(status: Status.loaded()));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));
