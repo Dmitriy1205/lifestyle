@@ -18,24 +18,39 @@ class WelcomeScreen extends StatelessWidget {
             return SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: GestureDetector(
-                onTap: () {
-                  context.read<WelcomeCubit>().close();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => SignIn(),
-                    ),
-                  );
-                  // context.read<WelcomeCubit>().close();
-                },
-                child: state.controller!.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio: state.controller!.value.aspectRatio,
-                        child: VideoPlayer(state.controller!),
-                      )
-                    : SizedBox(),
-              ),
+              child: state.controller!.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: state.controller!.value.aspectRatio,
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          VideoPlayer(state.controller!),
+                          Positioned(
+                            bottom: MediaQuery.of(context).size.height / 8,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              height: MediaQuery.of(context).size.height / 16,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  onPressed: () {
+                                    context.read<WelcomeCubit>().close();
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => SignIn(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Start')),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : SizedBox(),
             );
           }
           return Center(
