@@ -2,26 +2,31 @@ part of 'sign_up_cubit.dart';
 
 class SignUpState extends Equatable {
   final Status? status;
-  final bool isObscure;
+  final bool isPassObscure;
+  final bool isConfPassObscure;
 
   SignUpState({
     this.status,
-    this.isObscure = true,
+    this.isPassObscure = true,
+    this.isConfPassObscure = true,
   });
 
   SignUpState copyWith({
     Status? status,
-    bool? isObscure,
+    bool? isPassObscure,
+    bool? isConfPassObscure,
   }) {
     return SignUpState(
       status: status ?? this.status,
-      isObscure: isObscure ?? this.isObscure,
+      isPassObscure: isPassObscure ?? this.isPassObscure,
+      isConfPassObscure: isConfPassObscure ?? this.isConfPassObscure,
     );
   }
 
   @override
   List<Object?> get props => [
         status,
-        isObscure,
+        isPassObscure,
+        isConfPassObscure,
       ];
 }

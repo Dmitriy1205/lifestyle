@@ -111,7 +111,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             TextFormField(
                               controller: _passwordController,
-                              obscureText: state.isObscure,
+                              obscureText: state.isPassObscure,
                               style: AppTheme.themeData.textTheme.displayMedium,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
@@ -126,15 +126,15 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    state.isObscure
+                                    state.isPassObscure
                                         ? context
                                             .read<SignUpCubit>()
-                                            .showPass(!state.isObscure)
+                                            .showPass(!state.isPassObscure)
                                         : context
                                             .read<SignUpCubit>()
-                                            .showPass(!state.isObscure);
+                                            .showPass(!state.isPassObscure);
                                   },
-                                  icon: state.isObscure
+                                  icon: state.isPassObscure
                                       ? FaIcon(
                                           FontAwesomeIcons.eye,
                                           color: AppColors.disabled,
@@ -151,12 +151,34 @@ class _SignUpState extends State<SignUp> {
                             ),
                             TextFormField(
                               controller: _confirmPasswordController,
+                              obscureText: state.isConfPassObscure,
                               style: AppTheme.themeData.textTheme.displayMedium,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.confirmPassword,
                                 prefixIcon: SizedBox(),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    state.isConfPassObscure
+                                        ? context
+                                            .read<SignUpCubit>()
+                                            .showConfirmPass(
+                                                !state.isConfPassObscure)
+                                        : context
+                                            .read<SignUpCubit>()
+                                            .showConfirmPass(
+                                                !state.isConfPassObscure);
+                                  },
+                                  icon: state.isConfPassObscure
+                                      ? FaIcon(
+                                          FontAwesomeIcons.eye,
+                                          color: AppColors.disabled,
+                                        )
+                                      : FaIcon(
+                                          FontAwesomeIcons.solidEye,
+                                        ),
+                                ),
                               ),
                               validator: (value) {
                                 if (value != _passwordController.text) {

@@ -22,5 +22,9 @@ class SignUpCubit extends Cubit<SignUpState> {
     }
   }
 
-  void showPass(bool isObscure) => emit(state.copyWith(isObscure: isObscure));
+  void showPass(bool isObscure) =>
+      emit(state.copyWith(isPassObscure: isObscure));
+
+  void showConfirmPass(bool isObscure) =>
+      emit(state.copyWith(isConfPassObscure: isObscure));
 }
