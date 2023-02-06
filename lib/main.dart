@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import 'presentation/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kReleaseMode) {
+  if (kReleaseMode && Platform.isIOS) {
     await Firebase.initializeApp(
       options: FirebaseOptions(
         apiKey: 'AIzaSyBBiPpG_X9pqPeBykda4c_TiTQqOZLi4So',

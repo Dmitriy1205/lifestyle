@@ -157,7 +157,13 @@ class _SignUpState extends State<SignUp> {
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.confirmPassword,
-                                prefixIcon: SizedBox(),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 12, bottom: 10, top: 12),
+                                  child: FaIcon(
+                                    FontAwesomeIcons.lock,
+                                  ),
+                                ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
                                     state.isConfPassObscure
