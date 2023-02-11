@@ -220,7 +220,7 @@ class _SignInState extends State<SignIn> {
                                   TextSpan(
                                       text: AppText.dontHaveAccount,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600)),
+                                          fontWeight: FontWeight.w600,),),
                                   TextSpan(
                                       text: AppText.signUp,
                                       style: AppTheme

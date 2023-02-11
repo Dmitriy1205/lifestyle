@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/common/constants/icons.dart';
@@ -31,6 +32,7 @@ class Profile extends StatelessWidget {
             }
             return Center(
               child: Column(
+
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -38,37 +40,36 @@ class Profile extends StatelessWidget {
                           context, MaterialPageRoute(builder: (_) => Info(userEmail: state.email!,)));
                     },
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.mainAccent,
-                        border:
-                            Border(bottom: BorderSide(color: AppColors.active)),
-                      ),
+
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            top: 60, left: 35, bottom: 20),
-                        child: Row(
+                            top: 80,),
+                        child: Column(
                           children: [
-                            Icon(
-                              AppIcons.user,
-                              color: AppColors.white,
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                height: 128,
+                                width: 128,
+                                child: CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: AppColors.white,
+                                  child: Image.asset('assets/images/user.png'),
+                                ),
+                              ),
                             ),
                             SizedBox(
-                              width: 30,
+                              height: 10,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  state.email!,
-                                  style:
-                                      AppTheme.themeData.textTheme.labelLarge,
-                                ),
-                                Text(
-                                  '${AppText.memberSince} ${Jiffy(state.date).yMMMMd}',
-                                  style:
-                                      AppTheme.themeData.textTheme.labelSmall,
-                                ),
-                              ],
+                            Text(
+                              state.email!,
+                              style:
+                                  AppTheme.themeData.textTheme.titleSmall,
+                            ),
+                            Text(
+                              '${AppText.memberSince} ${Jiffy(state.date).yMMMMd}',
+                              style:
+                                  AppTheme.themeData.textTheme.labelSmall,
                             )
                           ],
                         ),
@@ -79,6 +80,7 @@ class Profile extends StatelessWidget {
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, top: 30),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ProfileMenuComponent(
                             prefixIcon: Icon(
@@ -87,26 +89,30 @@ class Profile extends StatelessWidget {
                               size: 20,
                             ),
                             text: AppText.editProfile),
-                        Divider(
-                          thickness: 2,
-                          color: AppColors.active,
-                        ),
+
                         SizedBox(
-                          height: 5,
+                          height: 20,
+                        ),
+                        ProfileMenuComponent(
+                            prefixIcon: FaIcon(
+                              FontAwesomeIcons.dumbbell,
+                              color: AppColors.active,
+                              size: 20,
+                            ),
+                            text: AppText.yourWorkout),
+                        SizedBox(
+                          height: 20,
                         ),
                         ProfileMenuComponent(
                             prefixIcon: Icon(
                               AppIcons.users,
                               color: AppColors.active,
-                              size: 18,
+                              size: 20,
                             ),
                             text: AppText.support),
-                        Divider(
-                          thickness: 2,
-                          color: AppColors.active,
-                        ),
+
                         SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
                         ProfileMenuComponent(
                             tap: () {
@@ -127,10 +133,35 @@ class Profile extends StatelessWidget {
                               size: 20,
                             ),
                             text: AppText.logout),
-                        Divider(
-                          thickness: 2,
-                          color: AppColors.active,
+                        SizedBox(
+                          height: 20,
                         ),
+                        Text(AppText.editStats,style: AppTheme.themeData.textTheme.titleSmall,),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileMenuComponent(
+                            prefixIcon: Text(AppText.gender,style: AppTheme.themeData.textTheme.displaySmall,), text: '',),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileMenuComponent(
+                            prefixIcon: Text(AppText.age,style: AppTheme.themeData.textTheme.displaySmall,), text: '',),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileMenuComponent(
+                            prefixIcon: Text(AppText.height,style: AppTheme.themeData.textTheme.displaySmall,), text: '',),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileMenuComponent(
+                            prefixIcon: Text(AppText.weight,style: AppTheme.themeData.textTheme.displaySmall,), text: '',),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileMenuComponent(
+                            prefixIcon: Text(AppText.favoriteTopic,style: AppTheme.themeData.textTheme.displaySmall,), text: '',),
                       ],
                     ),
                   )

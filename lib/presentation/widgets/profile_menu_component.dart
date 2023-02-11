@@ -39,7 +39,7 @@ class ProfileMenuComponent extends StatelessWidget {
             Icon(
               AppIcons.next,
               color: AppColors.disabled,
-              size: 18,
+              size: 14,
             ),
           ],
         ),

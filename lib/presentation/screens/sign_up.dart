@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/common/utils/validator.dart';
 import 'package:lifestyle/presentation/bloc/sign_up/sign_up_cubit.dart';
-import 'package:lifestyle/presentation/screens/main_screen.dart';
+import 'package:lifestyle/presentation/screens/create_profile/create_profile.dart';
 import 'package:lifestyle/presentation/screens/sign_in.dart';
 
 import '../../common/constants/constants.dart';
@@ -44,8 +44,8 @@ class _SignUpState extends State<SignUp> {
           child: BlocConsumer<SignUpCubit, SignUpState>(
             listener: (context, state) {
               if (state.status!.isLoaded) {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => MainScreen()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) => CreateProfile()));
               } else if (state.status!.isError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

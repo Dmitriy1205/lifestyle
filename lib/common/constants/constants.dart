@@ -25,7 +25,49 @@ class AppText {
   static const String editProfile = 'Edit profile';
   static const String support = 'Support';
   static const String logout = 'Logout';
+  static const String yourWorkout = 'Your workouts';
   static const String password = 'Password';
+  static const String editStats = 'Edit stats';
+
+  static const String whatsGender = 'What’s your gender?';
+  static const String howOld = 'How old are you?';
+  static const String whatsHeight = 'What’s your height?';
+  static const String whatsWeight = 'What’s your weight?';
+  static const String whatTopic = 'What topics you like more?';
+
+  static const String next = 'Next';
+  static const String finish = 'Finish';
+  static const String previousStep = 'Previous Step';
+
+  static const String man = 'Man';
+  static const String woman = 'Woman';
+  static const String gender = 'Gender';
+  static const String age = 'Age';
+  static const String height = 'Height';
+  static const String weight = 'Weight';
+  static const String favoriteTopic = 'Favorite topics';
+
+  static const String buildingMuscles = 'Building muscles';
+  static const String loosingWeight = 'Loosing weight';
+  static const String gainingWeight = 'Gaining weight';
+  static const String stretching = 'Stretching';
 
   static const String videoPath = 'assets/videos/video.MP4';
+
+  static  Map<String, bool> topics = {
+    buildingMuscles: false,
+    loosingWeight: false,
+    gainingWeight: false,
+    stretching: false,
+  };
+}
+
+class AppVariables {
+  static double currentPosition = 0.0;
+  static bool first = false;
+}
+
+enum Gender {
+  man,
+  woman,
 }
