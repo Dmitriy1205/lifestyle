@@ -51,8 +51,28 @@ class AppText {
   static const String loosingWeight = 'Loosing weight';
   static const String gainingWeight = 'Gaining weight';
   static const String stretching = 'Stretching';
+  static const String healthDirectory = 'Health directory';
+  static const String workouts = 'Workouts';
+  static const String lifestyle = 'LIFESTYLE';
+  static const String forToday = 'For today';
+  static const String neww = 'New';
+  static const String articles = 'Articles';
+  static const String forYou = 'For you';
+  static const String exercises = 'Exercises';
+  static const String mealsRecomendations = 'Meals recomendations';
 
+  //video
   static const String videoPath = 'assets/videos/video.MP4';
+
+  //images
+  static const String train1 = 'assets/images/train1.png';
+  static const String train2 = 'assets/images/train2.png';
+  static const String train3 = 'assets/images/train3.png';
+  static const String train4 = 'assets/images/train4.png';
+  static const String train5 = 'assets/images/train5.png';
+  static const String train6 = 'assets/images/train6.png';
+  static const String excercise1 = 'assets/images/excercise1.png';
+  static const String excercise2 = 'assets/images/excercise2.png';
 
   static  Map<String, bool> topics = {
     buildingMuscles: false,

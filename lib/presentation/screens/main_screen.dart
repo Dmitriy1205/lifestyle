@@ -7,7 +7,7 @@ import 'package:lifestyle/presentation/screens/feed.dart';
 import 'package:lifestyle/presentation/screens/profile.dart';
 
 import '../../common/constants/colors.dart';
-import 'home.dart';
+import 'home_screen/home.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key? key}) : super(key: key);
