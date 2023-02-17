@@ -45,7 +45,7 @@ class GenderScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FaIcon(
+                            const FaIcon(
                               FontAwesomeIcons.venus,
                               size: 40,
                             ),
@@ -74,7 +74,7 @@ class GenderScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FaIcon(
+                            const FaIcon(
                               FontAwesomeIcons.mars,
                               size: 40,
                             ),

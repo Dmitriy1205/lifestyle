@@ -5,7 +5,7 @@ class SignUpState extends Equatable {
   final bool isPassObscure;
   final bool isConfPassObscure;
 
-  SignUpState({
+  const SignUpState({
     this.status,
     this.isPassObscure = true,
     this.isConfPassObscure = true,

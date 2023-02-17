@@ -17,7 +17,7 @@ class AgeScreen extends StatelessWidget {
     this.controlToPrev,
   }) : super(key: key);
 
-  List _items = List.generate(43, (index) => 18 + index);
+  final List _items = List.generate(43, (index) => 18 + index);
 
 
   @override
@@ -36,7 +36,7 @@ class AgeScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
-                    selectionOverlay: SizedBox(),
+                    selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
                     magnification: 1.5,

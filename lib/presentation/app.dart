@@ -7,6 +7,9 @@ import 'package:lifestyle/presentation/screens/main_screen.dart';
 import 'package:lifestyle/presentation/screens/welcome_screen.dart';
 
 import '../common/services/service_locator.dart';
+import 'bloc/profile/create_workout/create_workout_cubit.dart';
+import 'bloc/profile/edit_workout/edit_workout_cubit.dart';
+import 'bloc/profile/your_workout/your_workout_cubit.dart';
 import 'bloc/sign_in/sign_in_cubit.dart';
 import 'bloc/sign_up/sign_up_cubit.dart';
 
@@ -29,6 +32,15 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<WelcomeCubit>(),
         ),
+        BlocProvider(
+          create: (context) => sl<CreateWorkoutCubit>(),
+        ),
+        BlocProvider(
+            create: (context) => sl<YourWorkoutCubit>()
+        ),
+        BlocProvider(
+          create: (context) => sl<EditWorkoutCubit>(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -37,9 +49,9 @@ class App extends StatelessWidget {
           builder: (context, state) {
             // return CreateProfile();
             if (state.isSignedIn == false) {
-              return WelcomeScreen();
+              return const WelcomeScreen();
             }
-            return MainScreen();
+            return const MainScreen();
           },
         ),
       ),

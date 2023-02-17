@@ -4,7 +4,7 @@ class HeightState extends Equatable {
   final Status? status;
   final int? height;
 
-  HeightState({
+  const HeightState({
     this.status,
     this.height,
   });

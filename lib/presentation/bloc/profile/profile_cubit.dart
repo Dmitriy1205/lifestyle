@@ -17,9 +17,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> init() async {
     emit(state.copyWith(status: Status.loading()));
     try {
-      String email = await authRepository.currentUser()!.email!;
+      String email = authRepository.currentUser()!.email!;
       String dateOfCreation =
-          await authRepository.currentUser()!.metadata.creationTime.toString();
+          authRepository.currentUser()!.metadata.creationTime.toString();
       emit(state.copyWith(
           status: Status.loaded(), email: email, date: dateOfCreation));
     } on BadRequestException catch (e) {

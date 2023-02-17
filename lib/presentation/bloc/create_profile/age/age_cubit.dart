@@ -21,7 +21,7 @@ class AgeCubit extends Cubit<AgeState> {
 
   Future<void> accept(int age) async {
     try {
-      await db.update(auth.currentUser()!.uid, {'age': age});
+      await db.setProfile(auth.currentUser()!.uid, {'age': age});
       emit(state.copyWith(status: Status.loaded()));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

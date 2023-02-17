@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lifestyle/data/models/workout.dart';
 
 import '../../common/constants/exceptions.dart';
 
@@ -7,23 +8,56 @@ class DataRepository {
 
   DataRepository({required this.db});
 
-  Future<void> set(String id) async {
+  Future<void> setUser(String id) async {
     try {
-      await db.collection('users').doc(id);
+      db.collection('users').doc(id);
     } on FirebaseException catch (e) {
-      print(e.message);
       throw BadRequestException(message: e.message!);
     }
   }
 
-  Future<void> update(String id, data) async {
+  Future<void> setProfile(String id, data) async {
     try {
       await db
           .collection('users')
           .doc(id)
-          .set({'Profile': data}, SetOptions(merge: true));
+          .set({'profile': data}, SetOptions(merge: true));
     } on FirebaseException catch (e) {
-      print(e.message);
+      throw BadRequestException(message: e.message!);
+    }
+  }
+
+  Future<void> setExercises(
+      String id, Map<String, dynamic> data, String workoutId) async {
+    try {
+      await db
+          .collection('users')
+          .doc(id)
+          .collection('workouts')
+          .doc(workoutId)
+          .set(data, SetOptions(merge: true));
+    } on FirebaseException catch (e) {
+      throw BadRequestException(message: e.message!);
+    }
+  }
+
+  Future<List<Workout>> getOwnWorkouts(String id) async {
+    try {
+      final data =
+          await db.collection('users').doc(id).collection('workouts').get();
+
+      return data.docs.map((e) => Workout.fromJson(e.data())).toList();
+    } on FirebaseException catch (e) {
+      throw BadRequestException(message: e.message!);
+    }
+  }
+
+  Future<List<Workout>> getAllWorkouts() async {
+    try {
+      final data = await db.collectionGroup('workouts').get();
+
+      return data.docs.map((e) => Workout.fromJson(e.data())).toList();
+    } on FirebaseException catch (e) {
       throw BadRequestException(message: e.message!);
     }
   }

@@ -14,7 +14,7 @@ import '../../common/themes/theme.dart';
 import '../bloc/sign_in/sign_in_cubit.dart';
 
 class SignIn extends StatefulWidget {
-  SignIn({Key? key}) : super(key: key);
+  const SignIn({Key? key}) : super(key: key);
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -43,13 +43,13 @@ class _SignInState extends State<SignIn> {
           child: BlocConsumer<SignInCubit, SignInState>(
             listener: (context, state) {
               if (state.status!.isLoaded) {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => MainScreen()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) => const MainScreen()));
               } else if (state.status!.isError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: AppColors.red,
-                    duration: Duration(seconds: 5),
+                    duration: const Duration(seconds: 5),
                     content: Text(
                       state.status!.errorMessage.toString(),
                       textAlign: TextAlign.center,
@@ -60,7 +60,7 @@ class _SignInState extends State<SignIn> {
             },
             builder: (context, state) {
               if (state.status!.isLoading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.mainAccent,
                   ),
@@ -71,7 +71,7 @@ class _SignInState extends State<SignIn> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         AppText.joinUs,
                         style: AppTheme.themeData.textTheme.displayLarge,
@@ -80,7 +80,7 @@ class _SignInState extends State<SignIn> {
                         AppText.theMostVarious,
                         style: AppTheme.themeData.textTheme.displayMedium,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -88,12 +88,12 @@ class _SignInState extends State<SignIn> {
                             TextFormField(
                               controller: _emailController,
                               style: AppTheme.themeData.textTheme.displayMedium,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.email,
                                 prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(
+                                  padding: EdgeInsets.only(
                                     left: 12,
                                     bottom: 10,
                                     top: 13,
@@ -105,7 +105,7 @@ class _SignInState extends State<SignIn> {
                               ),
                               validator: context.validateEmailAddress,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             TextFormField(
@@ -113,11 +113,11 @@ class _SignInState extends State<SignIn> {
                               obscureText: state.isObscure,
                               style: AppTheme.themeData.textTheme.displayMedium,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.password,
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 12, bottom: 10, top: 12),
                                   child: FaIcon(
                                     FontAwesomeIcons.lock,
@@ -134,11 +134,11 @@ class _SignInState extends State<SignIn> {
                                             .showPass(!state.isObscure);
                                   },
                                   icon: state.isObscure
-                                      ? FaIcon(
+                                      ? const FaIcon(
                                           FontAwesomeIcons.eye,
                                           color: AppColors.disabled,
                                         )
-                                      : FaIcon(
+                                      : const FaIcon(
                                           FontAwesomeIcons.solidEye,
                                         ),
                                 ),
@@ -147,6 +147,7 @@ class _SignInState extends State<SignIn> {
                                 if (value!.isEmpty) {
                                   return ' Password cant be empty';
                                 }
+                                return value;
                               },
                             ),
                           ],
@@ -160,11 +161,11 @@ class _SignInState extends State<SignIn> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  //TODO: route to forgot password
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ForgotPassword(),
+                                      builder: (context) =>
+                                          const ForgotPassword(),
                                     ),
                                   );
                                 },
@@ -181,8 +182,8 @@ class _SignInState extends State<SignIn> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height / 19,
                           width: MediaQuery.of(context).size.width,
-                          child: GoogleAuthButton()),
-                      Spacer(
+                          child: const GoogleAuthButton()),
+                      const Spacer(
                         flex: 2,
                       ),
                       ElevatedButton(
@@ -196,7 +197,7 @@ class _SignInState extends State<SignIn> {
                                 _passwordController.text,
                               );
                         },
-                        child: Container(
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height / 18,
                           width: MediaQuery.of(context).size.width,
                           child: Center(
@@ -217,10 +218,12 @@ class _SignInState extends State<SignIn> {
                                 style:
                                     AppTheme.themeData.textTheme.displayMedium,
                                 children: [
-                                  TextSpan(
-                                      text: AppText.dontHaveAccount,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,),),
+                                  const TextSpan(
+                                    text: AppText.dontHaveAccount,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   TextSpan(
                                       text: AppText.signUp,
                                       style: AppTheme
@@ -230,7 +233,8 @@ class _SignInState extends State<SignIn> {
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => SignUp(),
+                                              builder: (context) =>
+                                                  const SignUp(),
                                             ),
                                           );
                                         }),

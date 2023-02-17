@@ -4,7 +4,7 @@ class AgeState extends Equatable {
   final Status? status;
   final int? age;
 
-  AgeState({
+  const AgeState({
     this.status,
     this.age,
   });

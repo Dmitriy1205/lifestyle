@@ -5,7 +5,7 @@ class ProfileState extends Equatable {
   final String? date;
   final String? email;
 
-  ProfileState({
+  const ProfileState({
     this.status,
     this.date,
     this.email,

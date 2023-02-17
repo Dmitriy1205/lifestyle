@@ -10,7 +10,7 @@ class WelcomeCubit extends Cubit<WelcomeState> {
   late VideoPlayerController controller;
   bool isPlaying = true;
 
-  WelcomeCubit() : super(WelcomeState()) {
+  WelcomeCubit() : super(const WelcomeState()) {
     controller = VideoPlayerController.asset(AppText.videoPath)
       ..setLooping(true)
       ..initialize().then((value) {

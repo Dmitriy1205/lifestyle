@@ -12,7 +12,7 @@ import '../../bloc/create_profile/tags/tags_cubit.dart';
 class TagsScreen extends StatelessWidget {
   final Function()? controlToPrev;
 
-  TagsScreen({
+  const TagsScreen({
     Key? key,
     this.controlToPrev,
   }) : super(key: key);
@@ -39,8 +39,6 @@ class TagsScreen extends StatelessWidget {
                                 index, !state.tags!.values.elementAt(index))
                             : context.read<TagsCubit>().setValue(
                                 index, !state.tags!.values.elementAt(index));
-
-                        print(state.tags);
                       },
                       child: Chip(
                         backgroundColor: state.tags!.values.elementAt(index)
@@ -62,7 +60,7 @@ class TagsScreen extends StatelessWidget {
                       (value) => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => MainScreen(),
+                          builder: (_) => const MainScreen(),
                         ),
                       ),
                     );

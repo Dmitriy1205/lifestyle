@@ -59,7 +59,20 @@ class AppText {
   static const String articles = 'Articles';
   static const String forYou = 'For you';
   static const String exercises = 'Exercises';
-  static const String mealsRecomendations = 'Meals recomendations';
+  static const String mealsRecommendations = 'Meal recommendations';
+  static const String trainingName = 'Training name';
+  static const String description = 'Description';
+  static const String training = 'Training';
+  static const String relax = 'Relax';
+  static const String edit = 'Edit';
+  static const String add = 'Add';
+  static const String create = 'Create';
+  static const String relaxTime = 'Relax Time';
+  static const String trainings = 'TRAININGS';
+  static const String search = 'Search';
+  static const String seconds = 'Seconds';
+  static const String minutes = 'Minutes';
+  static const String unit = 'Unit';
 
   //video
   static const String videoPath = 'assets/videos/video.MP4';
@@ -74,7 +87,7 @@ class AppText {
   static const String excercise1 = 'assets/images/excercise1.png';
   static const String excercise2 = 'assets/images/excercise2.png';
 
-  static  Map<String, bool> topics = {
+  static Map<String, bool> topics = {
     buildingMuscles: false,
     loosingWeight: false,
     gainingWeight: false,

@@ -4,7 +4,7 @@ class SignInState extends Equatable {
   final Status? status;
   final bool isObscure;
 
-  SignInState({
+  const SignInState({
     this.status,
     this.isObscure = true,
   });

@@ -16,7 +16,7 @@ class HeightScreen extends StatelessWidget {
     required this.controlToNext,
     this.controlToPrev,
   }) : super(key: key);
-  List _items = List.generate(60, (index) => 140 + index);
+  final List _items = List.generate(60, (index) => 140 + index);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class HeightScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
-                    selectionOverlay: SizedBox(),
+                    selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
                     magnification: 1.5,

@@ -24,13 +24,13 @@ class CreateProfileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 90,
             ),
             Text(
@@ -45,7 +45,7 @@ class CreateProfileBody extends StatelessWidget {
               ),
               child: content,
             ),
-            Spacer(),
+            const Spacer(),
             ElevatedButton(
               onPressed: onTapNext,
               child: SizedBox(
@@ -59,11 +59,11 @@ class CreateProfileBody extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             !isFirst
-                ? SizedBox(
+                ? const SizedBox(
                     height: 48,
                   )
                 : TextButton(

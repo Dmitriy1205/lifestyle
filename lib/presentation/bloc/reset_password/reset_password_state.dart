@@ -3,7 +3,7 @@ part of 'reset_password_cubit.dart';
 class ResetPasswordState extends Equatable {
   final Status? status;
 
-  ResetPasswordState({
+  const ResetPasswordState({
     this.status,
   });
 

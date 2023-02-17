@@ -4,6 +4,8 @@ import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/constants/icons.dart';
 import '../../../common/themes/theme.dart';
+import '../../../data/models/group.dart';
+import '../../widgets/big_workout_picture.dart';
 
 class TrainingScreen extends StatelessWidget {
   final String header;
@@ -11,6 +13,8 @@ class TrainingScreen extends StatelessWidget {
   final String author;
   final String description;
   final String recommendation;
+  final String image;
+  final List<Group> exercises;
 
   const TrainingScreen({
     Key? key,
@@ -19,6 +23,8 @@ class TrainingScreen extends StatelessWidget {
     required this.author,
     required this.description,
     required this.recommendation,
+    required this.image,
+    required this.exercises,
   }) : super(key: key);
 
   @override
@@ -29,7 +35,7 @@ class TrainingScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             AppIcons.back,
             color: AppColors.contrast,
             size: 20,
@@ -39,7 +45,7 @@ class TrainingScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           shrinkWrap: true,
           children: [
             Text(
@@ -49,16 +55,14 @@ class TrainingScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 10),
-              child: Container(
-                child: Image.asset(AppText.train5),
-              ),
+              child: BigWorkoutPicture(image: image),
             ),
             Text(
               description,
               style: AppTheme.themeData.textTheme.labelSmall,
               textAlign: TextAlign.start,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -83,122 +87,76 @@ class TrainingScreen extends StatelessWidget {
                 style: AppTheme.themeData.textTheme.labelLarge,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            //todo: put listview.builder for exercises instead of rows from here
-            Row(
-              children: [
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: Image.asset(
-                    AppText.excercise1,
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Jumps on height',
-                      style: AppTheme.themeData.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.contrast, fontSize: 12),
-                    ),
-                    Text(
-                      '30 Seconds',
-                      style: AppTheme.themeData.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.contrast, fontSize: 8),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                'Relax 20 Seconds',
-                style: AppTheme.themeData.textTheme.displayMedium!
-                    .copyWith(fontSize: 12),
-              ),
-            ),
-            Row(
-              children: [
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: Image.asset(
-                    AppText.excercise1,
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Jumps on height',
-                      style: AppTheme.themeData.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.contrast, fontSize: 14),
-                    ),
-                    Text(
-                      '30 Seconds',
-                      style: AppTheme.themeData.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.contrast, fontSize: 14),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                'Relax 20 Seconds',
-                style: AppTheme.themeData.textTheme.displayMedium!
-                    .copyWith(fontSize: 12),
-              ),
-            ),
-            Row(
-              children: [
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: Image.asset(
-                    AppText.excercise1,
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Jumps on height',
-                      style: AppTheme.themeData.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.contrast, fontSize: 14),
-                    ),
-                    Text(
-                      '30 Seconds',
-                      style: AppTheme.themeData.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.contrast, fontSize: 14),
-                    ),
-                  ],
-                )
-              ],
-            ),
-
-            //todo: until this
+            ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: exercises.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      exercises[index].exercise == null
+                          ? const SizedBox()
+                          : Row(
+                              children: [
+                                SizedBox(
+                                  height: 65,
+                                  width: 65,
+                                  child: Image.asset(
+                                    exercises[index].exercise!.image!,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      exercises[index].exercise!.name!,
+                                      style: AppTheme
+                                          .themeData.textTheme.bodyMedium!
+                                          .copyWith(
+                                              color: AppColors.contrast,
+                                              fontSize: 12),
+                                    ),
+                                    Text(
+                                      '${exercises[index].exercise!.duration!} ${exercises[index].exercise!.timeValue!}',
+                                      style: AppTheme
+                                          .themeData.textTheme.bodyMedium!
+                                          .copyWith(
+                                              color: AppColors.contrast,
+                                              fontSize: 8),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                      exercises[index].relaxTime == 'null' ||
+                              exercises[index].relaxTime == null
+                          ? const SizedBox()
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Text(
+                                '${AppText.relax} ${exercises[index].relaxTime!} ${AppText.seconds}',
+                                style: AppTheme
+                                    .themeData.textTheme.displayMedium!
+                                    .copyWith(fontSize: 12),
+                              ),
+                            ),
+                    ],
+                  );
+                }),
             Padding(
               padding: const EdgeInsets.only(
-                top: 40,
+                top: 20,
                 bottom: 5,
               ),
               child: Text(
-                AppText.mealsRecomendations,
+                AppText.mealsRecommendations,
                 style: AppTheme.themeData.textTheme.labelLarge,
               ),
             ),
@@ -213,52 +171,3 @@ class TrainingScreen extends StatelessWidget {
     );
   }
 }
-// ListView.builder(
-//   shrinkWrap: true,
-//   itemBuilder: (BuildContext context, int index) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Row(
-//           children: [
-//             Container(
-//               height: 65,
-//               width: 65,
-//               child: Image.asset(
-//                 AppText.excercise1,
-//               ),
-//             ),
-//             SizedBox(
-//               width: 15,
-//             ),
-//             Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   'Jumps on height',
-//                   style: AppTheme.themeData.textTheme.bodyMedium!
-//                       .copyWith(
-//                           color: AppColors.contrast, fontSize: 12),
-//                 ),
-//                 Text(
-//                   '30 Seconds',
-//                   style: AppTheme.themeData.textTheme.bodyMedium!
-//                       .copyWith(
-//                           color: AppColors.contrast, fontSize: 8),
-//                 ),
-//               ],
-//             )
-//           ],
-//         ),
-//         Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 20),
-//           child: Text(
-//             'Relax 20 Seconds',
-//             style: AppTheme.themeData.textTheme.displayMedium!
-//                 .copyWith(fontSize: 12),
-//           ),
-//         ),
-//       ],
-//     );
-//   },
-// )

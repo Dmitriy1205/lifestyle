@@ -1,38 +1,51 @@
+import 'package:lifestyle/data/models/group.dart';
+
 class Workout {
-  final String? name;
-  final String? description;
-  final String? interval;
-  final String? author;
-  final String? image;
-  final List? exercises;
+  String? id;
+  String? name;
+  String? description;
+  String? recommendation;
+  String? interval;
+  String? author;
+  String? image;
+  List<Group>? exercises;
 
   Workout({
+    this.id,
     this.name,
     this.description,
     this.interval,
     this.author,
     this.image,
     this.exercises,
+    this.recommendation,
   });
 
   factory Workout.fromJson(Map<String, dynamic> json) {
     return Workout(
-      name: json["name"],
-      description: json["description"],
-      interval: json["interval"],
-      author: json["author"],
-      image: json['image'],
-      exercises: json['exercises'],
+      id: json['id'],
+      name: json["name"].toString(),
+      description: json["description"].toString(),
+      interval: json["interval"].toString(),
+      author: json["author"].toString(),
+      image: json['image'].toString(),
+      exercises:
+          (json['exercises'] as List).map((e) => Group.fromJson(e)).toList(),
+      recommendation: json['recommendation'].toString(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "name": this.name,
-      "description": this.description,
-      "interval": this.interval,
-      "author": this.author,
-      'image': this.image,
+      "id": id,
+      "name": name,
+      "description": description,
+      "recommendation": recommendation,
+      "interval": interval,
+      "author": author,
+      "image": image,
+      "exercises":
+          List<dynamic>.from(exercises!.map((ex) => ex.toJson())).toList(),
     };
   }
 
@@ -41,17 +54,23 @@ class Workout {
       identical(this, other) ||
       other is Workout &&
           runtimeType == other.runtimeType &&
+          id == other.id &&
           name == other.name &&
           description == other.description &&
+          recommendation == other.recommendation &&
           interval == other.interval &&
           author == other.author &&
-          image == other.image;
+          image == other.image &&
+          exercises == other.exercises;
 
   @override
   int get hashCode =>
+      id.hashCode ^
       name.hashCode ^
       description.hashCode ^
+      recommendation.hashCode ^
       interval.hashCode ^
       author.hashCode ^
-      image.hashCode;
+      image.hashCode ^
+      exercises.hashCode;
 }

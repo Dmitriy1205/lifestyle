@@ -21,7 +21,7 @@ class WeightCubit extends Cubit<WeightState> {
 
   Future<void> accept(int weight) async {
     try {
-      await db.update(auth.currentUser()!.uid, {'weight': weight});
+      await db.setProfile(auth.currentUser()!.uid, {'weight': weight});
       emit(state.copyWith(status: Status.loaded()));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

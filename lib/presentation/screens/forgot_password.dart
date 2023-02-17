@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,7 +12,7 @@ import '../../common/services/service_locator.dart';
 import '../../common/themes/theme.dart';
 
 class ForgotPassword extends StatefulWidget {
-  ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({Key? key}) : super(key: key);
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
@@ -40,7 +39,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               AppIcons.back,
               color: AppColors.contrast,
               size: 20,
@@ -53,7 +52,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.red,
-                  duration: Duration(seconds: 5),
+                  duration: const Duration(seconds: 5),
                   content: Text(
                     state.status!.errorMessage.toString(),
                   ),
@@ -61,9 +60,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               );
             } else if (state.status!.isLoaded) {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => SignIn()));
+                  context, MaterialPageRoute(builder: (_) => const SignIn()));
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   backgroundColor: AppColors.green,
                   duration: Duration(seconds: 5),
                   content: Text(
@@ -76,7 +75,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           },
           builder: (context, state) {
             if (state.status!.isLoading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.mainAccent,
                 ),
@@ -103,7 +102,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         style: AppTheme.themeData.textTheme.displayMedium,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 70,
                     ),
                     Form(
@@ -113,12 +112,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           TextFormField(
                             controller: _emailController,
                             style: AppTheme.themeData.textTheme.displayMedium,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 10),
                               hintText: AppText.email,
                               prefixIcon: Padding(
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                     left: 12, bottom: 10, top: 13),
                                 child: FaIcon(
                                   FontAwesomeIcons.solidEnvelope,
@@ -130,7 +129,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ],
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     ElevatedButton(
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) {
@@ -141,7 +140,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             .read<ResetPasswordCubit>()
                             .send(_emailController.text);
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height / 18,
                         width: MediaQuery.of(context).size.width,
                         child: Center(

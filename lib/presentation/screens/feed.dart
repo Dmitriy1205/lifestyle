@@ -9,12 +9,10 @@ class Feed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Text(
-            AppText.feed,
-            style: AppTheme.themeData.textTheme.displayLarge,
-          ),
+      body: Center(
+        child: Text(
+          AppText.feed,
+          style: AppTheme.themeData.textTheme.displayLarge,
         ),
       ),
     );

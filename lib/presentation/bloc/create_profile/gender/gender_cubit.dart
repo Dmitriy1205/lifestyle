@@ -22,14 +22,15 @@ class GenderCubit extends Cubit<GenderState> {
     String genderName;
     if (selectedGender == Gender.man) {
       genderName = 'Man';
-    } else
+    } else {
       genderName = 'Woman';
+    }
     emit(state.copyWith(gender: selectedGender, genderName: genderName));
   }
 
   Future<void> accept(String gender) async {
     try {
-      await db.update(auth.currentUser()!.uid, {'gender': gender});
+      await db.setProfile(auth.currentUser()!.uid, {'gender': gender});
       emit(state.copyWith(status: Status.loaded()));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

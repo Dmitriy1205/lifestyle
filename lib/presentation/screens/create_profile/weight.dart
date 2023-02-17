@@ -16,7 +16,7 @@ class WeightScreen extends StatelessWidget {
     required this.controlToNext,
     this.controlToPrev,
   }) : super(key: key);
-  List _items = List.generate(80, (index) => 40 + index);
+  final List _items = List.generate(80, (index) => 40 + index);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class WeightScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
-                    selectionOverlay: SizedBox(),
+                    selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
                     magnification: 1.5,

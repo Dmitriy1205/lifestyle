@@ -10,9 +10,10 @@ import 'package:lifestyle/presentation/screens/sign_in.dart';
 
 import '../../common/constants/constants.dart';
 import '../../common/themes/theme.dart';
+import '../widgets/loading_indicator.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({Key? key}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -45,12 +46,12 @@ class _SignUpState extends State<SignUp> {
             listener: (context, state) {
               if (state.status!.isLoaded) {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (_) => CreateProfile()));
+                    MaterialPageRoute(builder: (_) => const CreateProfile()));
               } else if (state.status!.isError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: AppColors.red,
-                    duration: Duration(seconds: 5),
+                    duration: const Duration(seconds: 5),
                     content: Text(
                       state.status!.errorMessage.toString(),
                       textAlign: TextAlign.center,
@@ -61,18 +62,14 @@ class _SignUpState extends State<SignUp> {
             },
             builder: (context, state) {
               if (state.status!.isLoading) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.mainAccent,
-                  ),
-                );
+                return const LoadingIndicator();
               }
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         AppText.createAccount,
                         style: AppTheme.themeData.textTheme.displayLarge,
@@ -81,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                         AppText.greatOpportunity,
                         style: AppTheme.themeData.textTheme.displayMedium,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -89,12 +86,12 @@ class _SignUpState extends State<SignUp> {
                             TextFormField(
                               controller: _emailController,
                               style: AppTheme.themeData.textTheme.displayMedium,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.email,
                                 prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(
+                                  padding: EdgeInsets.only(
                                     left: 12,
                                     bottom: 10,
                                     top: 13,
@@ -106,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                               validator: context.validateEmailAddress,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             TextFormField(
@@ -114,11 +111,11 @@ class _SignUpState extends State<SignUp> {
                               obscureText: state.isPassObscure,
                               style: AppTheme.themeData.textTheme.displayMedium,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.password,
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 12, bottom: 10, top: 12),
                                   child: FaIcon(
                                     FontAwesomeIcons.lock,
@@ -135,18 +132,18 @@ class _SignUpState extends State<SignUp> {
                                             .showPass(!state.isPassObscure);
                                   },
                                   icon: state.isPassObscure
-                                      ? FaIcon(
+                                      ? const FaIcon(
                                           FontAwesomeIcons.eye,
                                           color: AppColors.disabled,
                                         )
-                                      : FaIcon(
+                                      : const FaIcon(
                                           FontAwesomeIcons.solidEye,
                                         ),
                                 ),
                               ),
                               validator: context.validateFieldNotEmpty,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             TextFormField(
@@ -154,11 +151,11 @@ class _SignUpState extends State<SignUp> {
                               obscureText: state.isConfPassObscure,
                               style: AppTheme.themeData.textTheme.displayMedium,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 hintText: AppText.confirmPassword,
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 12, bottom: 10, top: 12),
                                   child: FaIcon(
                                     FontAwesomeIcons.lock,
@@ -177,11 +174,11 @@ class _SignUpState extends State<SignUp> {
                                                 !state.isConfPassObscure);
                                   },
                                   icon: state.isConfPassObscure
-                                      ? FaIcon(
+                                      ? const FaIcon(
                                           FontAwesomeIcons.eye,
                                           color: AppColors.disabled,
                                         )
-                                      : FaIcon(
+                                      : const FaIcon(
                                           FontAwesomeIcons.solidEye,
                                         ),
                                 ),
@@ -190,14 +187,16 @@ class _SignUpState extends State<SignUp> {
                                 if (value != _passwordController.text) {
                                   return 'Enter Valid Password';
                                 }
-                                if (value!.isEmpty)
-                                  return 'Email cannot be empty';
+                                if (value!.isEmpty) {
+                                  return 'Field cannot be empty';
+                                }
+                                return null;
                               },
                             ),
                           ],
                         ),
                       ),
-                      Spacer(
+                      const Spacer(
                         flex: 2,
                       ),
                       ElevatedButton(
@@ -211,7 +210,7 @@ class _SignUpState extends State<SignUp> {
                                 _passwordController.text,
                               );
                         },
-                        child: Container(
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height / 16,
                           width: MediaQuery.of(context).size.width,
                           child: Center(
@@ -232,7 +231,7 @@ class _SignUpState extends State<SignUp> {
                                 style:
                                     AppTheme.themeData.textTheme.displayMedium,
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                       text: AppText.haveAccount,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600)),
@@ -245,7 +244,7 @@ class _SignUpState extends State<SignUp> {
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => SignIn(),
+                                              builder: (context) => const SignIn(),
                                             ),
                                           );
                                         }),

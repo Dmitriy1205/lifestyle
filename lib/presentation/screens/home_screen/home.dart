@@ -21,9 +21,9 @@ class Home extends StatelessWidget {
             AppText.lifestyle,
             style: AppTheme.themeData.textTheme.displayLarge,
           ),
-          actions: [
+          actions: const [
             Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: EdgeInsets.only(right: 20),
               child: Center(
                 child: FaIcon(
                   FontAwesomeIcons.magnifyingGlass,
@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
               ),
             ),
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             indicatorColor: AppColors.mainAccent,
             indicatorPadding: EdgeInsets.symmetric(horizontal: 30),
             indicatorWeight: 3,
@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             HealthDirectory(),
             Workouts(),

@@ -24,7 +24,7 @@ class HealthDirectory extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: ListView(
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -35,9 +35,7 @@ class HealthDirectory extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Container(
-                      child: Image.asset(AppText.train1),
-                    ),
+                    child: Image.asset(AppText.train1),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +59,7 @@ class HealthDirectory extends StatelessWidget {
                     ),
                   ),
                   mock(AppText.train2, 'Push-ups together', '1:23'),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   mock(AppText.train3, 'Basic heavy weights tecniques', '7:55'),
@@ -86,14 +84,14 @@ class HealthDirectory extends StatelessWidget {
   Row mock(String image, String name, String time) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           height: 65,
           width: 65,
           child: Image.asset(
             image,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 15,
         ),
         Column(

@@ -4,7 +4,7 @@ class WeightState extends Equatable {
   final Status? status;
   final int? weight;
 
-  WeightState({
+  const WeightState({
     this.status,
     this.weight,
   });

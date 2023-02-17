@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData themeData = ThemeData(
-    colorScheme: ThemeData().colorScheme.copyWith(primary: Color(0xFF10284D)),
-    tabBarTheme: TabBarTheme(
-      labelStyle: const TextStyle(
+    colorScheme: ThemeData().colorScheme.copyWith(primary: const Color(0xFF10284D)),
+    tabBarTheme: const TabBarTheme(
+      labelStyle: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 16,
       ),
       labelColor: Color(0xFF10284D),
-      unselectedLabelStyle: const TextStyle(
+      unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 16,
       ),
       unselectedLabelColor: Color(0xFF898D94),
     ),
-    scaffoldBackgroundColor: Color(0xFFFFFFFF),
-    textSelectionTheme: TextSelectionThemeData(cursorColor: Color(0xFF10284D)),
-    inputDecorationTheme: InputDecorationTheme(
+    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    textSelectionTheme: const TextSelectionThemeData(cursorColor: Color(0xFF10284D)),
+    inputDecorationTheme: const InputDecorationTheme(
       focusColor: Color(0xFF10284D),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -39,58 +39,58 @@ class AppTheme {
     ),
     useMaterial3: true,
     fontFamily: 'Lato',
-    textTheme: TextTheme(
-      displayLarge: const TextStyle(
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: 26,
         color: Color(0xFF10284D),
       ),
-      displayMedium: const TextStyle(
+      displayMedium: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 16,
         color: Color(0xFF10284D),
       ),
-      titleLarge: const TextStyle(
+      titleLarge: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 24,
         color: Color(0xFF10284D),
       ),
-      titleMedium: const TextStyle(
+      titleMedium: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 16,
         color: Color(0xFF898D94),
       ),
-      titleSmall: const TextStyle(
+      titleSmall: TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: 18,
         color: Color(0xFF10284D),
       ),
-      displaySmall: const TextStyle(
+      displaySmall: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 12,
         color: Color(0xFF898D94),
       ),
-      bodyLarge: const TextStyle(
+      bodyLarge: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 19,
         color: Color(0xFF10284D),
       ),
-      bodyMedium: const TextStyle(
+      bodyMedium: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 16,
         color: Color(0xFFFFFFFF),
       ),
-      labelLarge: const TextStyle(
+      labelLarge: TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: 12,
         color: Color(0xFF10284D),
       ),
-      labelSmall: const TextStyle(
+      labelSmall: TextStyle(
         fontWeight: FontWeight.w300,
         fontSize: 12,
         color: Color(0xFF10284D),
       ),
-      labelMedium: const TextStyle(
+      labelMedium: TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 16,
         color: Color(0xFFC7ED3A),
@@ -98,13 +98,13 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        shape: BeveledRectangleBorder(),
+        shape: const BeveledRectangleBorder(),
         textStyle: const TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 24,
           color: Color(0xFF10284D),
         ),
-        backgroundColor: Color(0xFFC7ED3A),
+        backgroundColor: const Color(0xFFC7ED3A),
       ),
     ),
   );

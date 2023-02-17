@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kReleaseMode && Platform.isIOS) {
     await Firebase.initializeApp(
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
         apiKey: 'AIzaSyBBiPpG_X9pqPeBykda4c_TiTQqOZLi4So',
         appId: 'com.shea.lifestyle',
         messagingSenderId: '',

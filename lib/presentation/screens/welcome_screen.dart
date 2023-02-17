@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/presentation/bloc/welcome/welcome_cubit.dart';
 import 'package:lifestyle/presentation/screens/sign_in.dart';
+import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
 import 'package:video_player/video_player.dart';
-
-import '../../common/constants/colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -27,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
                           VideoPlayer(state.controller!),
                           Positioned(
                             bottom: MediaQuery.of(context).size.height / 8,
-                            child: Container(
+                            child: SizedBox(
                               width: MediaQuery.of(context).size.width / 1.3,
                               height: MediaQuery.of(context).size.height / 16,
                               child: ElevatedButton(
@@ -40,24 +39,20 @@ class WelcomeScreen extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => SignIn(),
+                                        builder: (_) => const SignIn(),
                                       ),
                                     );
                                   },
-                                  child: Text('Start')),
+                                  child: const Text('Start')),
                             ),
                           )
                         ],
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             );
           }
-          return Center(
-            child: CircularProgressIndicator(
-              color: AppColors.mainAccent,
-            ),
-          );
+          return const LoadingIndicator();
         },
       ),
     );

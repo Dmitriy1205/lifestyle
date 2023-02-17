@@ -21,7 +21,7 @@ class HeightCubit extends Cubit<HeightState> {
 
   Future<void> accept(int height) async {
     try {
-      await db.update(auth.currentUser()!.uid, {'height': height});
+      await db.setProfile(auth.currentUser()!.uid, {'height': height});
       emit(state.copyWith(status: Status.loaded()));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

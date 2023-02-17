@@ -22,7 +22,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     try {
       await authRepository
           .signUp(email: email, password: password)
-          .then((value) => db.set(authRepository.currentUser()!.uid));
+          .then((value) => db.setUser(authRepository.currentUser()!.uid));
       emit(state.copyWith(status: Status.loaded()));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

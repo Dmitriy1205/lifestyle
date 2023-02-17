@@ -16,7 +16,7 @@ class GoogleAuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<GoogleAuthCubit>(),
-      child: _GoogleAuthButton(),
+      child: const _GoogleAuthButton(),
     );
   }
 }
@@ -32,7 +32,7 @@ class _GoogleAuthButton extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => MainScreen(),
+              builder: (context) => const MainScreen(),
             ),
           );
         }
@@ -56,7 +56,7 @@ class _GoogleAuthButton extends StatelessWidget {
             children: [
               const FaIcon(FontAwesomeIcons.google, color: AppColors.white),
               state.status!.isLoading
-                  ? Center(
+                  ? const Center(
                       child: SizedBox(
                           height: 20,
                           width: 20,
@@ -68,7 +68,7 @@ class _GoogleAuthButton extends StatelessWidget {
                       AppText.signInGoogle,
                       style: AppTheme.themeData.textTheme.bodyMedium,
                     ),
-              SizedBox(
+              const SizedBox(
                 width: 40,
               ),
             ],

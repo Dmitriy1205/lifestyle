@@ -4,7 +4,7 @@ class AuthState extends Equatable {
   final Status? status;
   final bool? isSignedIn;
 
-  AuthState({
+  const AuthState({
     this.status,
     this.isSignedIn,
   });

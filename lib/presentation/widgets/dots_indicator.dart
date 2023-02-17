@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 
-typedef void OnTap(double position);
+typedef OnTap = void Function(double position);
 
 class DotsIndicator extends StatelessWidget {
   final int dotsCount;

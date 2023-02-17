@@ -20,29 +20,27 @@ class ProfileMenuComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: tap,
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                prefixIcon,
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  text,
-                  style: AppTheme.themeData.textTheme.displaySmall,
-                )
-              ],
-            ),
-            Icon(
-              AppIcons.next,
-              color: AppColors.disabled,
-              size: 14,
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              prefixIcon,
+              const SizedBox(
+                width: 15,
+              ),
+              Text(
+                text,
+                style: AppTheme.themeData.textTheme.displaySmall,
+              )
+            ],
+          ),
+          const Icon(
+            AppIcons.next,
+            color: AppColors.disabled,
+            size: 14,
+          ),
+        ],
       ),
     );
   }

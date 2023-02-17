@@ -5,7 +5,7 @@ class GenderState extends Equatable {
   final Gender? gender;
   final String? genderName;
 
-  GenderState({
+  const GenderState({
     this.status,
     this.gender,
     this.genderName,

@@ -5,7 +5,7 @@ class TagsState extends Equatable {
   final Status? status;
   final Map<String, bool>? tags;
 
-  TagsState({
+  const TagsState({
     this.isTagged,
     this.tags,
     this.status,
