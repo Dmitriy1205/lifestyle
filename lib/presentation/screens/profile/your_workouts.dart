@@ -63,96 +63,102 @@ class YourWorkouts extends StatelessWidget {
           if (state.status!.isLoading) {
             return const LoadingIndicator();
           }
-          return Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24, top: 30),
-            child: ListView.builder(
-                itemCount: state.workout!.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => DetailsScreen(
-                            header: state.workout![index].name!,
-                            interval: state.workout![index].interval!,
-                            author: state.workout![index].author!,
-                            description: state.workout![index].description!,
-                            recommendation:
-                                state.workout![index].recommendation!,
-                            exercises: state.workout![index].exercises!,
-                            image: state.workout![index].image!,
-                            id: state.workout![index].id!,
-                          ),
-                        ),
-                      ).then(
-                        (value) => context.read<YourWorkoutCubit>().init(),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        children: [
-                          SmallWorkoutPicture(
-                              image: state.workout![index].image!),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+          return Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24, top: 30),
+                  child: ListView.builder(
+                      itemCount: state.workout!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => DetailsScreen(
+                                  header: state.workout![index].name!,
+                                  interval: state.workout![index].interval!,
+                                  author: state.workout![index].author!,
+                                  description: state.workout![index].description!,
+                                  recommendation:
+                                      state.workout![index].recommendation!,
+                                  exercises: state.workout![index].exercises!,
+                                  image: state.workout![index].image!,
+                                  id: state.workout![index].id!,
+                                ),
+                              ),
+                            ).then(
+                              (value) => context.read<YourWorkoutCubit>().init(),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: Row(
                               children: [
-                                Text(
-                                  state.workout![index].name!,
-                                  style: AppTheme
-                                      .themeData.textTheme.bodyMedium!
-                                      .copyWith(
-                                          color: AppColors.contrast,
-                                          fontSize: 14),
-                                ),
-                                Text(
-                                  state.workout![index].description!,
-                                  style: AppTheme
-                                      .themeData.textTheme.bodyMedium!
-                                      .copyWith(
-                                          color: AppColors.contrast,
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.w300),
-                                ),
+                                SmallWorkoutPicture(
+                                    image: state.workout![index].image!),
                                 const SizedBox(
-                                  height: 10,
+                                  width: 15,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      state.workout![index].interval!,
-                                      style: AppTheme
-                                          .themeData.textTheme.bodyMedium!
-                                          .copyWith(
-                                              color: AppColors.contrast,
-                                              fontSize: 8),
-                                    ),
-                                    Text(
-                                      state.workout![index].author!,
-                                      style: AppTheme
-                                          .themeData.textTheme.bodyMedium!
-                                          .copyWith(
-                                              color: AppColors.disabled,
-                                              fontSize: 8),
-                                    ),
-                                  ],
-                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.workout![index].name!,
+                                        style: AppTheme
+                                            .themeData.textTheme.bodyMedium!
+                                            .copyWith(
+                                                color: AppColors.contrast,
+                                                fontSize: 14),
+                                      ),
+                                      Text(
+                                        state.workout![index].description!,
+                                        style: AppTheme
+                                            .themeData.textTheme.bodyMedium!
+                                            .copyWith(
+                                                color: AppColors.contrast,
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.w300),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            state.workout![index].interval!,
+                                            style: AppTheme
+                                                .themeData.textTheme.bodyMedium!
+                                                .copyWith(
+                                                    color: AppColors.contrast,
+                                                    fontSize: 8),
+                                          ),
+                                          Text(
+                                            state.workout![index].author!,
+                                            style: AppTheme
+                                                .themeData.textTheme.bodyMedium!
+                                                .copyWith(
+                                                    color: AppColors.disabled,
+                                                    fontSize: 8),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
+                          ),
+                        );
+                      }),
+                ),
+              ),
+            ],
           );
         },
       ),

@@ -37,10 +37,10 @@ class Workouts extends StatelessWidget {
                   child: Padding(
                     padding:
                         const EdgeInsets.only(left: 20, right: 30, top: 20),
-                    child: ListView(
-                      physics: const ClampingScrollPhysics(),
-                      shrinkWrap: true,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+
+
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           AppText.forYou,
@@ -52,109 +52,112 @@ class Workouts extends StatelessWidget {
                         ),
                         state.workout == null
                             ? const SizedBox()
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: state.workout!.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 15),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => TrainingScreen(
-                                              header:
-                                                  state.workout![index].name!,
-                                              interval: state
-                                                  .workout![index].interval!,
-                                              author:
-                                                  state.workout![index].author!,
-                                              description: state
-                                                  .workout![index].description!,
-                                              recommendation: state
-                                                  .workout![index]
-                                                  .recommendation!,
-                                              image:
-                                                  state.workout![index].image!,
-                                              exercises: state
-                                                  .workout![index].exercises!,
+                            : Expanded(
+                              child: ListView.builder(
+                                physics: ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: state.workout!.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 15),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => TrainingScreen(
+                                                header:
+                                                    state.workout![index].name!,
+                                                interval: state
+                                                    .workout![index].interval!,
+                                                author:
+                                                    state.workout![index].author!,
+                                                description: state
+                                                    .workout![index].description!,
+                                                recommendation: state
+                                                    .workout![index]
+                                                    .recommendation!,
+                                                image:
+                                                    state.workout![index].image!,
+                                                exercises: state
+                                                    .workout![index].exercises!,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SmallWorkoutPicture(
-                                            image: state.workout![index].image!,
-                                          ),
-                                          const SizedBox(
-                                            width: 15,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  state.workout![index].name!,
-                                                  style: AppTheme.themeData
-                                                      .textTheme.bodyMedium!
-                                                      .copyWith(
-                                                          color: AppColors
-                                                              .contrast,
-                                                          fontSize: 14),
-                                                ),
-                                                Text(
-                                                  state.workout![index]
-                                                      .description!,
-                                                  style: AppTheme.themeData
-                                                      .textTheme.bodyMedium!
-                                                      .copyWith(
-                                                          color: AppColors
-                                                              .contrast,
-                                                          fontSize: 8,
-                                                          fontWeight:
-                                                              FontWeight.w300),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      state.workout![index]
-                                                          .interval!,
-                                                      style: AppTheme.themeData
-                                                          .textTheme.bodyMedium!
-                                                          .copyWith(
-                                                              color: AppColors
-                                                                  .contrast,
-                                                              fontSize: 8),
-                                                    ),
-                                                    Text(
-                                                      state.workout![index]
-                                                          .author!,
-                                                      style: AppTheme.themeData
-                                                          .textTheme.bodyMedium!
-                                                          .copyWith(
-                                                              color: AppColors
-                                                                  .disabled,
-                                                              fontSize: 8),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                          );
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SmallWorkoutPicture(
+                                              image: state.workout![index].image!,
                                             ),
-                                          )
-                                        ],
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    state.workout![index].name!,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.bodyMedium!
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .contrast,
+                                                            fontSize: 14),
+                                                  ),
+                                                  Text(
+                                                    state.workout![index]
+                                                        .description!,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.bodyMedium!
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .contrast,
+                                                            fontSize: 8,
+                                                            fontWeight:
+                                                                FontWeight.w300),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        state.workout![index]
+                                                            .interval!,
+                                                        style: AppTheme.themeData
+                                                            .textTheme.bodyMedium!
+                                                            .copyWith(
+                                                                color: AppColors
+                                                                    .contrast,
+                                                                fontSize: 8),
+                                                      ),
+                                                      Text(
+                                                        state.workout![index]
+                                                            .author!,
+                                                        style: AppTheme.themeData
+                                                            .textTheme.bodyMedium!
+                                                            .copyWith(
+                                                                color: AppColors
+                                                                    .disabled,
+                                                                fontSize: 8),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                            ),
                         const SizedBox(
                           height: 20,
                         ),
