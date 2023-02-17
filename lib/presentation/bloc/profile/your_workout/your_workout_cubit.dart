@@ -12,9 +12,7 @@ class YourWorkoutCubit extends Cubit<YourWorkoutState> {
   YourWorkoutCubit({
     required this.db,
     required this.auth,
-  }) : super(YourWorkoutState(status: Status.initial())) {
-    init();
-  }
+  }) : super(YourWorkoutState(status: Status.initial()));
 
   final DataRepository db;
   final AuthRepository auth;

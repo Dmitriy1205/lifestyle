@@ -12,9 +12,19 @@ import '../../../common/constants/constants.dart';
 import '../../../common/constants/icons.dart';
 import '../../../common/themes/theme.dart';
 
-class YourWorkouts extends StatelessWidget {
+class YourWorkouts extends StatefulWidget {
   const YourWorkouts({Key? key}) : super(key: key);
 
+  @override
+  State<YourWorkouts> createState() => _YourWorkoutsState();
+}
+
+class _YourWorkoutsState extends State<YourWorkouts> {
+  @override
+  void initState() {
+    context.read<YourWorkoutCubit>().init();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +91,8 @@ class YourWorkouts extends StatelessWidget {
                                   header: state.workout![index].name!,
                                   interval: state.workout![index].interval!,
                                   author: state.workout![index].author!,
-                                  description: state.workout![index].description!,
+                                  description:
+                                      state.workout![index].description!,
                                   recommendation:
                                       state.workout![index].recommendation!,
                                   exercises: state.workout![index].exercises!,
@@ -90,7 +101,8 @@ class YourWorkouts extends StatelessWidget {
                                 ),
                               ),
                             ).then(
-                              (value) => context.read<YourWorkoutCubit>().init(),
+                              (value) =>
+                                  context.read<YourWorkoutCubit>().init(),
                             );
                           },
                           child: Padding(
@@ -104,7 +116,8 @@ class YourWorkouts extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         state.workout![index].name!,
