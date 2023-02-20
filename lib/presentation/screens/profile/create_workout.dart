@@ -6,6 +6,7 @@ import 'package:lifestyle/presentation/bloc/profile/create_workout/create_workou
 import 'package:lifestyle/presentation/screens/profile/relax_builder.dart';
 import 'package:lifestyle/presentation/widgets/image_picker.dart';
 import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
+import 'package:lifestyle/presentation/widgets/small_workout_picture.dart';
 import 'package:lifestyle/presentation/widgets/workout_template.dart';
 import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
@@ -87,13 +88,7 @@ class CreateWorkout extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
                                   children: [
-                                    SizedBox(
-                                      height: 65,
-                                      width: 65,
-                                      child: Image.asset(
-                                        state.group![index].exercise!.image!,
-                                      ),
-                                    ),
+                                    SmallWorkoutPicture(image: state.group![index].exercise!.image!),
                                     const SizedBox(
                                       width: 15,
                                     ),

@@ -54,7 +54,7 @@ class Workouts extends StatelessWidget {
                             ? const SizedBox()
                             : Expanded(
                               child: ListView.builder(
-                                physics: ClampingScrollPhysics(),
+                                physics: const ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: state.workout!.length,
                                   itemBuilder: (context, index) {

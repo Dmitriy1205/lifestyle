@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/data/models/group.dart';
 import 'package:lifestyle/presentation/screens/profile/relax_builder.dart';
+import 'package:lifestyle/presentation/widgets/small_workout_picture.dart';
 import 'package:lifestyle/presentation/widgets/workout_template.dart';
 import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
@@ -123,13 +124,7 @@ class _EditWorkoutState extends State<EditWorkout> {
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
                                   children: [
-                                    SizedBox(
-                                      height: 65,
-                                      width: 65,
-                                      child: Image.asset(
-                                        state.group![index].exercise!.image!,
-                                      ),
-                                    ),
+                                    SmallWorkoutPicture(image: state.group![index].exercise!.image!),
                                     const SizedBox(
                                       width: 15,
                                     ),

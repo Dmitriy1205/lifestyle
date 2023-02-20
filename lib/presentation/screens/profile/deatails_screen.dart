@@ -7,6 +7,7 @@ import '../../../common/constants/constants.dart';
 import '../../../common/constants/icons.dart';
 import '../../../common/themes/theme.dart';
 import '../../../data/models/group.dart';
+import '../../widgets/small_workout_picture.dart';
 
 class DetailsScreen extends StatelessWidget {
   final String id;
@@ -134,13 +135,7 @@ class DetailsScreen extends StatelessWidget {
                           ? const SizedBox()
                           : Row(
                               children: [
-                                SizedBox(
-                                  height: 65,
-                                  width: 65,
-                                  child: Image.asset(
-                                    exercises[index].exercise!.image!,
-                                  ),
-                                ),
+                                SmallWorkoutPicture(image:exercises[index].exercise!.image!),
                                 const SizedBox(
                                   width: 15,
                                 ),

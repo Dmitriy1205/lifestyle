@@ -84,8 +84,8 @@ class AppText {
   static const String train4 = 'assets/images/train4.png';
   static const String train5 = 'assets/images/train5.png';
   static const String train6 = 'assets/images/train6.png';
-  static const String excercise1 = 'assets/images/excercise1.png';
-  static const String excercise2 = 'assets/images/excercise2.png';
+  static const String excercise1 = 'assets/images/exercise1.gif';
+  static const String excercise2 = 'assets/images/exercise2.gif';
 
   static Map<String, bool> topics = {
     buildingMuscles: false,

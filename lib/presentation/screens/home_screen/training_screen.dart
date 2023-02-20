@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifestyle/presentation/widgets/small_workout_picture.dart';
 
 import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
@@ -102,13 +103,8 @@ class TrainingScreen extends StatelessWidget {
                           ? const SizedBox()
                           : Row(
                               children: [
-                                SizedBox(
-                                  height: 65,
-                                  width: 65,
-                                  child: Image.asset(
-                                    exercises[index].exercise!.image!,
-                                  ),
-                                ),
+                                SmallWorkoutPicture(
+                                    image: exercises[index].exercise!.image!),
                                 const SizedBox(
                                   width: 15,
                                 ),

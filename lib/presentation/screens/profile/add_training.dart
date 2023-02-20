@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/common/utils/validator.dart';
 import 'package:lifestyle/data/models/exercises.dart';
+import 'package:lifestyle/presentation/widgets/small_workout_picture.dart';
 
 import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
@@ -62,13 +63,7 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
           children: [
             Row(
               children: [
-                SizedBox(
-                  height: 65,
-                  width: 65,
-                  child: Image.asset(
-                    widget.image,
-                  ),
-                ),
+                SmallWorkoutPicture(image: widget.image),
                 const SizedBox(
                   width: 25,
                 ),
