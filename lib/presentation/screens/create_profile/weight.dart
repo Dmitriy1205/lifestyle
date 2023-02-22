@@ -8,13 +8,18 @@ import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 
 class WeightScreen extends StatelessWidget {
-  final Future<void> Function() controlToNext;
+  final Future<void> Function()? controlToNext;
   final Function()? controlToPrev;
+  final Function()? edit;
+  final bool fromProfile;
+  final int? weight;
 
   WeightScreen({
     Key? key,
-    required this.controlToNext,
+    this.controlToNext,
     this.controlToPrev,
+    this.edit,
+    this.fromProfile = false, this.weight,
   }) : super(key: key);
   final List _items = List.generate(80, (index) => 40 + index);
 
@@ -26,6 +31,7 @@ class WeightScreen extends StatelessWidget {
         body: BlocBuilder<WeightCubit, WeightState>(
           builder: (context, state) {
             return CreateProfileBody(
+              fromProfile: fromProfile,
               title: AppText.whatsWeight,
               buttonTitle: AppText.next,
               content: Padding(
@@ -35,6 +41,7 @@ class WeightScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
+                    scrollController: FixedExtentScrollController(initialItem: weight == null ? 0: weight!-40 ),
                     selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
@@ -65,9 +72,15 @@ class WeightScreen extends StatelessWidget {
                 return context
                     .read<WeightCubit>()
                     .accept(state.weight!)
-                    .then((value) => controlToNext());
+                    .then((value) => controlToNext!());
               },
               onTapPrev: controlToPrev,
+              onEdit: () {
+                return context
+                    .read<WeightCubit>()
+                    .accept(state.weight!)
+                    .then((value) => Navigator.pop(context));
+              },
             );
           },
         ),

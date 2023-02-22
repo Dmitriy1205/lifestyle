@@ -6,12 +6,17 @@ import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/common/constants/icons.dart';
 import 'package:lifestyle/common/themes/theme.dart';
 import 'package:lifestyle/presentation/bloc/profile/profile_cubit.dart';
+import 'package:lifestyle/presentation/screens/create_profile/tags.dart';
+import 'package:lifestyle/presentation/screens/create_profile/weight.dart';
 import 'package:lifestyle/presentation/screens/profile/your_workouts.dart';
 import 'package:lifestyle/presentation/screens/sign_in.dart';
 import 'package:lifestyle/presentation/widgets/profile_menu_component.dart';
 
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
+import '../create_profile/age.dart';
+import '../create_profile/gender.dart';
+import '../create_profile/height.dart';
 import 'info.dart';
 
 class Profile extends StatelessWidget {
@@ -154,6 +159,18 @@ class Profile extends StatelessWidget {
                             style: AppTheme.themeData.textTheme.displaySmall,
                           ),
                           text: '',
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => GenderScreen(
+                                  fromProfile: true,
+                                  current: state.profile!.gender,
+                                ),
+                              ),
+                            ).then(
+                                (value) => context.read<ProfileCubit>().init());
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -164,6 +181,18 @@ class Profile extends StatelessWidget {
                             style: AppTheme.themeData.textTheme.displaySmall,
                           ),
                           text: '',
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => AgeScreen(
+                                  fromProfile: true,
+                                  age: state.profile!.age,
+                                ),
+                              ),
+                            ).then(
+                                (value) => context.read<ProfileCubit>().init());
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -174,6 +203,18 @@ class Profile extends StatelessWidget {
                             style: AppTheme.themeData.textTheme.displaySmall,
                           ),
                           text: '',
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => HeightScreen(
+                                  fromProfile: true,
+                                  height: state.profile!.height,
+                                ),
+                              ),
+                            ).then(
+                                (value) => context.read<ProfileCubit>().init());
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -184,6 +225,18 @@ class Profile extends StatelessWidget {
                             style: AppTheme.themeData.textTheme.displaySmall,
                           ),
                           text: '',
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => WeightScreen(
+                                  weight: state.profile!.weight,
+                                  fromProfile: true,
+                                ),
+                              ),
+                            ).then(
+                                (value) => context.read<ProfileCubit>().init());
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -194,6 +247,18 @@ class Profile extends StatelessWidget {
                             style: AppTheme.themeData.textTheme.displaySmall,
                           ),
                           text: '',
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => TagsScreen(
+                                  fromProfile: true,
+                                  topic: state.profile!.topics,
+                                ),
+                              ),
+                            ).then(
+                                (value) => context.read<ProfileCubit>().init());
+                          },
                         ),
                         const SizedBox(
                           height: 50,

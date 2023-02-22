@@ -47,10 +47,23 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
-            HealthDirectory(),
-            Workouts(),
+        body: Column(
+          children:  [
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                height: 20,
+                color: AppColors.whiteShade,
+              ),
+            ),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  HealthDirectory(),
+                  Workouts(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

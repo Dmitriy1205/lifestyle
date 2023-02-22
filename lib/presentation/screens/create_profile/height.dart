@@ -8,13 +8,16 @@ import '../../../common/services/service_locator.dart';
 import '../../bloc/create_profile/height/height_cubit.dart';
 
 class HeightScreen extends StatelessWidget {
-  final Future<void> Function() controlToNext;
+  final Future<void> Function()? controlToNext;
   final Function()? controlToPrev;
+  final bool fromProfile;
+  final int? height;
 
   HeightScreen({
     Key? key,
-    required this.controlToNext,
+    this.controlToNext,
     this.controlToPrev,
+    this.fromProfile = false, this.height,
   }) : super(key: key);
   final List _items = List.generate(60, (index) => 140 + index);
 
@@ -26,6 +29,7 @@ class HeightScreen extends StatelessWidget {
         body: BlocBuilder<HeightCubit, HeightState>(
           builder: (context, state) {
             return CreateProfileBody(
+              fromProfile: fromProfile,
               title: AppText.whatsHeight,
               buttonTitle: AppText.next,
               content: Padding(
@@ -35,6 +39,7 @@ class HeightScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
+                    scrollController: FixedExtentScrollController(initialItem: height == null ? 0: height!-140 ),
                     selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
@@ -65,9 +70,15 @@ class HeightScreen extends StatelessWidget {
                 return context
                     .read<HeightCubit>()
                     .accept(state.height!)
-                    .then((value) => controlToNext());
+                    .then((value) => controlToNext!());
               },
               onTapPrev: controlToPrev,
+              onEdit: (){
+                return context
+                    .read<HeightCubit>()
+                    .accept(state.height!)
+                    .then((value) => Navigator.pop(context));
+              },
             );
           },
         ),

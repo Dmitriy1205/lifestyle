@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
             items: const [
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.only(top: 20,right: 5),
+                  padding: EdgeInsets.only(top: 20, right: 5),
                   child: Icon(AppIcons.home),
                 ),
                 label: AppText.home,
@@ -73,8 +73,9 @@ class _MainScreenState extends State<MainScreen> {
             ],
           ),
         ),
-        body: Center(
-          child: _pages.elementAt(_selectedIndex),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
         ),
       ),
     );

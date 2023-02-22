@@ -23,6 +23,7 @@ class ExerciseBuilder extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<ExerciseBuilderCubit>(),
       child: Scaffold(
+        
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -87,7 +88,7 @@ class ExerciseBuilder extends StatelessWidget {
                                           builder: (context) =>
                                               AddTrainingScreen(
                                             name: state.files![index].name!,
-                                            image: state.files![index].url!,
+                                            image: state.files![index].path!,
                                             addExercise: addExercise,
                                           ),
                                         ),
@@ -99,7 +100,7 @@ class ExerciseBuilder extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           SmallWorkoutPicture(
-                                              image: state.files![index].url!),
+                                              image: state.files![index].path!),
                                           const SizedBox(
                                             width: 15,
                                           ),

@@ -8,13 +8,16 @@ import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 
 class AgeScreen extends StatelessWidget {
-  final Future<void> Function() controlToNext;
+  final Future<void> Function()? controlToNext;
   final Function()? controlToPrev;
+  final bool fromProfile;
+  final int? age;
 
   AgeScreen({
     Key? key,
-    required this.controlToNext,
+     this.controlToNext,
     this.controlToPrev,
+    this.fromProfile = false, this.age,
   }) : super(key: key);
 
   final List _items = List.generate(43, (index) => 18 + index);
@@ -28,6 +31,7 @@ class AgeScreen extends StatelessWidget {
         body: BlocBuilder<AgeCubit, AgeState>(
           builder: (context, state) {
             return CreateProfileBody(
+              fromProfile: fromProfile,
               title: AppText.howOld,
               content: Padding(
                 padding: const EdgeInsets.only(top: 60),
@@ -36,6 +40,7 @@ class AgeScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
+                    scrollController: FixedExtentScrollController(initialItem: age == null ? 0: age!-18 ),
                     selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
@@ -67,9 +72,15 @@ class AgeScreen extends StatelessWidget {
                 return context
                     .read<AgeCubit>()
                     .accept(state.age!)
-                    .then((value) => controlToNext());
+                    .then((value) => controlToNext!());
               },
               onTapPrev: controlToPrev,
+              onEdit: (){
+                return context
+                    .read<AgeCubit>()
+                    .accept(state.age!)
+                    .then((value) => Navigator.pop(context));
+              },
             );
           },
         ),

@@ -11,10 +11,16 @@ import '../../bloc/create_profile/tags/tags_cubit.dart';
 
 class TagsScreen extends StatelessWidget {
   final Function()? controlToPrev;
+  final Function()? edit;
+  final bool fromProfile;
+  final Map<String, dynamic>? topic;
 
   const TagsScreen({
     Key? key,
     this.controlToPrev,
+    this.edit,
+    this.fromProfile = false,
+    this.topic,
   }) : super(key: key);
 
   @override
@@ -25,34 +31,71 @@ class TagsScreen extends StatelessWidget {
         body: BlocBuilder<TagsCubit, TagsState>(
           builder: (context, state) {
             return CreateProfileBody(
+              fromProfile: fromProfile,
+              onEdit: () {
+                return context.read<TagsCubit>().accept(state.tags!).then(
+                      (value) => Navigator.pop(context),
+                    );
+              },
               title: AppText.whatTopic,
               buttonTitle: AppText.finish,
               content: Wrap(
-                children: List<Widget>.generate(
-                  state.tags!.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.only(right: 6),
-                    child: GestureDetector(
-                      onTap: () {
-                        state.tags!.values.elementAt(index)
-                            ? context.read<TagsCubit>().setValue(
-                                index, !state.tags!.values.elementAt(index))
-                            : context.read<TagsCubit>().setValue(
-                                index, !state.tags!.values.elementAt(index));
-                      },
-                      child: Chip(
-                        backgroundColor: state.tags!.values.elementAt(index)
-                            ? AppColors.contrast
-                            : AppColors.disabled,
-                        label: Text(
-                          state.tags!.keys.elementAt(index),
-                          style: AppTheme.themeData.textTheme.bodyMedium!
-                              .copyWith(fontSize: 10),
+                children: topic == null
+                    ? List<Widget>.generate(
+                        state.tags!.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.only(right: 6),
+                          child: GestureDetector(
+                            onTap: () {
+                              state.tags!.values.elementAt(index)
+                                  ? context.read<TagsCubit>().setValue(
+                                      index,
+                                      !state.tags!.values.elementAt(index),
+                                      AppText.topics)
+                                  : context.read<TagsCubit>().setValue(
+                                      index,
+                                      !state.tags!.values.elementAt(index),
+                                      AppText.topics);
+                            },
+                            child: Chip(
+                              backgroundColor:
+                                  state.tags!.values.elementAt(index)
+                                      ? AppColors.contrast
+                                      : AppColors.disabled,
+                              label: Text(
+                                state.tags!.keys.elementAt(index),
+                                style: AppTheme.themeData.textTheme.bodyMedium!
+                                    .copyWith(fontSize: 10),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ).toList(),
+                      ).toList()
+                    : List<Widget>.generate(
+                        topic!.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.only(right: 6),
+                          child: GestureDetector(
+                            onTap: () {
+                              topic!.values.elementAt(index)
+                                  ? context.read<TagsCubit>().setValue(index,
+                                      !topic!.values.elementAt(index), topic!)
+                                  : context.read<TagsCubit>().setValue(index,
+                                      !topic!.values.elementAt(index), topic!);
+                            },
+                            child: Chip(
+                              backgroundColor: topic!.values.elementAt(index)
+                                  ? AppColors.contrast
+                                  : AppColors.disabled,
+                              label: Text(
+                                topic!.keys.elementAt(index),
+                                style: AppTheme.themeData.textTheme.bodyMedium!
+                                    .copyWith(fontSize: 10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ).toList(),
               ),
               onTapPrev: controlToPrev,
               onTapNext: () {

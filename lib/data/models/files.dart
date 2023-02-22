@@ -1,16 +1,25 @@
 class Files {
   String? name;
-  String? url;
+  String? path;
   String? creationDate;
   String? thumbnail;
+  String? duration;
 
   Files({
     this.name,
-    this.url,
+    this.path,
     this.creationDate,
     this.thumbnail,
+    this.duration,
   });
 
-//
-
+  factory Files.fromJson(Map<String, dynamic> json) {
+    return Files(
+      name: json["name"],
+      path: json["path"],
+      creationDate: json["creationDate"],
+      thumbnail: json["thumbnail"],
+      duration: json['duration'],
+    );
+  }
 }

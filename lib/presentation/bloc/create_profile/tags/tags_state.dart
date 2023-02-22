@@ -3,7 +3,7 @@ part of 'tags_cubit.dart';
 class TagsState extends Equatable {
   final bool? isTagged;
   final Status? status;
-  final Map<String, bool>? tags;
+  final Map<String, dynamic>? tags;
 
   const TagsState({
     this.isTagged,
@@ -13,7 +13,7 @@ class TagsState extends Equatable {
 
   TagsState copyWith({
     bool? isTagged,
-    Map<String, bool>? tags,
+    Map<String, dynamic>? tags,
     Status? status,
   }) {
     return TagsState(

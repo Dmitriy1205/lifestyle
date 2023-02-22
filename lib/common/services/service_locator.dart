@@ -8,6 +8,7 @@ import 'package:lifestyle/presentation/bloc/google_auth/google_auth_cubit.dart';
 import 'package:lifestyle/presentation/bloc/image_picker/image_picker_cubit.dart';
 import 'package:lifestyle/presentation/bloc/profile/create_workout/create_workout_cubit.dart';
 import 'package:lifestyle/presentation/bloc/profile/exercise_builder/exercise_builder_cubit.dart';
+import 'package:lifestyle/presentation/bloc/video_player/video_player_cubit.dart';
 
 import '../../data/repositories/data_repository.dart';
 import '../../data/repositories/storage_repository.dart';
@@ -43,7 +44,7 @@ Future<void> init() async {
   sl.registerFactory(() => SignInCubit(authRepository: sl()));
   sl.registerFactory(() => SignUpCubit(authRepository: sl(), db: sl()));
   sl.registerFactory(() => GoogleAuthCubit(authRepository: sl()));
-  sl.registerFactory(() => ProfileCubit(authRepository: sl()));
+  sl.registerFactory(() => ProfileCubit(auth: sl(), db: sl()));
   sl.registerFactory(() => ResetPasswordCubit(authRepository: sl()));
   sl.registerFactory(() => WelcomeCubit());
   sl.registerFactory(() => GenderCubit(db: sl(), auth: sl()));
@@ -58,6 +59,7 @@ Future<void> init() async {
       () => EditWorkoutCubit(db: sl(), auth: sl(), storage: sl()));
   sl.registerFactory(() => ImagePickerCubit(auth: sl(), storage: sl()));
   sl.registerFactory(() => WorkoutCubit(db: sl()));
-  sl.registerFactory(() => ExerciseBuilderCubit(storage: sl()));
-  sl.registerFactory(() => HealthCubit(storage: sl()));
+  sl.registerFactory(() => ExerciseBuilderCubit(storage: sl(), db: sl()));
+  sl.registerFactory(() => HealthCubit(storage: sl(), db: sl()));
+  sl.registerFactory(() => VideoPlayerCubit());
 }

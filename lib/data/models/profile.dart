@@ -1,9 +1,9 @@
 class ProfileModel {
-  final int? age;
-  final String? gender;
-  final int? height;
-  final int? weight;
-  final Map<String, dynamic>? topics;
+  int? age;
+  String? gender;
+  int? height;
+  int? weight;
+  Map<String, dynamic>? topics;
 
   ProfileModel({
     this.age,
@@ -15,10 +15,10 @@ class ProfileModel {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      age: int.parse(json["age"]),
+      age: json["age"],
       gender: json["gender"],
-      height: int.parse(json["height"]),
-      weight: int.parse(json["weight"]),
+      height: json["height"],
+      weight: json["weight"],
       topics: json["topics"],
     );
   }
@@ -32,4 +32,29 @@ class ProfileModel {
       "topics": topics,
     };
   }
+}
+
+class Topic {
+  bool? buildingMuscles;
+  bool? gainingWeight;
+  bool? loosingWeight;
+  bool? stretching;
+
+  Topic({
+    this.buildingMuscles,
+    this.gainingWeight,
+    this.loosingWeight,
+    this.stretching,
+  });
+
+  factory Topic.fromJson(Map<String, dynamic> json) {
+    return Topic(
+      buildingMuscles: json["Building muscles"] == 'true',
+      gainingWeight: json["Gaining weight"] == 'true',
+      loosingWeight: json["Loosing weight"] == 'true',
+      stretching: json["Stretching"] == 'true',
+    );
+  }
+//
+
 }

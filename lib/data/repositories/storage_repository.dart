@@ -39,7 +39,7 @@ class StorageRepository {
         if (listFiles.length != files.items.length) {
           listFiles.add(Files(
               name: data.name.substring(0, data.name.indexOf('.')),
-              url: url,
+              path: url,
               creationDate: data.timeCreated.toString()));
         }
       }

@@ -10,11 +10,18 @@ import '../../../common/themes/theme.dart';
 import '../../widgets/loading_indicator.dart';
 import '../../widgets/small_workout_picture.dart';
 
-class Workouts extends StatelessWidget {
+class Workouts extends StatefulWidget {
   const Workouts({Key? key}) : super(key: key);
 
   @override
+  State<Workouts> createState() => _WorkoutsState();
+}
+
+class _WorkoutsState extends State<Workouts>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
       create: (context) => sl<WorkoutCubit>(),
       child: Scaffold(
@@ -26,20 +33,11 @@ class Workouts extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Container(
-                    height: 20,
-                    color: AppColors.whiteShade,
-                  ),
-                ),
                 Expanded(
                   child: Padding(
                     padding:
                         const EdgeInsets.only(left: 20, right: 30, top: 20),
                     child: Column(
-
-
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -53,111 +51,122 @@ class Workouts extends StatelessWidget {
                         state.workout == null
                             ? const SizedBox()
                             : Expanded(
-                              child: ListView.builder(
-                                physics: const ClampingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: state.workout!.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: 15),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) => TrainingScreen(
-                                                header:
-                                                    state.workout![index].name!,
-                                                interval: state
-                                                    .workout![index].interval!,
-                                                author:
-                                                    state.workout![index].author!,
-                                                description: state
-                                                    .workout![index].description!,
-                                                recommendation: state
-                                                    .workout![index]
-                                                    .recommendation!,
-                                                image:
-                                                    state.workout![index].image!,
-                                                exercises: state
-                                                    .workout![index].exercises!,
+                                child: ListView.builder(
+                                    physics: const ClampingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: state.workout!.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 15),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) => TrainingScreen(
+                                                  header: state
+                                                      .workout![index].name!,
+                                                  interval: state
+                                                      .workout![index]
+                                                      .interval!,
+                                                  author: state
+                                                      .workout![index].author!,
+                                                  description: state
+                                                      .workout![index]
+                                                      .description!,
+                                                  recommendation: state
+                                                      .workout![index]
+                                                      .recommendation!,
+                                                  image: state
+                                                      .workout![index].image!,
+                                                  exercises: state
+                                                      .workout![index]
+                                                      .exercises!,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            SmallWorkoutPicture(
-                                              image: state.workout![index].image!,
-                                            ),
-                                            const SizedBox(
-                                              width: 15,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    state.workout![index].name!,
-                                                    style: AppTheme.themeData
-                                                        .textTheme.bodyMedium!
-                                                        .copyWith(
-                                                            color: AppColors
-                                                                .contrast,
-                                                            fontSize: 14),
-                                                  ),
-                                                  Text(
-                                                    state.workout![index]
-                                                        .description!,
-                                                    style: AppTheme.themeData
-                                                        .textTheme.bodyMedium!
-                                                        .copyWith(
-                                                            color: AppColors
-                                                                .contrast,
-                                                            fontSize: 8,
-                                                            fontWeight:
-                                                                FontWeight.w300),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        state.workout![index]
-                                                            .interval!,
-                                                        style: AppTheme.themeData
-                                                            .textTheme.bodyMedium!
-                                                            .copyWith(
-                                                                color: AppColors
-                                                                    .contrast,
-                                                                fontSize: 8),
-                                                      ),
-                                                      Text(
-                                                        state.workout![index]
-                                                            .author!,
-                                                        style: AppTheme.themeData
-                                                            .textTheme.bodyMedium!
-                                                            .copyWith(
-                                                                color: AppColors
-                                                                    .disabled,
-                                                                fontSize: 8),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                            );
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SmallWorkoutPicture(
+                                                image: state
+                                                    .workout![index].image!,
                                               ),
-                                            )
-                                          ],
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      state.workout![index]
+                                                          .name!,
+                                                      style: AppTheme.themeData
+                                                          .textTheme.bodyMedium!
+                                                          .copyWith(
+                                                              color: AppColors
+                                                                  .contrast,
+                                                              fontSize: 14),
+                                                    ),
+                                                    Text(
+                                                      state.workout![index]
+                                                          .description!,
+                                                      style: AppTheme.themeData
+                                                          .textTheme.bodyMedium!
+                                                          .copyWith(
+                                                              color: AppColors
+                                                                  .contrast,
+                                                              fontSize: 8,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          state.workout![index]
+                                                              .interval!,
+                                                          style: AppTheme
+                                                              .themeData
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  color: AppColors
+                                                                      .contrast,
+                                                                  fontSize: 8),
+                                                        ),
+                                                        Text(
+                                                          state.workout![index]
+                                                              .author!,
+                                                          style: AppTheme
+                                                              .themeData
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  color: AppColors
+                                                                      .disabled,
+                                                                  fontSize: 8),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }),
-                            ),
+                                      );
+                                    }),
+                              ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -172,4 +181,7 @@ class Workouts extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
