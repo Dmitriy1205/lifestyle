@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/common/constants/constants.dart';
 import 'package:lifestyle/presentation/bloc/google_auth/google_auth_cubit.dart';
+import 'package:lifestyle/presentation/screens/create_profile/create_profile.dart';
 import 'package:lifestyle/presentation/screens/main_screen.dart';
 
 import '../../common/constants/colors.dart';
@@ -29,12 +30,19 @@ class _GoogleAuthButton extends StatelessWidget {
     return BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
       listener: (context, state) {
         if (state.status!.isLoaded) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MainScreen(),
-            ),
-          );
+          state.exist!
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MainScreen(),
+                  ),
+                )
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateProfile(),
+                  ),
+                );
         }
       },
       builder: (context, state) {

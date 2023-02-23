@@ -47,7 +47,10 @@ class VideoPlayerCubit extends Cubit<VideoPlayerState> {
   }
 
   Future setAllOrientation() async {
-    await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   void getVideoDuration(String videoUrl) {

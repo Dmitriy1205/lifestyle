@@ -52,7 +52,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     try {
       await GoogleSignIn().signOut();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -65,7 +65,13 @@ class AuthRepository {
         idToken: googleAuth?.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential cred = await auth.signInWithCredential(credential);
+      if (cred.additionalUserInfo?.isNewUser == true) {
+        await auth.signInWithCredential(credential);
+        return false;
+      }
+      await auth.signInWithCredential(credential);
+      return true;
     } on FirebaseAuthException catch (e) {
       throw BadRequestException(message: e.message!);
     } on Exception catch (e) {
@@ -77,6 +83,8 @@ class AuthRepository {
     await auth.signOut();
     await GoogleSignIn().signOut();
   }
+
+  GoogleSignInAccount googleUser() => GoogleSignIn().currentUser!;
 
   Future<void> resetPassword(String email) async {
     try {

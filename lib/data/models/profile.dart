@@ -20,11 +20,17 @@ class ProfileModel {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      age: json["age"],
-      gender: json["gender"],
-      height: json["height"],
-      weight: json["weight"],
-      topics: json["topics"],
+      age: json["age"] ?? 18,
+      gender: json["gender"] ?? 'null',
+      height: json["height"] ?? 140,
+      weight: json["weight"] ?? 40,
+      topics: json["topics"] ??
+          {
+            'Building muscles': false,
+            'Loosing weight': false,
+            'Gaining weight': false,
+            'Stretching': false,
+          },
     );
   }
 

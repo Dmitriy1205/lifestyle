@@ -70,7 +70,7 @@ class DataRepository {
       if (!data.exists) {
         return ProfileModel();
       }
-      return ProfileModel.fromJson(data.data()!['profile']);
+      return ProfileModel.fromJson(data.data()!['profile'] ?? {});
     } on FirebaseException catch (e) {
       throw BadRequestException(message: e.message!);
     } on Exception catch (e) {

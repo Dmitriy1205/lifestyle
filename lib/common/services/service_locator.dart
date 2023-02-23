@@ -43,7 +43,7 @@ Future<void> init() async {
   sl.registerFactory(() => AuthCubit(authRepository: sl()));
   sl.registerFactory(() => SignInCubit(authRepository: sl()));
   sl.registerFactory(() => SignUpCubit(authRepository: sl(), db: sl()));
-  sl.registerFactory(() => GoogleAuthCubit(authRepository: sl()));
+  sl.registerFactory(() => GoogleAuthCubit(auth: sl()));
   sl.registerFactory(() => ProfileCubit(auth: sl(), db: sl()));
   sl.registerFactory(() => ResetPasswordCubit(authRepository: sl()));
   sl.registerFactory(() => WelcomeCubit());
