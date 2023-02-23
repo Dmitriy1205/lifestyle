@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/common/constants/icons.dart';
@@ -8,6 +7,7 @@ import 'package:lifestyle/common/themes/theme.dart';
 import 'package:lifestyle/presentation/bloc/profile/profile_cubit.dart';
 import 'package:lifestyle/presentation/screens/create_profile/tags.dart';
 import 'package:lifestyle/presentation/screens/create_profile/weight.dart';
+import 'package:lifestyle/presentation/screens/profile/support.dart';
 import 'package:lifestyle/presentation/screens/profile/your_workouts.dart';
 import 'package:lifestyle/presentation/screens/sign_in.dart';
 import 'package:lifestyle/presentation/widgets/profile_menu_component.dart';
@@ -17,6 +17,7 @@ import '../../../common/services/service_locator.dart';
 import '../create_profile/age.dart';
 import '../create_profile/gender.dart';
 import '../create_profile/height.dart';
+import 'edit_profile.dart';
 import 'info.dart';
 
 class Profile extends StatelessWidget {
@@ -85,19 +86,28 @@ class Profile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const ProfileMenuComponent(
-                            prefixIcon: Icon(
-                              AppIcons.edit,
-                              color: AppColors.active,
-                              size: 20,
-                            ),
-                            text: AppText.editProfile),
+                        ProfileMenuComponent(
+                          prefixIcon: const Icon(
+                            AppIcons.edit,
+                            color: AppColors.active,
+                            size: 20,
+                          ),
+                          text: AppText.editProfile,
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const EditProfile(),
+                              ),
+                            );
+                          },
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
                         ProfileMenuComponent(
-                          prefixIcon: const FaIcon(
-                            FontAwesomeIcons.dumbbell,
+                          prefixIcon: const Icon(
+                            AppIcons.gym,
                             color: AppColors.active,
                             size: 20,
                           ),
@@ -114,13 +124,22 @@ class Profile extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        const ProfileMenuComponent(
-                            prefixIcon: Icon(
-                              AppIcons.users,
-                              color: AppColors.active,
-                              size: 20,
-                            ),
-                            text: AppText.support),
+                        ProfileMenuComponent(
+                          prefixIcon: const Icon(
+                            AppIcons.users,
+                            color: AppColors.active,
+                            size: 20,
+                          ),
+                          text: AppText.support,
+                          tap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const Support(),
+                              ),
+                            );
+                          },
+                        ),
                         const SizedBox(
                           height: 20,
                         ),

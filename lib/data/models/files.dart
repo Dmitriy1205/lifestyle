@@ -4,6 +4,7 @@ class Files {
   String? creationDate;
   String? thumbnail;
   String? duration;
+  String? image;
 
   Files({
     this.name,
@@ -11,6 +12,7 @@ class Files {
     this.creationDate,
     this.thumbnail,
     this.duration,
+    this.image,
   });
 
   factory Files.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Files {
       creationDate: json["creationDate"],
       thumbnail: json["thumbnail"],
       duration: json['duration'],
+      image: json['image'],
     );
   }
 }

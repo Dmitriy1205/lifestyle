@@ -4,10 +4,15 @@ class AppIcons {
   AppIcons._();
 
   static const _kFontFam = 'AppIcons';
+  static const gymFont = 'gym';
 
   static const IconData users = IconData(
     0xe802,
     fontFamily: _kFontFam,
+  );
+  static const IconData gym = IconData(
+    0xe809,
+    fontFamily: gymFont,
   );
   static const IconData edit = IconData(
     0xe803,

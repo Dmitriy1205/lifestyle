@@ -50,6 +50,7 @@ dependencies:
   carousel_slider: ^4.2.1
   image_picker: ^0.8.6+1
   cached_network_image: ^3.2.3
+  url_launcher: ^6.1.9
 
   #firebase
   firebase_core: ^2.4.1
@@ -114,6 +115,9 @@ flutter:
     - family:  AppIcons
       fonts:
         - asset: assets/icons/AppIcons.ttf
+    - family: gym
+      fonts:
+        - asset: assets/icons/gym.ttf
 #     - family: Trajan Pro
 #       fonts:
 #         - asset: fonts/TrajanPro.ttf
