@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/presentation/bloc/home/health_directory/health_cubit.dart';
 import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
@@ -10,7 +9,6 @@ import 'package:video_player/video_player.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 import '../../../common/themes/theme.dart';
-import '../../widgets/full_screen_video.dart';
 import '../video_player_screen.dart';
 
 class HealthDirectory extends StatefulWidget {

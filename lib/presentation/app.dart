@@ -5,7 +5,6 @@ import 'package:lifestyle/presentation/bloc/auth/auth_cubit.dart';
 import 'package:lifestyle/presentation/bloc/welcome/welcome_cubit.dart';
 import 'package:lifestyle/presentation/screens/main_screen.dart';
 import 'package:lifestyle/presentation/screens/welcome_screen.dart';
-import 'package:video_player/video_player.dart';
 
 import '../common/services/service_locator.dart';
 import 'bloc/home/health_directory/health_cubit.dart';
