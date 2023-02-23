@@ -5,6 +5,7 @@ import 'package:lifestyle/presentation/bloc/auth/auth_cubit.dart';
 import 'package:lifestyle/presentation/bloc/welcome/welcome_cubit.dart';
 import 'package:lifestyle/presentation/screens/main_screen.dart';
 import 'package:lifestyle/presentation/screens/welcome_screen.dart';
+import 'package:video_player/video_player.dart';
 
 import '../common/services/service_locator.dart';
 import 'bloc/home/health_directory/health_cubit.dart';
@@ -13,6 +14,7 @@ import 'bloc/profile/edit_workout/edit_workout_cubit.dart';
 import 'bloc/profile/your_workout/your_workout_cubit.dart';
 import 'bloc/sign_in/sign_in_cubit.dart';
 import 'bloc/sign_up/sign_up_cubit.dart';
+import 'bloc/video_player/video_player_cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -36,12 +38,17 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<CreateWorkoutCubit>(),
         ),
-        BlocProvider(create: (context) => sl<YourWorkoutCubit>()),
+        BlocProvider(
+          create: (context) => sl<YourWorkoutCubit>(),
+        ),
         BlocProvider(
           create: (context) => sl<EditWorkoutCubit>(),
         ),
         BlocProvider(
           create: (context) => sl<HealthCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<VideoPlayerCubit>(),
         ),
       ],
       child: MaterialApp(

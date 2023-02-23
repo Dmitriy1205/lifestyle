@@ -11,6 +11,7 @@ import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 import '../../../common/themes/theme.dart';
 import '../../widgets/full_screen_video.dart';
+import '../video_player_screen.dart';
 
 class HealthDirectory extends StatefulWidget {
   const HealthDirectory({Key? key}) : super(key: key);
@@ -62,73 +63,82 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                   )
                                 : Stack(
                                     children: [
-                                      VideoPlayer(
-                                        state.controller!,
-                                      ),
-                                      Positioned(
-                                        bottom: 45,
-                                        child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: VideoProgressIndicator(
-                                              state.controller!,
-                                              allowScrubbing: true,
-                                              colors: const VideoProgressColors(
-                                                  playedColor:
-                                                      AppColors.mainAccent),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 0,
-                                        left: 0,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            state.isPlaying!
-                                                ? context
-                                                    .read<HealthCubit>()
-                                                    .playPause(
-                                                        !state.isPlaying!)
-                                                : context
-                                                    .read<HealthCubit>()
-                                                    .playPause(
-                                                        !state.isPlaying!);
-                                          },
-                                          icon: FaIcon(
-                                            !state.isPlaying!
-                                                ? FontAwesomeIcons.pause
-                                                : FontAwesomeIcons.play,
-                                            color: AppColors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 0,
-                                        right: 0,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            Navigator.push(
+                                      GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (_) => FullScreen(
-                                                  controller: state.controller!,
-                                                  isPlaying: state.isPlaying!,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          icon: const FaIcon(
-                                            // !state.isFullScreen!
-                                            FontAwesomeIcons.maximize,
-                                            // : FontAwesomeIcons.minimize,
-                                            color: AppColors.white,
-                                          ),
+                                                  builder: (_) => VideoPlayerScreen(
+                                                      video: state.controller!.dataSource)));
+                                        },
+                                        child: VideoPlayer(
+                                          state.controller!,
                                         ),
                                       ),
+                                      // Positioned(
+                                      //   bottom: 45,
+                                      //   child: SizedBox(
+                                      //     width:
+                                      //         MediaQuery.of(context).size.width,
+                                      //     child: Padding(
+                                      //       padding: const EdgeInsets.symmetric(
+                                      //           horizontal: 10),
+                                      //       child: VideoProgressIndicator(
+                                      //         state.controller!,
+                                      //         allowScrubbing: true,
+                                      //         colors: const VideoProgressColors(
+                                      //             playedColor:
+                                      //                 AppColors.mainAccent),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // Positioned(
+                                      //   bottom: 0,
+                                      //   left: 0,
+                                      //   child: IconButton(
+                                      //     onPressed: () {
+                                      //       state.isPlaying!
+                                      //           ? context
+                                      //               .read<HealthCubit>()
+                                      //               .playPause(
+                                      //                   !state.isPlaying!)
+                                      //           : context
+                                      //               .read<HealthCubit>()
+                                      //               .playPause(
+                                      //                   !state.isPlaying!);
+                                      //     },
+                                      //     icon: FaIcon(
+                                      //       !state.isPlaying!
+                                      //           ? FontAwesomeIcons.pause
+                                      //           : FontAwesomeIcons.play,
+                                      //       color: AppColors.white,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // Positioned(
+                                      //   bottom: 0,
+                                      //   right: 0,
+                                      //   child: IconButton(
+                                      //     onPressed: () {
+                                      //       Navigator.push(
+                                      //         context,
+                                      //         MaterialPageRoute(
+                                      //           builder: (_) => FullScreen(
+                                      //             controller: state.controller!,
+                                      //             isPlaying: state.isPlaying!,
+                                      //           ),
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //     icon: const FaIcon(
+                                      //       // !state.isFullScreen!
+                                      //       FontAwesomeIcons.maximize,
+                                      //       // : FontAwesomeIcons.minimize,
+                                      //       color: AppColors.white,
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   )
                             : const LoadingIndicator(),
@@ -138,11 +148,14 @@ class _HealthDirectoryState extends State<HealthDirectory>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(state.name!,
+                      Text(
+                        state.name!,
                         style: AppTheme.themeData.textTheme.displayMedium,
                       ),
                       Text(
-                      state.controller == null ? '':  videoDuration(state.controller!.value.duration),
+                        state.controller == null
+                            ? ''
+                            : videoDuration(state.controller!.value.duration),
                         style: AppTheme.themeData.textTheme.displayMedium,
                       )
                     ],
@@ -164,9 +177,11 @@ class _HealthDirectoryState extends State<HealthDirectory>
                           padding: const EdgeInsets.only(bottom: 23),
                           child: GestureDetector(
                             onTap: () {
-                              context
-                                  .read<HealthCubit>()
-                                  .initVideo(state.files![index].path!,state.files![index].name!);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => VideoPlayerScreen(
+                                          video: state.files![index].path!)));
                             },
                             child: Row(
                               children: [

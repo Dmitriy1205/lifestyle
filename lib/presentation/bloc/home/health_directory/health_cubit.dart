@@ -39,7 +39,7 @@ class HealthCubit extends Cubit<HealthState> {
             files: videos,
             articles: articles,
             name:videos[0].name! ,
-            isPlaying: true,
+            isPlaying: false,
             isFullScreen: false,
           ));
         }
@@ -55,7 +55,7 @@ class HealthCubit extends Cubit<HealthState> {
     try {
       controller = VideoPlayerController.network(
         videoUrl,
-      );
+      )..play()..setLooping(true);
 
       await controller.initialize();
       emit(
