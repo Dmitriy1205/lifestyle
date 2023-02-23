@@ -67,6 +67,9 @@ class DataRepository {
   Future<ProfileModel> getProfile(String id) async {
     try {
       final data = await db.collection('users').doc(id).get();
+      if (!data.exists) {
+        return ProfileModel();
+      }
       return ProfileModel.fromJson(data.data()!['profile']);
     } on FirebaseException catch (e) {
       throw BadRequestException(message: e.message!);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/presentation/bloc/home/health_directory/health_cubit.dart';
 import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
@@ -62,12 +63,15 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                 : Stack(
                                     children: [
                                       GestureDetector(
-                                        onTap: (){
+                                        onTap: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (_) => VideoPlayerScreen(
-                                                      video: state.controller!.dataSource)));
+                                                  builder: (_) =>
+                                                      VideoPlayerScreen(
+                                                          video: state
+                                                              .controller!
+                                                              .dataSource)));
                                         },
                                         child: VideoPlayer(
                                           state.controller!,
@@ -91,29 +95,29 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                       //     ),
                                       //   ),
                                       // ),
-                                      // Positioned(
-                                      //   bottom: 0,
-                                      //   left: 0,
-                                      //   child: IconButton(
-                                      //     onPressed: () {
-                                      //       state.isPlaying!
-                                      //           ? context
-                                      //               .read<HealthCubit>()
-                                      //               .playPause(
-                                      //                   !state.isPlaying!)
-                                      //           : context
-                                      //               .read<HealthCubit>()
-                                      //               .playPause(
-                                      //                   !state.isPlaying!);
-                                      //     },
-                                      //     icon: FaIcon(
-                                      //       !state.isPlaying!
-                                      //           ? FontAwesomeIcons.pause
-                                      //           : FontAwesomeIcons.play,
-                                      //       color: AppColors.white,
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                      Positioned(
+                                        bottom: 0,
+                                        left: 0,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            state.isPlaying!
+                                                ? context
+                                                    .read<HealthCubit>()
+                                                    .playPause(
+                                                        !state.isPlaying!)
+                                                : context
+                                                    .read<HealthCubit>()
+                                                    .playPause(
+                                                        !state.isPlaying!);
+                                          },
+                                          icon: FaIcon(
+                                            !state.isPlaying!
+                                                ? FontAwesomeIcons.pause
+                                                : FontAwesomeIcons.play,
+                                            color: AppColors.white,
+                                          ),
+                                        ),
+                                      ),
                                       // Positioned(
                                       //   bottom: 0,
                                       //   right: 0,

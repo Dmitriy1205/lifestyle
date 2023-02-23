@@ -1,16 +1,21 @@
 class ProfileModel {
-  int? age;
-  String? gender;
-  int? height;
-  int? weight;
-  Map<String, dynamic>? topics;
+  int age;
+  String gender;
+  int height;
+  int weight;
+  Map<String, dynamic> topics;
 
   ProfileModel({
-    this.age,
-    this.gender,
-    this.height,
-    this.weight,
-    this.topics,
+    this.age = 18,
+    this.gender = 'none',
+    this.height = 140,
+    this.weight = 40,
+    this.topics = const {
+      'Building muscles': false,
+      'Loosing weight': false,
+      'Gaining weight': false,
+      'Stretching': false,
+    },
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {

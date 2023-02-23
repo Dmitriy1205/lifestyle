@@ -32,7 +32,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         status: Status.loaded(),
         email: email,
         date: dateOfCreation,
-        profile: field,
+        profile: field ,
       ));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));
