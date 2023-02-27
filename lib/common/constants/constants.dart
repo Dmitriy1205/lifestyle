@@ -73,6 +73,15 @@ class AppText {
   static const String seconds = 'Seconds';
   static const String minutes = 'Minutes';
   static const String unit = 'Unit';
+  static const String videos = 'Videos';
+  static const String vitamins = 'Vitamins';
+  static const String minerals = 'Minerals';
+  static const String probiotics = 'Probiotics';
+  static const String exercise  = 'Exercise';
+  static const String sleep  = 'Sleep';
+  static const String remedies  = 'Remedies';
+  static const String fitness = 'Fitness';
+  static const String warningText = '* It\'s important to speak with your physician before using any of these herbs as single treatment option *';
 
   //video
   static const String videoPath = 'assets/videos/video.MP4';

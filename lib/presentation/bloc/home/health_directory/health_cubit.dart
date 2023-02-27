@@ -30,6 +30,7 @@ class HealthCubit extends Cubit<HealthState> {
       List<Files> videos = await db.getFiles(source: 'video');
       List<Files> thumbnails = await db.getFiles(source: 'thumbnails');
       List<Files> articles = await db.getFiles(source: 'articles');
+      List<Files> vitamins = await db.getFiles(source: 'vitamins');
 
       for (var i = 0; i < thumbnails.length; i++) {
         if (videos[i].name! == thumbnails[i].name!) {
@@ -37,29 +38,32 @@ class HealthCubit extends Cubit<HealthState> {
           emit(state.copyWith(
             status: Status.loaded(),
             files: videos,
+            vitamins: vitamins,
             articles: articles,
-            name:videos[0].name! ,
+            name: videos[0].name!,
             isPlaying: false,
             isFullScreen: false,
           ));
         }
       }
-      await initVideo(videos[0].path!,videos[0].name!);
+      await initVideo(videos[0].path!, videos[0].name!);
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }
   }
 
-  Future<void> initVideo(String videoUrl,String name) async {
+  Future<void> initVideo(String videoUrl, String name) async {
     emit(state.copyWith(status: Status.videoLoading()));
     try {
       controller = VideoPlayerController.network(
         videoUrl,
-      )..play()..setLooping(true);
+      )
+        ..play()
+        ..setLooping(true);
 
       await controller.initialize();
-      emit(
-          state.copyWith(status: Status.videoLoaded(), controller: controller,name: name));
+      emit(state.copyWith(
+          status: Status.videoLoaded(), controller: controller, name: name));
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }

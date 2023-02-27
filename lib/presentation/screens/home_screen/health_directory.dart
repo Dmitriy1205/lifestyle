@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/presentation/bloc/home/health_directory/health_cubit.dart';
+import 'package:lifestyle/presentation/screens/home_screen/description_screen.dart';
 import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
 import 'package:lifestyle/presentation/widgets/small_workout_picture.dart';
 import 'package:video_player/video_player.dart';
@@ -37,7 +39,6 @@ class _HealthDirectoryState extends State<HealthDirectory>
               child: ListView(
                 physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     AppText.forToday,
@@ -77,24 +78,6 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                           state.controller!,
                                         ),
                                       ),
-                                      // Positioned(
-                                      //   bottom: 45,
-                                      //   child: SizedBox(
-                                      //     width:
-                                      //         MediaQuery.of(context).size.width,
-                                      //     child: Padding(
-                                      //       padding: const EdgeInsets.symmetric(
-                                      //           horizontal: 10),
-                                      //       child: VideoProgressIndicator(
-                                      //         state.controller!,
-                                      //         allowScrubbing: true,
-                                      //         colors: const VideoProgressColors(
-                                      //             playedColor:
-                                      //                 AppColors.mainAccent),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                       Positioned(
                                         bottom: 0,
                                         left: 0,
@@ -118,29 +101,6 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                           ),
                                         ),
                                       ),
-                                      // Positioned(
-                                      //   bottom: 0,
-                                      //   right: 0,
-                                      //   child: IconButton(
-                                      //     onPressed: () {
-                                      //       Navigator.push(
-                                      //         context,
-                                      //         MaterialPageRoute(
-                                      //           builder: (_) => FullScreen(
-                                      //             controller: state.controller!,
-                                      //             isPlaying: state.isPlaying!,
-                                      //           ),
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //     icon: const FaIcon(
-                                      //       // !state.isFullScreen!
-                                      //       FontAwesomeIcons.maximize,
-                                      //       // : FontAwesomeIcons.minimize,
-                                      //       color: AppColors.white,
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ],
                                   )
                             : const LoadingIndicator(),
@@ -162,101 +122,806 @@ class _HealthDirectoryState extends State<HealthDirectory>
                       )
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Text(
-                      AppText.neww,
-                      style: AppTheme.themeData.textTheme.displayMedium!
-                          .copyWith(fontWeight: FontWeight.w700),
+                  DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20,
+                          ),
+                          child: TabBar(
+                            indicatorColor: AppColors.mainAccent,
+                            indicatorPadding:
+                                EdgeInsets.symmetric(horizontal: 30),
+                            indicatorWeight: 3,
+                            labelPadding: EdgeInsets.symmetric(vertical: 10),
+                            tabs: [
+                              Text(
+                                AppText.videos,
+                              ),
+                              Text(
+                                AppText.articles,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 380,
+                          width: MediaQuery.of(context).size.width,
+                          child: TabBarView(
+                            children: [
+                              GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: state.files!.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    VideoPlayerScreen(
+                                                        video: state
+                                                            .files![index]
+                                                            .path!)));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(
+                                          alignment:
+                                              AlignmentDirectional.center,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Container(
+                                                color: AppColors.grey,
+                                                height: MediaQuery.of(context)
+                                                    .size
+                                                    .height,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.cover,
+                                                  imageUrl: state
+                                                      .files![index].thumbnail!,
+                                                  placeholder: (context, url) =>
+                                                      const LoadingIndicator(),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          const Center(
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons
+                                                          .solidImage,
+                                                      size: 20,
+                                                      color: AppColors.active,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 10,
+                                              left: 10,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    state.files![index].name!,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.bodyMedium!
+                                                        .copyWith(
+                                                            color:
+                                                                AppColors.white,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                  Text(
+                                                    state.files![index]
+                                                        .duration!,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.bodyMedium!
+                                                        .copyWith(
+                                                            color:
+                                                                AppColors.white,
+                                                            fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                              ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ExpansionTile(
+                                      tilePadding: EdgeInsets.zero,
+                                      title: Text(
+                                        AppText.vitamins,
+                                        style: AppTheme
+                                            .themeData.textTheme.displayMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700),
+                                      ),
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: state.vitamins!.length,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 23),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (_) =>
+                                                              DescriptionScreen(
+                                                            header: state
+                                                                .vitamins![
+                                                                    index]
+                                                                .name!,
+                                                            content: state
+                                                                .vitamins![
+                                                                    index]
+                                                                .content!,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        SmallWorkoutPicture(
+                                                            image: state
+                                                                .vitamins![
+                                                                    index]
+                                                                .image!),
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              state
+                                                                  .vitamins![
+                                                                      index]
+                                                                  .name!,
+                                                              style: AppTheme
+                                                                  .themeData
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .copyWith(
+                                                                      color: AppColors
+                                                                          .contrast,
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  ExpansionTile(
+                                    tilePadding: EdgeInsets.zero,
+                                    title: Text(
+                                      AppText.minerals,
+                                      style: AppTheme
+                                          .themeData.textTheme.displayMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                                    children: [
+                                      ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: state.articles!.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                context
+                                                    .read<HealthCubit>()
+                                                    .launch(state
+                                                        .articles![index]
+                                                        .path!);
+                                              },
+                                              child: ListTile(
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: SmallWorkoutPicture(
+                                                  image: state
+                                                      .articles![index].image!,
+                                                ),
+                                                title: Text(
+                                                  state.articles![index].name!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 12),
+                                                ),
+                                                subtitle: Text(
+                                                  state.articles![index].path!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 14),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                  ExpansionTile(
+                                    tilePadding: EdgeInsets.zero,
+                                    title: Text(
+                                      AppText.probiotics,
+                                      style: AppTheme
+                                          .themeData.textTheme.displayMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                                    children: [
+                                      ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: state.articles!.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                context
+                                                    .read<HealthCubit>()
+                                                    .launch(state
+                                                        .articles![index]
+                                                        .path!);
+                                              },
+                                              child: ListTile(
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: SmallWorkoutPicture(
+                                                  image: state
+                                                      .articles![index].image!,
+                                                ),
+                                                title: Text(
+                                                  state.articles![index].name!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 12),
+                                                ),
+                                                subtitle: Text(
+                                                  state.articles![index].path!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 14),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                  ExpansionTile(
+                                    tilePadding: EdgeInsets.zero,
+                                    title: Text(
+                                      AppText.exercise,
+                                      style: AppTheme
+                                          .themeData.textTheme.displayMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                                    children: [
+                                      ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: state.articles!.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                context
+                                                    .read<HealthCubit>()
+                                                    .launch(state
+                                                        .articles![index]
+                                                        .path!);
+                                              },
+                                              child: ListTile(
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: SmallWorkoutPicture(
+                                                  image: state
+                                                      .articles![index].image!,
+                                                ),
+                                                title: Text(
+                                                  state.articles![index].name!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 12),
+                                                ),
+                                                subtitle: Text(
+                                                  state.articles![index].path!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 14),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                  ExpansionTile(
+                                    tilePadding: EdgeInsets.zero,
+                                    title: Text(
+                                      AppText.sleep,
+                                      style: AppTheme
+                                          .themeData.textTheme.displayMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                                    children: [
+                                      ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: state.articles!.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                context
+                                                    .read<HealthCubit>()
+                                                    .launch(state
+                                                        .articles![index]
+                                                        .path!);
+                                              },
+                                              child: ListTile(
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: SmallWorkoutPicture(
+                                                  image: state
+                                                      .articles![index].image!,
+                                                ),
+                                                title: Text(
+                                                  state.articles![index].name!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 12),
+                                                ),
+                                                subtitle: Text(
+                                                  state.articles![index].path!,
+                                                  style: AppTheme.themeData
+                                                      .textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: AppColors
+                                                              .contrast,
+                                                          fontSize: 14),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 17),
+                                    child: ExpansionTile(
+                                      tilePadding: EdgeInsets.zero,
+                                      title: Text(
+                                        AppText.remedies,
+                                        style: AppTheme
+                                            .themeData.textTheme.displayMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700),
+                                      ),
+                                      children: [
+                                        ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: state.articles!.length,
+                                            itemBuilder: (context, index) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  context
+                                                      .read<HealthCubit>()
+                                                      .launch(state
+                                                          .articles![index]
+                                                          .path!);
+                                                },
+                                                child: ListTile(
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  leading: SmallWorkoutPicture(
+                                                    image: state
+                                                        .articles![index]
+                                                        .image!,
+                                                  ),
+                                                  title: Text(
+                                                    state
+                                                        .articles![index].name!,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.bodyMedium!
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .contrast,
+                                                            fontSize: 12),
+                                                  ),
+                                                  subtitle: Text(
+                                                    state
+                                                        .articles![index].path!,
+                                                    style: AppTheme.themeData
+                                                        .textTheme.bodyMedium!
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .contrast,
+                                                            fontSize: 14),
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.files!.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 23),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => VideoPlayerScreen(
-                                          video: state.files![index].path!)));
-                            },
-                            child: Row(
-                              children: [
-                                SmallWorkoutPicture(
-                                    image: state.files![index].thumbnail!),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      state.files![index].name!,
-                                      style: AppTheme
-                                          .themeData.textTheme.bodyMedium!
-                                          .copyWith(
-                                              color: AppColors.contrast,
-                                              fontSize: 14),
-                                    ),
-                                    Text(
-                                      state.files![index].duration!,
-                                      style: AppTheme
-                                          .themeData.textTheme.bodyMedium!
-                                          .copyWith(
-                                              color: AppColors.contrast,
-                                              fontSize: 14),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 17),
-                    child: Text(
-                      AppText.articles,
-                      style: AppTheme.themeData.textTheme.displayMedium!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: state.articles!.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            context
-                                .read<HealthCubit>()
-                                .launch(state.articles![index].path!);
-                          },
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: SmallWorkoutPicture(
-                              image: state.articles![index].image!,
-                            ),
-                            title: Text(
-                              state.articles![index].name!,
-                              style: AppTheme.themeData.textTheme.bodyMedium!
-                                  .copyWith(
-                                      color: AppColors.contrast, fontSize: 12),
-                            ),
-                            subtitle: Text(
-                              state.articles![index].path!,
-                              style: AppTheme.themeData.textTheme.bodyMedium!
-                                  .copyWith(
-                                      color: AppColors.contrast, fontSize: 14),
-                            ),
-                          ),
-                        );
-                      }),
+                  //TODO: delete this old comment code
+
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 20),
+                  //   child: Text(
+                  //     AppText.neww,
+                  //     style: AppTheme.themeData.textTheme.displayMedium!
+                  //         .copyWith(fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // ListView.builder(
+                  //     shrinkWrap: true,
+                  //     physics: const NeverScrollableScrollPhysics(),
+                  //     itemCount: state.files!.length,
+                  //     itemBuilder: (context, index) {
+                  //       return Padding(
+                  //         padding: const EdgeInsets.only(bottom: 23),
+                  //         child: GestureDetector(
+                  //           onTap: () {
+                  //             Navigator.push(
+                  //                 context,
+                  //                 MaterialPageRoute(
+                  //                     builder: (_) => VideoPlayerScreen(
+                  //                         video: state.files![index].path!)));
+                  //           },
+                  //           child: Row(
+                  //             children: [
+                  //               SmallWorkoutPicture(
+                  //                   image: state.files![index].thumbnail!),
+                  //               const SizedBox(
+                  //                 width: 15,
+                  //               ),
+                  //               Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 children: [
+                  //                   Text(
+                  //                     state.files![index].name!,
+                  //                     style: AppTheme
+                  //                         .themeData.textTheme.bodyMedium!
+                  //                         .copyWith(
+                  //                             color: AppColors.contrast,
+                  //                             fontSize: 14),
+                  //                   ),
+                  //                   Text(
+                  //                     state.files![index].duration!,
+                  //                     style: AppTheme
+                  //                         .themeData.textTheme.bodyMedium!
+                  //                         .copyWith(
+                  //                             color: AppColors.contrast,
+                  //                             fontSize: 14),
+                  //                   ),
+                  //                 ],
+                  //               )
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       );
+                  //     }),
+                  //-------------------------------------
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 20),
+                  //   child: ExpansionTile(
+                  //     tilePadding: EdgeInsets.zero,
+                  //     title: Text(
+                  //       AppText.videos,
+                  //       style: AppTheme.themeData.textTheme.displayMedium!
+                  //           .copyWith(fontWeight: FontWeight.w700),
+                  //     ),
+                  //     children: [
+                  //       Padding(
+                  //         padding: const EdgeInsets.symmetric(vertical: 20),
+                  //         child: ListView.builder(
+                  //             shrinkWrap: true,
+                  //             physics: const NeverScrollableScrollPhysics(),
+                  //             itemCount: state.files!.length,
+                  //             itemBuilder: (context, index) {
+                  //               return Padding(
+                  //                 padding: const EdgeInsets.only(bottom: 23),
+                  //                 child: GestureDetector(
+                  //                   onTap: () {
+                  //                     Navigator.push(
+                  //                         context,
+                  //                         MaterialPageRoute(
+                  //                             builder: (_) => VideoPlayerScreen(
+                  //                                 video: state
+                  //                                     .files![index].path!)));
+                  //                   },
+                  //                   child: Row(
+                  //                     children: [
+                  //                       SmallWorkoutPicture(
+                  //                           image:
+                  //                               state.files![index].thumbnail!),
+                  //                       const SizedBox(
+                  //                         width: 15,
+                  //                       ),
+                  //                       Column(
+                  //                         crossAxisAlignment:
+                  //                             CrossAxisAlignment.start,
+                  //                         children: [
+                  //                           Text(
+                  //                             state.files![index].name!,
+                  //                             style: AppTheme.themeData
+                  //                                 .textTheme.bodyMedium!
+                  //                                 .copyWith(
+                  //                                     color: AppColors.contrast,
+                  //                                     fontSize: 14),
+                  //                           ),
+                  //                           Text(
+                  //                             state.files![index].duration!,
+                  //                             style: AppTheme.themeData
+                  //                                 .textTheme.bodyMedium!
+                  //                                 .copyWith(
+                  //                                     color: AppColors.contrast,
+                  //                                     fontSize: 14),
+                  //                           ),
+                  //                         ],
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               );
+                  //             }),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8, bottom: 17),
+                  //   child: ExpansionTile(
+                  //     tilePadding: EdgeInsets.zero,
+                  //     title: Text(
+                  //       AppText.articles,
+                  //       style: AppTheme.themeData.textTheme.displayMedium!
+                  //           .copyWith(fontWeight: FontWeight.w700),
+                  //     ),
+                  //     children: [
+                  //       ListView.builder(
+                  //           physics: const NeverScrollableScrollPhysics(),
+                  //           shrinkWrap: true,
+                  //           itemCount: state.articles!.length,
+                  //           itemBuilder: (context, index) {
+                  //             return GestureDetector(
+                  //               onTap: () {
+                  //                 context
+                  //                     .read<HealthCubit>()
+                  //                     .launch(state.articles![index].path!);
+                  //               },
+                  //               child: ListTile(
+                  //                 contentPadding: EdgeInsets.zero,
+                  //                 leading: SmallWorkoutPicture(
+                  //                   image: state.articles![index].image!,
+                  //                 ),
+                  //                 title: Text(
+                  //                   state.articles![index].name!,
+                  //                   style: AppTheme
+                  //                       .themeData.textTheme.bodyMedium!
+                  //                       .copyWith(
+                  //                           color: AppColors.contrast,
+                  //                           fontSize: 12),
+                  //                 ),
+                  //                 subtitle: Text(
+                  //                   state.articles![index].path!,
+                  //                   style: AppTheme
+                  //                       .themeData.textTheme.bodyMedium!
+                  //                       .copyWith(
+                  //                           color: AppColors.contrast,
+                  //                           fontSize: 14),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           }),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8, bottom: 17),
+                  //   child: ExpansionTile(
+                  //     tilePadding: EdgeInsets.zero,
+                  //     title: Text(
+                  //       AppText.vitamins,
+                  //       style: AppTheme.themeData.textTheme.displayMedium!
+                  //           .copyWith(fontWeight: FontWeight.w700),
+                  //     ),
+                  //     children: [
+                  //       ListView.builder(
+                  //           physics: const NeverScrollableScrollPhysics(),
+                  //           shrinkWrap: true,
+                  //           itemCount: state.articles!.length,
+                  //           itemBuilder: (context, index) {
+                  //             return GestureDetector(
+                  //               onTap: () {
+                  //                 context
+                  //                     .read<HealthCubit>()
+                  //                     .launch(state.articles![index].path!);
+                  //               },
+                  //               child: ListTile(
+                  //                 contentPadding: EdgeInsets.zero,
+                  //                 leading: SmallWorkoutPicture(
+                  //                   image: state.articles![index].image!,
+                  //                 ),
+                  //                 title: Text(
+                  //                   state.articles![index].name!,
+                  //                   style: AppTheme
+                  //                       .themeData.textTheme.bodyMedium!
+                  //                       .copyWith(
+                  //                           color: AppColors.contrast,
+                  //                           fontSize: 12),
+                  //                 ),
+                  //                 subtitle: Text(
+                  //                   state.articles![index].path!,
+                  //                   style: AppTheme
+                  //                       .themeData.textTheme.bodyMedium!
+                  //                       .copyWith(
+                  //                           color: AppColors.contrast,
+                  //                           fontSize: 14),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           }),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8, bottom: 17),
+                  //   child: ExpansionTile(
+                  //     tilePadding: EdgeInsets.zero,
+                  //     title: Text(
+                  //       AppText.fitness,
+                  //       style: AppTheme.themeData.textTheme.displayMedium!
+                  //           .copyWith(fontWeight: FontWeight.w700),
+                  //     ),
+                  //     children: [
+                  //       ListView.builder(
+                  //           physics: const NeverScrollableScrollPhysics(),
+                  //           shrinkWrap: true,
+                  //           itemCount: state.articles!.length,
+                  //           itemBuilder: (context, index) {
+                  //             return GestureDetector(
+                  //               onTap: () {
+                  //                 context
+                  //                     .read<HealthCubit>()
+                  //                     .launch(state.articles![index].path!);
+                  //               },
+                  //               child: ListTile(
+                  //                 contentPadding: EdgeInsets.zero,
+                  //                 leading: SmallWorkoutPicture(
+                  //                   image: state.articles![index].image!,
+                  //                 ),
+                  //                 title: Text(
+                  //                   state.articles![index].name!,
+                  //                   style: AppTheme
+                  //                       .themeData.textTheme.bodyMedium!
+                  //                       .copyWith(
+                  //                           color: AppColors.contrast,
+                  //                           fontSize: 12),
+                  //                 ),
+                  //                 subtitle: Text(
+                  //                   state.articles![index].path!,
+                  //                   style: AppTheme
+                  //                       .themeData.textTheme.bodyMedium!
+                  //                       .copyWith(
+                  //                           color: AppColors.contrast,
+                  //                           fontSize: 14),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           }),
+                  //     ],
+                  //   ),
+                  // ),
+                  //-------------------------------------
+                  //TODO: delete this old comment code
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8, bottom: 17),
+                  //   child: Text(
+                  //     AppText.articles,
+                  //     style: AppTheme.themeData.textTheme.displayMedium!
+                  //         .copyWith(fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // ListView.builder(
+                  //     physics: const NeverScrollableScrollPhysics(),
+                  //     shrinkWrap: true,
+                  //     itemCount: state.articles!.length,
+                  //     itemBuilder: (context, index) {
+                  //       return GestureDetector(
+                  //         onTap: () {
+                  //           context
+                  //               .read<HealthCubit>()
+                  //               .launch(state.articles![index].path!);
+                  //         },
+                  //         child: ListTile(
+                  //           contentPadding: EdgeInsets.zero,
+                  //           leading: SmallWorkoutPicture(
+                  //             image: state.articles![index].image!,
+                  //           ),
+                  //           title: Text(
+                  //             state.articles![index].name!,
+                  //             style: AppTheme.themeData.textTheme.bodyMedium!
+                  //                 .copyWith(
+                  //                     color: AppColors.contrast, fontSize: 12),
+                  //           ),
+                  //           subtitle: Text(
+                  //             state.articles![index].path!,
+                  //             style: AppTheme.themeData.textTheme.bodyMedium!
+                  //                 .copyWith(
+                  //                     color: AppColors.contrast, fontSize: 14),
+                  //           ),
+                  //         ),
+                  //       );
+                  //     }),
                 ],
               ),
             );
@@ -281,3 +946,37 @@ class _HealthDirectoryState extends State<HealthDirectory>
   @override
   bool get wantKeepAlive => true;
 }
+// ListView.builder(
+// physics: const NeverScrollableScrollPhysics(),
+// shrinkWrap: true,
+// itemCount: state.articles!.length,
+// itemBuilder: (context, index) {
+// return GestureDetector(
+// onTap: () {
+// context.read<HealthCubit>().launch(
+// state.articles![index].path!);
+// },
+// child: ListTile(
+// contentPadding: EdgeInsets.zero,
+// leading: SmallWorkoutPicture(
+// image: state.articles![index].image!,
+// ),
+// title: Text(
+// state.articles![index].name!,
+// style: AppTheme
+//     .themeData.textTheme.bodyMedium!
+//     .copyWith(
+// color: AppColors.contrast,
+// fontSize: 12),
+// ),
+// subtitle: Text(
+// state.articles![index].path!,
+// style: AppTheme
+//     .themeData.textTheme.bodyMedium!
+//     .copyWith(
+// color: AppColors.contrast,
+// fontSize: 14),
+// ),
+// ),
+// );
+// }),

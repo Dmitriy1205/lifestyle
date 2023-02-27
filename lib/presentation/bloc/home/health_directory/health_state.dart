@@ -4,6 +4,7 @@ class HealthState extends Equatable {
   final Status? status;
   final List<Files>? files;
   final List<Files>? articles;
+  final List<Files>? vitamins;
   final String? thumbnail;
   final VideoPlayerController? controller;
   final bool? isPlaying;
@@ -14,6 +15,7 @@ class HealthState extends Equatable {
     this.status,
     this.files,
     this.articles,
+    this.vitamins,
     this.thumbnail,
     this.controller,
     this.isPlaying,
@@ -25,6 +27,7 @@ class HealthState extends Equatable {
     Status? status,
     List<Files>? files,
     List<Files>? articles,
+    List<Files>? vitamins,
     String? thumbnail,
     VideoPlayerController? controller,
     bool? isPlaying,
@@ -35,6 +38,7 @@ class HealthState extends Equatable {
       status: status ?? this.status,
       files: files ?? this.files,
       articles: articles ?? this.articles,
+      vitamins: vitamins ?? this.vitamins,
       thumbnail: thumbnail ?? this.thumbnail,
       controller: controller ?? this.controller,
       isPlaying: isPlaying ?? this.isPlaying,
@@ -48,6 +52,7 @@ class HealthState extends Equatable {
         status,
         files,
         articles,
+        vitamins,
         thumbnail,
         controller,
         isPlaying,

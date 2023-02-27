@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData themeData = ThemeData(
-    colorScheme: ThemeData().colorScheme.copyWith(primary: const Color(0xFF10284D)),
+    dividerColor: const Color(0xFFC7ED3A),
+    colorScheme:
+        ThemeData().colorScheme.copyWith(primary: const Color(0xFF10284D)),
     tabBarTheme: const TabBarTheme(
       labelStyle: TextStyle(
         fontWeight: FontWeight.w500,
@@ -16,7 +18,8 @@ class AppTheme {
       unselectedLabelColor: Color(0xFF898D94),
     ),
     scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-    textSelectionTheme: const TextSelectionThemeData(cursorColor: Color(0xFF10284D)),
+    textSelectionTheme:
+        const TextSelectionThemeData(cursorColor: Color(0xFF10284D)),
     inputDecorationTheme: const InputDecorationTheme(
       focusColor: Color(0xFF10284D),
       enabledBorder: OutlineInputBorder(
