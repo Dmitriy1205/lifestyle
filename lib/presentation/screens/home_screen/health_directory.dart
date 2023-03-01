@@ -147,7 +147,7 @@ class _HealthDirectoryState extends State<HealthDirectory>
                           ),
                         ),
                         SizedBox(
-                          height: 480,
+                          height: 400,
                           width: MediaQuery.of(context).size.width,
                           child: TabBarView(
                             children: [
