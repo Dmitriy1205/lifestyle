@@ -42,7 +42,7 @@ class Home extends StatelessWidget {
                 AppText.healthDirectory,
               ),
               Text(
-                AppText.workouts,
+                AppText.goals,
               )
             ],
           ),

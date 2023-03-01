@@ -41,7 +41,7 @@ class _RelaxBuilderState extends State<RelaxBuilder> {
         ),
         centerTitle: true,
         title: Text(
-          AppText.relaxTime,
+          AppText.rest.toUpperCase(),
           style: AppTheme.themeData.textTheme.displayLarge,
         ),
       ),

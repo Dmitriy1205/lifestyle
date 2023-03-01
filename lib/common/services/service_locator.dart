@@ -19,6 +19,7 @@ import '../../presentation/bloc/create_profile/height/height_cubit.dart';
 import '../../presentation/bloc/create_profile/weight/weight_cubit.dart';
 import '../../presentation/bloc/home/health_directory/health_cubit.dart';
 import '../../presentation/bloc/home/workout/workout_cubit.dart';
+import '../../presentation/bloc/profile/edit_profile/edit_profile_cubit.dart';
 import '../../presentation/bloc/profile/edit_workout/edit_workout_cubit.dart';
 import '../../presentation/bloc/profile/profile_cubit.dart';
 import '../../presentation/bloc/profile/your_workout/your_workout_cubit.dart';
@@ -62,4 +63,5 @@ Future<void> init() async {
   sl.registerFactory(() => ExerciseBuilderCubit(storage: sl(), db: sl()));
   sl.registerFactory(() => HealthCubit(storage: sl(), db: sl()));
   sl.registerFactory(() => VideoPlayerCubit());
+  sl.registerFactory(() => EditProfileCubit(db: sl(), auth: sl(), storage: sl()));
 }

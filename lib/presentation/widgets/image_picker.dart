@@ -13,8 +13,15 @@ import '../bloc/image_picker/image_picker_cubit.dart';
 
 class PicturePicker extends StatelessWidget {
   final Function(File) userImage;
+  final Widget? avatar;
+  final String? imageFromProfile;
 
-  const PicturePicker({Key? key, required this.userImage}) : super(key: key);
+  const PicturePicker({
+    Key? key,
+    required this.userImage,
+    this.avatar,
+    this.imageFromProfile,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,8 @@ class PicturePicker extends StatelessWidget {
       create: (context) => sl<ImagePickerCubit>(),
       child: _PicturePicker(
         userImage: userImage,
+        avatar: avatar,
+        imageFromProfile: imageFromProfile,
       ),
     );
   }
@@ -29,8 +38,15 @@ class PicturePicker extends StatelessWidget {
 
 class _PicturePicker extends StatelessWidget {
   final Function(File) userImage;
+  final Widget? avatar;
+  final String? imageFromProfile;
 
-  const _PicturePicker({Key? key, required this.userImage}) : super(key: key);
+  const _PicturePicker({
+    Key? key,
+    required this.userImage,
+    required this.avatar,
+    this.imageFromProfile,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,34 +59,65 @@ class _PicturePicker extends StatelessWidget {
         }
         return Stack(
           children: [
-            Container(
-              height: 191,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: AppColors.grey,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: state.image == null
-                    ? const FaIcon(
-                        FontAwesomeIcons.solidImage,
-                        size: 36,
-                        color: AppColors.active,
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          state.image!,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-              ),
-            ),
+            avatar == null
+                ? Container(
+                    height: 191,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: AppColors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: state.image == null
+                          ? const FaIcon(
+                              FontAwesomeIcons.solidImage,
+                              size: 36,
+                              color: AppColors.active,
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.file(
+                                state.image!,
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    ),
+                  )
+                : Center(
+                    child: state.image == null
+                        ? imageFromProfile == null
+                            ? CircleAvatar(
+                                radius: 70,
+                                backgroundColor: AppColors.white,
+                                child: Image.asset('assets/images/user.png'))
+                            : SizedBox(
+                                height: 138,
+                                width: 138,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(70),
+                                    child: Image.network(
+                                      imageFromProfile!,
+                                      fit: BoxFit.cover,
+                                    )),
+                              )
+                        : SizedBox(
+                            height: 138,
+                            width: 138,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(70),
+                              child: Image.file(
+                                state.image!,
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )),
             Positioned(
-              right: 10,
-              bottom: 8,
+              right: avatar == null ? 10 : 0,
+              bottom: avatar == null ? 8 : 0,
               child: GestureDetector(
                 onTap: () {
                   showPicker(context, func: (f) {

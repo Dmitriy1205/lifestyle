@@ -1,3 +1,4 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lifestyle/common/constants/exceptions.dart';
@@ -24,15 +25,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.copyWith(status: Status.loading()));
     try {
       String email = auth.currentUser()!.email!;
+      String image = auth.currentUser()!.photoURL!;
       String dateOfCreation =
           auth.currentUser()!.metadata.creationTime.toString();
       var field = await db.getProfile(auth.currentUser()!.uid);
 
       emit(state.copyWith(
         status: Status.loaded(),
-        email: email,
+        email: field.name ?? email,
+        image: field.image ?? image,
         date: dateOfCreation,
-        profile: field ,
+        profile: field,
       ));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

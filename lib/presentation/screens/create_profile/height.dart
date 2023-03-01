@@ -17,7 +17,8 @@ class HeightScreen extends StatelessWidget {
     Key? key,
     this.controlToNext,
     this.controlToPrev,
-    this.fromProfile = false, this.height,
+    this.fromProfile = false,
+    this.height,
   }) : super(key: key);
   final List _items = List.generate(60, (index) => 140 + index);
 
@@ -36,33 +37,56 @@ class HeightScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 60),
                 child: Container(
                   height: 250,
-                  width: 150,
+                  width: MediaQuery.of(context).size.width / 2,
                   color: Colors.white,
-                  child: CupertinoPicker(
-                    scrollController: FixedExtentScrollController(initialItem: height == null ? 0: height!-140 ),
-                    selectionOverlay: const SizedBox(),
-                    diameterRatio: 1.5,
-                    squeeze: 1,
-                    magnification: 1.5,
-                    itemExtent: 45.0,
-                    onSelectedItemChanged: (value) {
-                      context.read<HeightCubit>().setHeight(_items[value]);
-                    },
-                    children: List.generate(_items.length, (index) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
-                          child: Text(
-                            _items[index].toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 40,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: CupertinoPicker(
+                          scrollController: FixedExtentScrollController(
+                              initialItem: height == null ? 0 : height! - 140),
+                          selectionOverlay: const SizedBox(),
+                          diameterRatio: 1.5,
+                          squeeze: 1,
+                          magnification: 1.5,
+                          itemExtent: 45.0,
+                          onSelectedItemChanged: (value) {
+                            context
+                                .read<HeightCubit>()
+                                .setHeight(_items[value]);
+                          },
+                          children: List.generate(_items.length, (index) {
+                            return Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 15, 0),
+                                child: Text(
+                                  _items[index].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
                         ),
-                      );
-                    }),
+                      ),
+                      const Text(
+                        'cm',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -73,7 +97,7 @@ class HeightScreen extends StatelessWidget {
                     .then((value) => controlToNext!());
               },
               onTapPrev: controlToPrev,
-              onEdit: (){
+              onEdit: () {
                 return context
                     .read<HeightCubit>()
                     .accept(state.height!)

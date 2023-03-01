@@ -137,7 +137,7 @@ class TrainingScreen extends StatelessWidget {
                           : Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Text(
-                                '${AppText.relax} ${exercises[index].relaxTime!} ${AppText.seconds}',
+                                '${AppText.rest} ${exercises[index].relaxTime!} ${AppText.seconds}',
                                 style: AppTheme
                                     .themeData.textTheme.displayMedium!
                                     .copyWith(fontSize: 12),

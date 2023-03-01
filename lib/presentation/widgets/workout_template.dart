@@ -170,7 +170,7 @@ class _EditableWorkoutTemplateState extends State<EditableWorkoutTemplate> {
                           ),
                           onPressed: widget.toRelax,
                           child: Text(
-                            '+ ${AppText.relax}',
+                            '+ ${AppText.rest}',
                             style: AppTheme.themeData.textTheme.displaySmall!
                                 .copyWith(color: AppColors.white),
                           ),

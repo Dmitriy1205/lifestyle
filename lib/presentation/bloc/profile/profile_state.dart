@@ -5,12 +5,14 @@ class ProfileState extends Equatable {
   final String? date;
   final String? email;
   final ProfileModel? profile;
+  final String? image;
 
   const ProfileState({
     this.status,
     this.date,
     this.email,
     this.profile,
+    this.image,
   });
 
   ProfileState copyWith({
@@ -18,12 +20,14 @@ class ProfileState extends Equatable {
     String? date,
     String? email,
     ProfileModel? profile,
+    String? image,
   }) {
     return ProfileState(
       status: status ?? this.status,
       date: date ?? this.date,
       email: email ?? this.email,
       profile: profile ?? this.profile,
+      image: image ?? this.image,
     );
   }
 
@@ -33,5 +37,6 @@ class ProfileState extends Equatable {
         date,
         email,
         profile,
+        image,
       ];
 }

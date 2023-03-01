@@ -175,7 +175,7 @@ class _EditWorkoutState extends State<EditWorkout> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '${AppText.relax} ${state.group![index].relaxTime} ${AppText.seconds}',
+                                      '${AppText.rest} ${state.group![index].relaxTime} ${AppText.seconds}',
                                       style: AppTheme
                                           .themeData.textTheme.displayMedium!
                                           .copyWith(fontSize: 12),

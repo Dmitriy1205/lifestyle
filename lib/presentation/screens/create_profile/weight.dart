@@ -38,33 +38,52 @@ class WeightScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 60),
                 child: Container(
                   height: 250,
-                  width: 150,
+                  width: MediaQuery.of(context).size.width / 2.5,
                   color: Colors.white,
-                  child: CupertinoPicker(
-                    scrollController: FixedExtentScrollController(initialItem: weight == null ? 0: weight!-40 ),
-                    selectionOverlay: const SizedBox(),
-                    diameterRatio: 1.5,
-                    squeeze: 1,
-                    magnification: 1.5,
-                    itemExtent: 45.0,
-                    onSelectedItemChanged: (value) {
-                      context.read<WeightCubit>().setWeight(_items[value]);
-                    },
-                    children: List.generate(_items.length, (index) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
-                          child: Text(
-                            _items[index].toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 40,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: CupertinoPicker(
+                          scrollController: FixedExtentScrollController(initialItem: weight == null ? 0: weight!-40 ),
+                          selectionOverlay: const SizedBox(),
+                          diameterRatio: 1.5,
+                          squeeze: 1,
+                          magnification: 1.5,
+                          itemExtent: 45.0,
+                          onSelectedItemChanged: (value) {
+                            context.read<WeightCubit>().setWeight(_items[value]);
+                          },
+                          children: List.generate(_items.length, (index) {
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
+                                child: Text(
+                                  _items[index].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
                         ),
-                      );
-                    }),
+                      ),
+                      const Text(
+                        'kg',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -57,7 +57,6 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
   }
 
   void deleteExercise(int index) {
-
     group.removeAt(index);
     emit(state.copyWith(status: Status.loaded(), group: group));
   }
@@ -78,9 +77,10 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
       } else {
         workout.image = image;
       }
-
-      workout.author =
-          auth.currentUser()!.displayName ?? auth.currentUser()!.email;
+      var field = await db.getProfile(auth.currentUser()!.uid);
+      workout.author = field.name ??
+          auth.currentUser()!.displayName ??
+          auth.currentUser()!.email;
 
       List<String?> exercisesDuration =
           workout.exercises!.map((e) => e.exercise?.duration).toList();

@@ -68,8 +68,10 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
       String workoutId = UniqueKey().hashCode.toString();
       var id = auth.currentUser()!.uid;
       String pic = await storage.upload(image, 'images/$id/$workoutId.png');
-      workout.author =
-          auth.currentUser()!.displayName ?? auth.currentUser()!.email;
+      var field = await db.getProfile(auth.currentUser()!.uid);
+      workout.author = field.name ??
+          auth.currentUser()!.displayName ??
+          auth.currentUser()!.email;
       workout.image = pic;
       workout.id = workoutId;
 
@@ -89,11 +91,9 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
       var interval = timeSum(total);
       workout.interval = '${exercisesDuration.length} trainings | $interval';
 
-
       await db.setExercises(id, workout.toJson(), workout.id!);
       emit(state.copyWith(status: Status.loaded()));
     } on Exception catch (e) {
-
       emit(state.copyWith(status: Status.error(e.toString())));
     }
   }

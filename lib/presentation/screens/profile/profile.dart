@@ -4,12 +4,14 @@ import 'package:jiffy/jiffy.dart';
 import 'package:lifestyle/common/constants/colors.dart';
 import 'package:lifestyle/common/constants/icons.dart';
 import 'package:lifestyle/common/themes/theme.dart';
+import 'package:lifestyle/presentation/bloc/profile/edit_profile/edit_profile_cubit.dart';
 import 'package:lifestyle/presentation/bloc/profile/profile_cubit.dart';
 import 'package:lifestyle/presentation/screens/create_profile/tags.dart';
 import 'package:lifestyle/presentation/screens/create_profile/weight.dart';
 import 'package:lifestyle/presentation/screens/profile/support.dart';
 import 'package:lifestyle/presentation/screens/profile/your_workouts.dart';
 import 'package:lifestyle/presentation/screens/sign_in.dart';
+import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
 import 'package:lifestyle/presentation/widgets/profile_menu_component.dart';
 
 import '../../../common/constants/constants.dart';
@@ -18,7 +20,6 @@ import '../create_profile/age.dart';
 import '../create_profile/gender.dart';
 import '../create_profile/height.dart';
 import 'edit_profile.dart';
-import 'info.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -36,54 +37,44 @@ class _ProfileState extends State<Profile> {
         body: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             if (state.status!.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.mainAccent,
-                ),
-              );
+              return const LoadingIndicator();
             }
             return Center(
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => Info(
-                            userEmail: state.email!,
-                          ),
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          height: 138,
+                          width: 138,
+                          child: state.image == null
+                              ? CircleAvatar(
+                                  radius: 70,
+                                  child: Image.asset('assets/images/user.png'))
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(70),
+                                  child: Image.network(
+                                    state.image!,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                         ),
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            height: 128,
-                            width: 128,
-                            child: CircleAvatar(
-                              radius: 70,
-                              backgroundColor: AppColors.white,
-                              child: Image.asset('assets/images/user.png'),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          state.email!,
-                          style: AppTheme.themeData.textTheme.titleSmall,
-                        ),
-                        Text(
-                          '${AppText.memberSince} ${Jiffy(state.date).yMMMMd}',
-                          style: AppTheme.themeData.textTheme.labelSmall,
-                        )
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        state.email!,
+                        style: AppTheme.themeData.textTheme.titleSmall,
+                      ),
+                      Text(
+                        '${AppText.memberSince} ${Jiffy(state.date).yMMMMd}',
+                        style: AppTheme.themeData.textTheme.labelSmall,
+                      )
+                    ],
                   ),
                   Padding(
                     padding:
@@ -102,9 +93,15 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const EditProfile(),
+                                builder: (_) => BlocProvider(
+                                  create: (context) => sl<EditProfileCubit>(),
+                                  child: EditProfile(
+                                    userEmail: state.email!,
+                                    image: state.image,
+                                  ),
+                                ),
                               ),
-                            );
+                            ).then((value) => context.read<ProfileCubit>().init());
                           },
                         ),
                         const SizedBox(
@@ -267,7 +264,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         ProfileMenuComponent(
                           prefixIcon: Text(
-                            AppText.favoriteTopic,
+                            AppText.goals,
                             style: AppTheme.themeData.textTheme.displaySmall,
                           ),
                           text: '',

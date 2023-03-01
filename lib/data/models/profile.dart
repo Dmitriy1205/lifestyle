@@ -4,6 +4,8 @@ class ProfileModel {
   int height;
   int weight;
   Map<String, dynamic> topics;
+  String? image;
+  String? name;
 
   ProfileModel({
     this.age = 18,
@@ -16,6 +18,8 @@ class ProfileModel {
       'Gaining weight': false,
       'Stretching': false,
     },
+    this.image,
+    this.name,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +35,8 @@ class ProfileModel {
             'Gaining weight': false,
             'Stretching': false,
           },
+      image: json["image"],
+      name: json["name"],
     );
   }
 
@@ -41,6 +47,8 @@ class ProfileModel {
       "height": height,
       "weight": weight,
       "topics": topics,
+      "image": image,
+      "name": name,
     };
   }
 }

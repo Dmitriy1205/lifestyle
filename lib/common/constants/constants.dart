@@ -5,7 +5,7 @@ class AppText {
   static const String signUp = 'Sign up';
   static const String signInGoogle = 'Sign in with Google';
   static const String forgotPassword = 'Forgot password?';
-  static const String dontHaveAccount = 'Dont`t have account? ';
+  static const String dontHaveAccount = 'Dont`t have an account? ';
 
   static const String createAccount = 'CREATE ACCOUNT';
   static const String haveAccount = 'Have an account? ';
@@ -33,7 +33,7 @@ class AppText {
   static const String howOld = 'How old are you?';
   static const String whatsHeight = 'What’s your height?';
   static const String whatsWeight = 'What’s your weight?';
-  static const String whatTopic = 'What topics you like more?';
+  static const String whatTopic = 'Specify your goals';
 
   static const String next = 'Next';
   static const String finish = 'Finish';
@@ -53,6 +53,7 @@ class AppText {
   static const String stretching = 'Stretching';
   static const String healthDirectory = 'Health directory';
   static const String workouts = 'Workouts';
+  static const String goals = 'Goals';
   static const String lifestyle = 'LIFESTYLE';
   static const String forToday = 'For today';
   static const String neww = 'New';
@@ -63,12 +64,12 @@ class AppText {
   static const String trainingName = 'Training name';
   static const String description = 'Description';
   static const String training = 'Training';
-  static const String relax = 'Relax';
+  static const String rest = 'Rest';
   static const String edit = 'Edit';
   static const String add = 'Add';
   static const String create = 'Create';
   static const String relaxTime = 'Relax Time';
-  static const String trainings = 'TRAININGS';
+  static const String trainings = 'TRAINING';
   static const String search = 'Search';
   static const String seconds = 'Seconds';
   static const String minutes = 'Minutes';
