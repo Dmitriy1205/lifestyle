@@ -9,6 +9,8 @@ class EditWorkoutState extends Equatable {
 
   final TextEditingController? recomController;
   final File? image;
+  final String? categoryName;
+  final WorkoutCategory? category;
 
   const EditWorkoutState({
     this.status,
@@ -17,6 +19,8 @@ class EditWorkoutState extends Equatable {
     this.descController,
     this.recomController,
     this.image,
+    this.categoryName,
+    this.category,
   });
 
   EditWorkoutState copyWith({
@@ -26,6 +30,8 @@ class EditWorkoutState extends Equatable {
     TextEditingController? descController,
     TextEditingController? recomController,
     File? image,
+    String? categoryName,
+    WorkoutCategory? category,
   }) {
     return EditWorkoutState(
       status: status ?? this.status,
@@ -34,6 +40,8 @@ class EditWorkoutState extends Equatable {
       descController: descController ?? this.descController,
       recomController: recomController ?? this.recomController,
       image: image ?? this.image,
+      categoryName: categoryName ?? this.categoryName,
+      category: category ?? this.category,
     );
   }
 
@@ -45,5 +53,7 @@ class EditWorkoutState extends Equatable {
         descController,
         recomController,
         image,
+        categoryName,
+        category,
       ];
 }

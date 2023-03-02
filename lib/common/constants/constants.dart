@@ -20,6 +20,8 @@ class AppText {
   static const String username = 'Username';
 
   static const String home = 'Home';
+  static const String gym = 'Gym';
+  static const String all = 'All';
   static const String feed = 'Feed';
   static const String profile = 'Profile';
   static const String editProfile = 'Edit profile';
@@ -46,6 +48,7 @@ class AppText {
   static const String height = 'Height';
   static const String weight = 'Weight';
   static const String favoriteTopic = 'Favorite topics';
+  static const String workoutCategory = 'Workout Category';
 
   static const String buildingMuscles = 'Building muscles';
   static const String loosingWeight = 'Loosing weight';
@@ -78,11 +81,13 @@ class AppText {
   static const String vitamins = 'Vitamins';
   static const String minerals = 'Minerals';
   static const String probiotics = 'Probiotics';
-  static const String exercise  = 'Exercise';
-  static const String sleep  = 'Sleep';
-  static const String remedies  = 'Remedies';
+  static const String exercise = 'Exercise';
+  static const String sleep = 'Sleep';
+  static const String remedies = 'Remedies';
   static const String fitness = 'Fitness';
-  static const String warningText = '* It\'s important to speak with your physician before using any of these herbs as single treatment option *';
+  static const String chooseWorkoutCategory = 'Сhoose workout category';
+  static const String warningText =
+      '* It\'s important to speak with your physician before using any of these herbs as single treatment option *';
 
   //video
   static const String videoPath = 'assets/videos/video.MP4';
@@ -113,4 +118,9 @@ class AppVariables {
 enum Gender {
   man,
   woman,
+}
+
+enum WorkoutCategory {
+  gym,
+  home,
 }

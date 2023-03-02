@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../../common/constants/constants.dart';
 import '../../../../data/models/exercises.dart';
 import '../../../../data/models/group.dart';
 import '../../../../data/models/status.dart';
@@ -28,17 +29,30 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
   final TextEditingController recomController = TextEditingController();
   List<Group> group = [];
 
-  void init(List<Group> exercises, String name, String des, String recom) {
+  void init(
+    List<Group> exercises,
+    String name,
+    String des,
+    String recom,
+    String category,
+  ) {
+    WorkoutCategory workoutCategory;
     nameController.text = name;
     descController.text = des;
     recomController.text = recom;
     group = exercises;
+    if (category == 'Gym') {
+      workoutCategory = WorkoutCategory.gym;
+    } else {
+      workoutCategory = WorkoutCategory.home;
+    }
     emit(state.copyWith(
       status: Status.loaded(),
       group: group,
       nameController: nameController,
       descController: descController,
       recomController: recomController,
+      category: workoutCategory,
     ));
   }
 
@@ -103,6 +117,16 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }
+  }
+
+  void setCategory(WorkoutCategory category) {
+    String name;
+    if (category == WorkoutCategory.gym) {
+      name = 'Gym';
+    } else {
+      name = 'Home';
+    }
+    emit(state.copyWith(category: category, categoryName: name));
   }
 
   String timeSum(int value) =>

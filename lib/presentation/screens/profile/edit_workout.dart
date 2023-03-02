@@ -20,6 +20,7 @@ class EditWorkout extends StatefulWidget {
   final String description;
   final String recommendation;
   final List<Group> exercises;
+  final String category;
 
   const EditWorkout({
     Key? key,
@@ -28,7 +29,7 @@ class EditWorkout extends StatefulWidget {
     required this.recommendation,
     required this.exercises,
     required this.id,
-    required this.image,
+    required this.image, required this.category,
   }) : super(key: key);
 
   @override
@@ -39,7 +40,7 @@ class _EditWorkoutState extends State<EditWorkout> {
   @override
   void initState() {
     context.read<EditWorkoutCubit>().init(widget.exercises, widget.name,
-        widget.description, widget.recommendation);
+        widget.description, widget.recommendation,widget.category,);
     super.initState();
   }
 
@@ -62,6 +63,10 @@ class _EditWorkoutState extends State<EditWorkout> {
               context.read<EditWorkoutCubit>().getImage(image);
             },
           ),
+          categoryChoose: (category) {
+            context.read<EditWorkoutCubit>().setCategory(category);
+          },
+          category: state.category,
           initialName: state.nameController,
           initialDescription: state.descController,
           initialRecommendation: state.recomController,
@@ -99,7 +104,8 @@ class _EditWorkoutState extends State<EditWorkout> {
                     ..description = state.descController!.text
                     ..recommendation = state.recomController!.text
                     ..exercises = state.group!
-                    ..id = widget.id,
+                    ..id = widget.id
+                    ..category = state.categoryName,
                   state.image,
                   widget.image,
                 )
@@ -124,7 +130,9 @@ class _EditWorkoutState extends State<EditWorkout> {
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
                                   children: [
-                                    SmallWorkoutPicture(image: state.group![index].exercise!.image!),
+                                    SmallWorkoutPicture(
+                                        image: state
+                                            .group![index].exercise!.image!),
                                     const SizedBox(
                                       width: 15,
                                     ),

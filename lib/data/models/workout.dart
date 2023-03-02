@@ -8,6 +8,7 @@ class Workout {
   String? interval;
   String? author;
   String? image;
+  String? category;
   List<Group>? exercises;
 
   Workout({
@@ -17,6 +18,7 @@ class Workout {
     this.interval,
     this.author,
     this.image,
+    this.category,
     this.exercises,
     this.recommendation,
   });
@@ -29,6 +31,7 @@ class Workout {
       interval: json["interval"].toString(),
       author: json["author"].toString(),
       image: json['image'].toString(),
+      category: json["category"].toString(),
       exercises:
           (json['exercises'] as List).map((e) => Group.fromJson(e)).toList(),
       recommendation: json['recommendation'].toString(),
@@ -44,6 +47,7 @@ class Workout {
       "interval": interval,
       "author": author,
       "image": image,
+      "category": category,
       "exercises":
           List<dynamic>.from(exercises!.map((ex) => ex.toJson())).toList(),
     };
@@ -61,7 +65,8 @@ class Workout {
           interval == other.interval &&
           author == other.author &&
           image == other.image &&
-          exercises == other.exercises;
+          exercises == other.exercises &&
+          category == other.category;
 
   @override
   int get hashCode =>
@@ -72,5 +77,6 @@ class Workout {
       interval.hashCode ^
       author.hashCode ^
       image.hashCode ^
-      exercises.hashCode;
+      exercises.hashCode ^
+      category.hashCode;
 }

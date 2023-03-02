@@ -18,6 +18,7 @@ class DetailsScreen extends StatelessWidget {
   final String recommendation;
   final String image;
   final List<Group> exercises;
+  final String category;
 
   const DetailsScreen({
     Key? key,
@@ -28,7 +29,7 @@ class DetailsScreen extends StatelessWidget {
     required this.recommendation,
     required this.exercises,
     required this.image,
-    required this.id,
+    required this.id, required this.category,
   }) : super(key: key);
 
   @override
@@ -61,6 +62,7 @@ class DetailsScreen extends StatelessWidget {
                         description: description,
                         recommendation: recommendation,
                         exercises: exercises,
+                        category: category,
                       ),
                     ),
                   );
@@ -113,6 +115,32 @@ class DetailsScreen extends StatelessWidget {
                 )
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                AppText.workoutCategory,
+                style: AppTheme.themeData.textTheme.labelLarge,
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.contrast,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  height: 36,
+                  width: 76,
+                  child: Center(
+                    child: Text(
+                      category,
+                      style: AppTheme.themeData.textTheme.bodyMedium!.copyWith(color: AppColors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Text(

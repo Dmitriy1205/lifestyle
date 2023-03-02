@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:lifestyle/common/constants/constants.dart';
 import 'package:lifestyle/data/models/exercises.dart';
 import 'package:lifestyle/data/models/workout.dart';
 import 'package:lifestyle/data/repositories/auth_repository.dart';
@@ -96,6 +98,16 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }
+  }
+
+  void setCategory(WorkoutCategory category) {
+    String name;
+    if (category == WorkoutCategory.gym) {
+      name = 'Gym';
+    } else {
+      name = 'Home';
+    }
+    emit(state.copyWith(category: category, categoryName: name));
   }
 
   String timeSum(int value) =>

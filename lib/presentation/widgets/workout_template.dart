@@ -11,6 +11,9 @@ class EditableWorkoutTemplate extends StatefulWidget {
   final Function() toRelax;
   final Function() toTraining;
   final Function() onButtonClick;
+  final Function(WorkoutCategory)? categoryChoose;
+  final WorkoutCategory? category;
+  final WorkoutCategory? current;
   final Widget exerciseList;
   final Widget imagePicker;
   final TextEditingController? initialName;
@@ -28,10 +31,13 @@ class EditableWorkoutTemplate extends StatefulWidget {
     this.initialRecommendation,
     this.initialDescription,
     required this.imagePicker,
+    this.categoryChoose,
+    this.category, this.current,
   }) : super(key: key);
 
   @override
-  State<EditableWorkoutTemplate> createState() => _EditableWorkoutTemplateState();
+  State<EditableWorkoutTemplate> createState() =>
+      _EditableWorkoutTemplateState();
 }
 
 class _EditableWorkoutTemplateState extends State<EditableWorkoutTemplate> {
@@ -63,6 +69,67 @@ class _EditableWorkoutTemplateState extends State<EditableWorkoutTemplate> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   widget.imagePicker,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      AppText.chooseWorkoutCategory,
+                      style: AppTheme.themeData.textTheme.displayMedium!
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            widget.categoryChoose!(WorkoutCategory.gym);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: widget.category == WorkoutCategory.gym
+                                    ? AppColors.contrast
+                                    : widget.current == WorkoutCategory.gym
+                                        ? AppColors.contrast
+                                    : AppColors.grey,
+                                borderRadius: BorderRadius.circular(15)),
+                            height: 36,
+                            width: 76,
+                            child: Center(
+                              child: Text(
+                                AppText.gym,
+                                style: AppTheme.themeData.textTheme.bodyMedium!.copyWith(color: AppColors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10,),
+                        GestureDetector(
+                          onTap: (){
+                            widget.categoryChoose!(WorkoutCategory.home);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: widget.category == WorkoutCategory.home
+                                  ? AppColors.contrast
+                                  : widget.current == WorkoutCategory.home
+                                  ? AppColors.contrast
+                                  : AppColors.grey,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 36,
+                            width: 76,
+                            child: Center(
+                              child: Text(
+                                AppText.home,
+                                style: AppTheme.themeData.textTheme.bodyMedium!.copyWith(color: AppColors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(

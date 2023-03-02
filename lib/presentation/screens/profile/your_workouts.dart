@@ -25,6 +25,7 @@ class _YourWorkoutsState extends State<YourWorkouts> {
     context.read<YourWorkoutCubit>().init();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +99,7 @@ class _YourWorkoutsState extends State<YourWorkouts> {
                                   exercises: state.workout![index].exercises!,
                                   image: state.workout![index].image!,
                                   id: state.workout![index].id!,
+                                  category: state.workout![index].category!,
                                 ),
                               ),
                             ).then(
@@ -119,6 +121,28 @@ class _YourWorkoutsState extends State<YourWorkouts> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(),
+                                          Container(
+                                            color: AppColors.contrast,
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 5),
+                                              child: Text(
+                                                state.workout![index].category!,
+                                                style: AppTheme
+                                                    .themeData.textTheme.bodyMedium!
+                                                    .copyWith(
+                                                    color: AppColors.white,
+                                                    fontSize: 10),
+                                              ),
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
                                       Text(
                                         state.workout![index].name!,
                                         style: AppTheme
@@ -159,6 +183,7 @@ class _YourWorkoutsState extends State<YourWorkouts> {
                                                     color: AppColors.disabled,
                                                     fontSize: 8),
                                           ),
+
                                         ],
                                       ),
                                     ],

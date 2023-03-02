@@ -43,8 +43,7 @@ class GenderScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        context.read<GenderCubit>().setGender(
-                            Gender.woman);
+                        context.read<GenderCubit>().setGender(Gender.woman);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -75,7 +74,8 @@ class GenderScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         context.read<GenderCubit>().setGender(
-                            Gender.man,);
+                              Gender.man,
+                            );
                       },
                       child: Container(
                         decoration: BoxDecoration(

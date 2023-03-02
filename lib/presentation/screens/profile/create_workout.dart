@@ -31,6 +31,10 @@ class CreateWorkout extends StatelessWidget {
               context.read<CreateWorkoutCubit>().getImage(image);
             },
           ),
+          categoryChoose: (category) {
+            context.read<CreateWorkoutCubit>().setCategory(category);
+          },
+          category: state.category,
           initialName: state.nameController,
           initialDescription: state.descController,
           initialRecommendation: state.recomController,
@@ -43,7 +47,8 @@ class CreateWorkout extends StatelessWidget {
                     ..name = state.nameController!.text
                     ..description = state.descController!.text
                     ..recommendation = state.recomController!.text
-                    ..exercises = state.group!,
+                    ..exercises = state.group!
+                    ..category = state.categoryName,
                   state.image!,
                 )
                 .then((value) => Navigator.pop(context));
@@ -88,7 +93,9 @@ class CreateWorkout extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
                                   children: [
-                                    SmallWorkoutPicture(image: state.group![index].exercise!.image!),
+                                    SmallWorkoutPicture(
+                                        image: state
+                                            .group![index].exercise!.image!),
                                     const SizedBox(
                                       width: 15,
                                     ),
