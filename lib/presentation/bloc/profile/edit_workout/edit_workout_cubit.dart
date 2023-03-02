@@ -96,7 +96,7 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
       int sumOfRlx = rlxTime.reduce((a, b) => a + b);
       int total = sumOfEx + sumOfRlx;
       var interval = timeSum(total);
-      workout.interval = '${exercisesDuration.length} trainings | $interval';
+      workout.interval = '${exercisesDuration.length} exercises | $interval';
 
       await db.setExercises(id, workout.toJson(), workout.id!);
       emit(state.copyWith(status: Status.loaded()));

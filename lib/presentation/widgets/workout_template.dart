@@ -141,7 +141,7 @@ class _EditableWorkoutTemplateState extends State<EditableWorkoutTemplate> {
                     children: [
                       SizedBox(
                         height: 24,
-                        width: 84,
+                        width: 86,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.contrast,
@@ -150,7 +150,7 @@ class _EditableWorkoutTemplateState extends State<EditableWorkoutTemplate> {
                           ),
                           onPressed: widget.toTraining,
                           child: Text(
-                            '+ ${AppText.training}',
+                            '+ ${AppText.exercise}',
                             style: AppTheme.themeData.textTheme.displaySmall!
                                 .copyWith(color: AppColors.white),
                           ),

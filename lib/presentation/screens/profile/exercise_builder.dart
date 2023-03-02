@@ -36,7 +36,7 @@ class ExerciseBuilder extends StatelessWidget {
             ),
           ),
           title: Text(
-            AppText.trainings,
+            AppText.exercises.toUpperCase(),
             style: AppTheme.themeData.textTheme.displayLarge,
           ),
           centerTitle: true,

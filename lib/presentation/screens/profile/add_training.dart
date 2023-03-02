@@ -52,7 +52,7 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
           ),
         ),
         title: Text(
-          AppText.trainings,
+          AppText.exercise.toUpperCase(),
           style: AppTheme.themeData.textTheme.displayLarge,
         ),
         centerTitle: true,
