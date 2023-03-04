@@ -89,4 +89,14 @@ class DataRepository {
       throw BadRequestException(message: e.message.toString());
     }
   }
+
+  Future<List<Files>> getAllFiles() async {
+    try {
+      final files = await db.collection('files').get();
+
+      return files.docs.map((e) => Files.fromJson(e.data())).toList();
+    } on FirebaseException catch (e) {
+      throw BadRequestException(message: e.message!);
+    }
+  }
 }

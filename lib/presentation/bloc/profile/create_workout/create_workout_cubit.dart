@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:lifestyle/common/constants/constants.dart';
 import 'package:lifestyle/data/models/exercises.dart';
 import 'package:lifestyle/data/models/workout.dart';

@@ -8,6 +8,7 @@ import 'package:lifestyle/presentation/screens/welcome_screen.dart';
 
 import '../common/services/service_locator.dart';
 import 'bloc/home/health_directory/health_cubit.dart';
+import 'bloc/home/home_cubit.dart';
 import 'bloc/profile/create_workout/create_workout_cubit.dart';
 import 'bloc/profile/edit_workout/edit_workout_cubit.dart';
 import 'bloc/profile/your_workout/your_workout_cubit.dart';
@@ -48,6 +49,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<VideoPlayerCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<HomeCubit>(),
         ),
       ],
       child: MaterialApp(
