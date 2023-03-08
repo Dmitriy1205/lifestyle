@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'common/services/service_locator.dart' as sl;
-import 'presentation/app.dart';
+import 'app/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

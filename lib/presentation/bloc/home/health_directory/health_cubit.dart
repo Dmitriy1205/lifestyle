@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:lifestyle/data/repositories/data_repository.dart';
@@ -27,6 +28,7 @@ class HealthCubit extends Cubit<HealthState> {
   Future<void> getExerciseVideos() async {
     emit(state.copyWith(status: Status.loading()));
     try {
+      final src = await db.isConnected();
       List<Files> videos = await db.getFiles(source: 'video');
       List<Files> thumbnails = await db.getFiles(source: 'thumbnails');
       List<Files> articles = await db.getFiles(source: 'articles');
@@ -43,6 +45,7 @@ class HealthCubit extends Cubit<HealthState> {
             name: videos[0].name!,
             isPlaying: false,
             isFullScreen: false,
+            source:src,
           ));
         }
       }

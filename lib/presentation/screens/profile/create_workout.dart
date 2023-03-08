@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:lifestyle/presentation/widgets/workout_template.dart';
 import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/themes/theme.dart';
+import '../../widgets/connection_message.dart';
 import 'exercise_builder.dart';
 
 class CreateWorkout extends StatelessWidget {
@@ -40,18 +42,20 @@ class CreateWorkout extends StatelessWidget {
           initialRecommendation: state.recomController,
           buttonName: AppText.create,
           onButtonClick: () {
-            context
-                .read<CreateWorkoutCubit>()
-                .createExercise(
-                  Workout()
-                    ..name = state.nameController!.text
-                    ..description = state.descController!.text
-                    ..recommendation = state.recomController!.text
-                    ..exercises = state.group!
-                    ..category = state.categoryName,
-                  state.image!,
-                )
-                .then((value) => Navigator.pop(context));
+            state.source == Source.cache
+                ? ConnectionMessage.buildErrorSnackbar(context)
+                : context
+                    .read<CreateWorkoutCubit>()
+                    .createExercise(
+                      Workout()
+                        ..name = state.nameController!.text
+                        ..description = state.descController!.text
+                        ..recommendation = state.recomController!.text
+                        ..exercises = state.group!
+                        ..category = state.categoryName,
+                      state.image!,
+                    )
+                    .then((value) => Navigator.pop(context));
           },
           toRelax: () {
             Navigator.push(

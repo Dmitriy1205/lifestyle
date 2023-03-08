@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:lifestyle/presentation/widgets/create_profile_body.dart';
 
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
+import '../../widgets/connection_message.dart';
 
 class WeightScreen extends StatelessWidget {
   final Future<void> Function()? controlToNext;
@@ -13,13 +15,16 @@ class WeightScreen extends StatelessWidget {
   final Function()? edit;
   final bool fromProfile;
   final int? weight;
+  final Source? source;
 
   WeightScreen({
     Key? key,
     this.controlToNext,
     this.controlToPrev,
     this.edit,
-    this.fromProfile = false, this.weight,
+    this.fromProfile = false,
+    this.weight,
+    this.source,
   }) : super(key: key);
   final List _items = List.generate(80, (index) => 40 + index);
 
@@ -49,19 +54,23 @@ class WeightScreen extends StatelessWidget {
                       Expanded(
                         flex: 3,
                         child: CupertinoPicker(
-                          scrollController: FixedExtentScrollController(initialItem: weight == null ? 0: weight!-40 ),
+                          scrollController: FixedExtentScrollController(
+                              initialItem: weight == null ? 0 : weight! - 40),
                           selectionOverlay: const SizedBox(),
                           diameterRatio: 1.5,
                           squeeze: 1,
                           magnification: 1.5,
                           itemExtent: 45.0,
                           onSelectedItemChanged: (value) {
-                            context.read<WeightCubit>().setWeight(_items[value]);
+                            context
+                                .read<WeightCubit>()
+                                .setWeight(_items[value]);
                           },
                           children: List.generate(_items.length, (index) {
                             return Center(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 15, 0),
                                 child: Text(
                                   _items[index].toString(),
                                   style: const TextStyle(
@@ -95,10 +104,12 @@ class WeightScreen extends StatelessWidget {
               },
               onTapPrev: controlToPrev,
               onEdit: () {
-                return context
-                    .read<WeightCubit>()
-                    .accept(state.weight!)
-                    .then((value) => Navigator.pop(context));
+                return source == Source.cache
+                    ? ConnectionMessage.buildErrorSnackbar(context)
+                    : context
+                        .read<WeightCubit>()
+                        .accept(state.weight!)
+                        .then((value) => Navigator.pop(context));
               },
             );
           },

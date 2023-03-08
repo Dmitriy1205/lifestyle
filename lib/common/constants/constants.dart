@@ -13,6 +13,8 @@ class AppText {
   static const String weWillSendLink =
       'We will send a link for password reset on your email';
   static const String sendEmail = 'Send email';
+  static const String noConnection = 'No internet connection';
+  static const String checkYourConnection = 'Check Your Internet connection';
 
   static const String confirmPassword = 'Confirm password';
   static const String email = 'Email';

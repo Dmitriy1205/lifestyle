@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -29,13 +30,14 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
   final TextEditingController recomController = TextEditingController();
   List<Group> group = [];
 
-  void init(
+  Future<void> init(
     List<Group> exercises,
     String name,
     String des,
     String recom,
     String category,
-  ) {
+  ) async {
+    final src = await db.isConnected();
     WorkoutCategory workoutCategory;
     nameController.text = name;
     descController.text = des;
@@ -53,6 +55,7 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
       descController: descController,
       recomController: recomController,
       category: workoutCategory,
+      source: src,
     ));
   }
 

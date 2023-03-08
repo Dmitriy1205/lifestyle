@@ -1,5 +1,5 @@
-
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lifestyle/common/constants/exceptions.dart';
 import 'package:lifestyle/data/repositories/auth_repository.dart';
@@ -24,18 +24,21 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> init() async {
     emit(state.copyWith(status: Status.loading()));
     try {
-      String email = auth.currentUser()!.email!;
-      String image = auth.currentUser()!.photoURL!;
+      final src = await db.isConnected();
+
       String dateOfCreation =
           auth.currentUser()!.metadata.creationTime.toString();
       var field = await db.getProfile(auth.currentUser()!.uid);
+      String email = field.name ?? auth.currentUser()!.email!;
+      String image = field.image ?? auth.currentUser()!.photoURL!;
 
       emit(state.copyWith(
         status: Status.loaded(),
-        email: field.name ?? email,
-        image: field.image ?? image,
+        email: email,
+        image: image,
         date: dateOfCreation,
         profile: field,
+        source: src,
       ));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.message)));

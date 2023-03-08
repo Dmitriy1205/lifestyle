@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,22 +7,25 @@ import 'package:lifestyle/presentation/widgets/create_profile_body.dart';
 
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
+import '../../widgets/connection_message.dart';
 
 class AgeScreen extends StatelessWidget {
   final Future<void> Function()? controlToNext;
   final Function()? controlToPrev;
   final bool fromProfile;
   final int? age;
+  final Source? source;
 
   AgeScreen({
     Key? key,
-     this.controlToNext,
+    this.controlToNext,
     this.controlToPrev,
-    this.fromProfile = false, this.age,
+    this.fromProfile = false,
+    this.age,
+    this.source,
   }) : super(key: key);
 
   final List _items = List.generate(43, (index) => 18 + index);
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,8 @@ class AgeScreen extends StatelessWidget {
                   width: 150,
                   color: Colors.white,
                   child: CupertinoPicker(
-                    scrollController: FixedExtentScrollController(initialItem: age == null ? 0: age!-18 ),
+                    scrollController: FixedExtentScrollController(
+                        initialItem: age == null ? 0 : age! - 18),
                     selectionOverlay: const SizedBox(),
                     diameterRatio: 1.5,
                     squeeze: 1,
@@ -75,11 +80,13 @@ class AgeScreen extends StatelessWidget {
                     .then((value) => controlToNext!());
               },
               onTapPrev: controlToPrev,
-              onEdit: (){
-                return context
-                    .read<AgeCubit>()
-                    .accept(state.age!)
-                    .then((value) => Navigator.pop(context));
+              onEdit: () {
+                return source == Source.cache
+                    ? ConnectionMessage.buildErrorSnackbar(context)
+                    : context
+                        .read<AgeCubit>()
+                        .accept(state.age!)
+                        .then((value) => Navigator.pop(context));
               },
             );
           },

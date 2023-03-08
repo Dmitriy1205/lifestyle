@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/common/constants/colors.dart';
@@ -8,12 +9,14 @@ import 'package:lifestyle/presentation/widgets/create_profile_body.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 import '../../bloc/create_profile/tags/tags_cubit.dart';
+import '../../widgets/connection_message.dart';
 
 class TagsScreen extends StatelessWidget {
   final Function()? controlToPrev;
   final Function()? edit;
   final bool fromProfile;
   final Map<String, dynamic>? topic;
+  final Source? source;
 
   const TagsScreen({
     Key? key,
@@ -21,6 +24,7 @@ class TagsScreen extends StatelessWidget {
     this.edit,
     this.fromProfile = false,
     this.topic,
+    this.source,
   }) : super(key: key);
 
   @override
@@ -33,9 +37,11 @@ class TagsScreen extends StatelessWidget {
             return CreateProfileBody(
               fromProfile: fromProfile,
               onEdit: () {
-                return context.read<TagsCubit>().accept(state.tags!).then(
-                      (value) => Navigator.pop(context),
-                    );
+                return source == Source.cache
+                    ? ConnectionMessage.buildErrorSnackbar(context)
+                    : context.read<TagsCubit>().accept(state.tags!).then(
+                          (value) => Navigator.pop(context),
+                        );
               },
               title: AppText.whatTopic,
               buttonTitle: AppText.finish,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lifestyle/common/constants/constants.dart';
@@ -21,12 +22,7 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
     required this.auth,
     required this.storage,
   }) : super(CreateWorkoutState(status: Status.initial())) {
-    emit(state.copyWith(
-      status: Status.loaded(),
-      nameController: nameController,
-      descController: descController,
-      recomController: recomController,
-    ));
+    init();
   }
 
   final TextEditingController nameController = TextEditingController();
@@ -42,6 +38,17 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
       exercise: exercise,
     ));
     emit(state.copyWith(status: Status.loaded(), group: group));
+  }
+
+  Future<void> init() async {
+    final src = await db.isConnected();
+    emit(state.copyWith(
+      status: Status.loaded(),
+      nameController: nameController,
+      descController: descController,
+      recomController: recomController,
+      source: src,
+    ));
   }
 
   void getImage(File image) =>

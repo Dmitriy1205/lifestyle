@@ -6,6 +6,7 @@ class ProfileState extends Equatable {
   final String? email;
   final ProfileModel? profile;
   final String? image;
+  final Source? source;
 
   const ProfileState({
     this.status,
@@ -13,6 +14,7 @@ class ProfileState extends Equatable {
     this.email,
     this.profile,
     this.image,
+    this.source,
   });
 
   ProfileState copyWith({
@@ -21,6 +23,7 @@ class ProfileState extends Equatable {
     String? email,
     ProfileModel? profile,
     String? image,
+    Source? source,
   }) {
     return ProfileState(
       status: status ?? this.status,
@@ -28,6 +31,7 @@ class ProfileState extends Equatable {
       email: email ?? this.email,
       profile: profile ?? this.profile,
       image: image ?? this.image,
+      source: source ?? this.source,
     );
   }
 
@@ -38,5 +42,6 @@ class ProfileState extends Equatable {
         email,
         profile,
         image,
+        source,
       ];
 }

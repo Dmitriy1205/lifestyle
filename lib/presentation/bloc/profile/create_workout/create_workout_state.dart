@@ -11,6 +11,7 @@ class CreateWorkoutState extends Equatable {
   final File? image;
   final String? categoryName;
   final WorkoutCategory? category;
+  final Source? source;
 
   const CreateWorkoutState({
     this.status,
@@ -21,6 +22,7 @@ class CreateWorkoutState extends Equatable {
     this.image,
     this.categoryName,
     this.category,
+    this.source,
   });
 
   CreateWorkoutState copyWith({
@@ -32,6 +34,7 @@ class CreateWorkoutState extends Equatable {
     File? image,
     String? categoryName,
     WorkoutCategory? category,
+    Source? source,
   }) {
     return CreateWorkoutState(
       status: status ?? this.status,
@@ -42,6 +45,7 @@ class CreateWorkoutState extends Equatable {
       image: image ?? this.image,
       categoryName: categoryName ?? this.categoryName,
       category: category ?? this.category,
+      source: source ?? this.source,
     );
   }
 
@@ -55,5 +59,6 @@ class CreateWorkoutState extends Equatable {
         image,
         categoryName,
         category,
+        source,
       ];
 }

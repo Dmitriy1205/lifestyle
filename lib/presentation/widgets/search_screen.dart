@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
@@ -10,6 +11,7 @@ import '../../common/themes/theme.dart';
 import '../bloc/home/search_screen/search_cubit.dart';
 import '../screens/home_screen/description_screen.dart';
 import '../screens/video_player_screen.dart';
+import 'connection_message.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -64,27 +66,37 @@ class SearchScreen extends StatelessWidget {
                                               const EdgeInsets.only(bottom: 15),
                                           child: GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => state
-                                                              .files![index]
-                                                              .type ==
-                                                          'vitamins'
-                                                      ? DescriptionScreen(
+                                              state.files![index].type ==
+                                                      'vitamins'
+                                                  ? Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (_) =>
+                                                            DescriptionScreen(
                                                           header: state
                                                               .files![index]
                                                               .name!,
                                                           content: state
                                                               .files![index]
                                                               .content!,
-                                                        )
-                                                      : VideoPlayerScreen(
-                                                          video: state
-                                                              .files![index]
-                                                              .path!),
-                                                ),
-                                              );
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : state.source == Source.cache
+                                                      ? ConnectionMessage
+                                                          .buildErrorSnackbar(
+                                                              context)
+                                                      : Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                VideoPlayerScreen(
+                                                                    video: state
+                                                                        .files![
+                                                                            index]
+                                                                        .path!),
+                                                          ),
+                                                        );
                                             },
                                             child: Row(
                                               children: [

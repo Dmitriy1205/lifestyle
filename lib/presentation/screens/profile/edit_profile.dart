@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +9,7 @@ import '../../../common/constants/colors.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/constants/icons.dart';
 import '../../../common/themes/theme.dart';
+import '../../widgets/connection_message.dart';
 import '../../widgets/loading_indicator.dart';
 
 class EditProfile extends StatefulWidget {
@@ -58,14 +60,16 @@ class _EditProfileState extends State<EditProfile> {
                   padding: const EdgeInsets.only(right: 20),
                   child: IconButton(
                     onPressed: () {
-                      context
-                          .read<EditProfileCubit>()
-                          .updateFields(
-                            state.image,
-                            widget.image!,
-                            state.nameController!.text,
-                          )
-                          .then((value) => Navigator.pop(context));
+                      state.source == Source.cache
+                          ? ConnectionMessage.buildErrorSnackbar(context)
+                          : context
+                              .read<EditProfileCubit>()
+                              .updateFields(
+                                state.image,
+                                widget.image!,
+                                state.nameController!.text,
+                              )
+                              .then((value) => Navigator.pop(context));
                     },
                     icon: const FaIcon(
                       FontAwesomeIcons.check,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
@@ -16,6 +17,7 @@ import 'package:lifestyle/presentation/widgets/profile_menu_component.dart';
 
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
+import '../../widgets/connection_message.dart';
 import '../create_profile/age.dart';
 import '../create_profile/gender.dart';
 import '../create_profile/height.dart';
@@ -50,8 +52,10 @@ class _ProfileState extends State<Profile> {
                         child: SizedBox(
                           height: 138,
                           width: 138,
-                          child: state.image == null
+                          child: state.image == null ||
+                                  state.source == Source.cache
                               ? CircleAvatar(
+                                  backgroundColor: AppColors.whiteShade,
                                   radius: 70,
                                   child: Image.asset('assets/images/user.png'))
                               : ClipRRect(
@@ -97,11 +101,14 @@ class _ProfileState extends State<Profile> {
                                   create: (context) => sl<EditProfileCubit>(),
                                   child: EditProfile(
                                     userEmail: state.email!,
-                                    image: state.image,
+                                    image: state.source == Source.cache
+                                        ? null
+                                        : state.image,
                                   ),
                                 ),
                               ),
-                            ).then((value) => context.read<ProfileCubit>().init());
+                            ).then(
+                                (value) => context.read<ProfileCubit>().init());
                           },
                         ),
                         const SizedBox(
@@ -147,16 +154,19 @@ class _ProfileState extends State<Profile> {
                         ),
                         ProfileMenuComponent(
                             tap: () {
-                              BlocProvider.of<ProfileCubit>(context)
-                                  .logout()
-                                  .then(
-                                    (value) => Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const SignIn(),
-                                      ),
-                                    ),
-                                  );
+                              state.source == Source.cache
+                                  ? ConnectionMessage.buildErrorSnackbar(
+                                      context)
+                                  : BlocProvider.of<ProfileCubit>(context)
+                                      .logout()
+                                      .then(
+                                        (value) => Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => const SignIn(),
+                                          ),
+                                        ),
+                                      );
                             },
                             prefixIcon: const Icon(
                               AppIcons.logout,
@@ -187,6 +197,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => GenderScreen(
                                   fromProfile: true,
                                   current: state.profile!.gender,
+                                  source: state.source,
                                 ),
                               ),
                             ).then(
@@ -209,6 +220,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => AgeScreen(
                                   fromProfile: true,
                                   age: state.profile!.age,
+                                  source:state.source,
                                 ),
                               ),
                             ).then(
@@ -231,6 +243,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => HeightScreen(
                                   fromProfile: true,
                                   height: state.profile!.height,
+                                  source:state.source
                                 ),
                               ),
                             ).then(
@@ -253,6 +266,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => WeightScreen(
                                   weight: state.profile!.weight,
                                   fromProfile: true,
+                                  source:state.source,
                                 ),
                               ),
                             ).then(
@@ -275,6 +289,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => TagsScreen(
                                   fromProfile: true,
                                   topic: state.profile!.topics,
+                                  source: state.source,
                                 ),
                               ),
                             ).then(

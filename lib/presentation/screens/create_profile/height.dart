@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,12 +7,14 @@ import 'package:lifestyle/presentation/widgets/create_profile_body.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 import '../../bloc/create_profile/height/height_cubit.dart';
+import '../../widgets/connection_message.dart';
 
 class HeightScreen extends StatelessWidget {
   final Future<void> Function()? controlToNext;
   final Function()? controlToPrev;
   final bool fromProfile;
   final int? height;
+  final Source? source;
 
   HeightScreen({
     Key? key,
@@ -19,6 +22,7 @@ class HeightScreen extends StatelessWidget {
     this.controlToPrev,
     this.fromProfile = false,
     this.height,
+    this.source,
   }) : super(key: key);
   final List _items = List.generate(60, (index) => 140 + index);
 
@@ -98,10 +102,12 @@ class HeightScreen extends StatelessWidget {
               },
               onTapPrev: controlToPrev,
               onEdit: () {
-                return context
-                    .read<HeightCubit>()
-                    .accept(state.height!)
-                    .then((value) => Navigator.pop(context));
+                return source == Source.cache
+                    ? ConnectionMessage.buildErrorSnackbar(context)
+                    : context
+                        .read<HeightCubit>()
+                        .accept(state.height!)
+                        .then((value) => Navigator.pop(context));
               },
             );
           },

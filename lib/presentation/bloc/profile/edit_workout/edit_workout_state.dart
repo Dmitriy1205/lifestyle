@@ -11,6 +11,7 @@ class EditWorkoutState extends Equatable {
   final File? image;
   final String? categoryName;
   final WorkoutCategory? category;
+  final Source? source;
 
   const EditWorkoutState({
     this.status,
@@ -21,6 +22,7 @@ class EditWorkoutState extends Equatable {
     this.image,
     this.categoryName,
     this.category,
+    this.source,
   });
 
   EditWorkoutState copyWith({
@@ -32,6 +34,7 @@ class EditWorkoutState extends Equatable {
     File? image,
     String? categoryName,
     WorkoutCategory? category,
+    Source? source,
   }) {
     return EditWorkoutState(
       status: status ?? this.status,
@@ -42,6 +45,7 @@ class EditWorkoutState extends Equatable {
       image: image ?? this.image,
       categoryName: categoryName ?? this.categoryName,
       category: category ?? this.category,
+      source: source ?? this.source,
     );
   }
 
@@ -55,5 +59,6 @@ class EditWorkoutState extends Equatable {
         image,
         categoryName,
         category,
+        source,
       ];
 }

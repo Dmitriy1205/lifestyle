@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,7 @@ import '../../../common/constants/constants.dart';
 import '../../../common/themes/theme.dart';
 import '../../../data/models/workout.dart';
 import '../../bloc/profile/edit_workout/edit_workout_cubit.dart';
+import '../../widgets/connection_message.dart';
 import '../../widgets/image_picker.dart';
 import 'exercise_builder.dart';
 
@@ -96,7 +98,9 @@ class _EditWorkoutState extends State<EditWorkout> {
             );
           },
           onButtonClick: () {
-            context
+            state.source == Source.cache
+                ? ConnectionMessage.buildErrorSnackbar(context)
+                : context
                 .read<EditWorkoutCubit>()
                 .editExercise(
                   Workout()

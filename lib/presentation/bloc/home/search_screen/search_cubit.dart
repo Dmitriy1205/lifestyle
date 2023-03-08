@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lifestyle/common/constants/exceptions.dart';
@@ -21,11 +22,15 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> init() async {
     emit(state.copyWith(status: Status.loading()));
     try {
+      final src = await db.isConnected();
       List<Files> files = await db.getAllFiles();
 
-
       emit(state.copyWith(
-          status: Status.loaded(), controller: nameController, files: files));
+        status: Status.loaded(),
+        controller: nameController,
+        files: files,
+        source: src,
+      ));
     } on BadRequestException catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }

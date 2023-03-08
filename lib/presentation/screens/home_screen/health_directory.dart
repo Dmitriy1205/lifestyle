@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +13,7 @@ import 'package:video_player/video_player.dart';
 import '../../../common/constants/constants.dart';
 import '../../../common/services/service_locator.dart';
 import '../../../common/themes/theme.dart';
+import '../../widgets/connection_message.dart';
 import '../video_player_screen.dart';
 
 class HealthDirectory extends StatefulWidget {
@@ -52,76 +54,89 @@ class _HealthDirectoryState extends State<HealthDirectory>
                       child: SizedBox(
                         height: 191,
                         width: MediaQuery.of(context).size.width,
-                        child: !state.status!.isVideoLoading
-                            ? state.controller == null
-                                ? Center(
-                                    child: Text(
-                                      state.status!.errorMessage!,
-                                      style: AppTheme
-                                          .themeData.textTheme.titleSmall,
-                                    ),
-                                  )
-                                : Stack(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      VideoPlayerScreen(
-                                                          video: state
-                                                              .controller!
-                                                              .dataSource)));
-                                        },
-                                        child: VideoPlayer(
-                                          state.controller!,
+                        child: state.source == Source.cache
+                            ? SizedBox(
+                                child: Center(
+                                  child: Text(
+                                    AppText.noConnection,
+                                    style:
+                                        AppTheme.themeData.textTheme.titleSmall,
+                                  ),
+                                ),
+                              )
+                            : !state.status!.isVideoLoading
+                                ? state.controller == null
+                                    ? Center(
+                                        child: Text(
+                                          state.status!.errorMessage!,
+                                          style: AppTheme
+                                              .themeData.textTheme.titleSmall,
                                         ),
-                                      ),
-                                      Positioned(
-                                        bottom: 0,
-                                        left: 0,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            state.isPlaying!
-                                                ? context
-                                                    .read<HealthCubit>()
-                                                    .playPause(
-                                                        !state.isPlaying!)
-                                                : context
-                                                    .read<HealthCubit>()
-                                                    .playPause(
-                                                        !state.isPlaying!);
-                                          },
-                                          icon: FaIcon(
-                                            !state.isPlaying!
-                                                ? FontAwesomeIcons.pause
-                                                : FontAwesomeIcons.play,
-                                            color: AppColors.white,
+                                      )
+                                    : Stack(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          VideoPlayerScreen(
+                                                              video: state
+                                                                  .controller!
+                                                                  .dataSource)));
+                                            },
+                                            child: VideoPlayer(
+                                              state.controller!,
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                            : const LoadingIndicator(),
+                                          Positioned(
+                                            bottom: 0,
+                                            left: 0,
+                                            child: IconButton(
+                                              onPressed: () {
+                                                state.isPlaying!
+                                                    ? context
+                                                        .read<HealthCubit>()
+                                                        .playPause(
+                                                            !state.isPlaying!)
+                                                    : context
+                                                        .read<HealthCubit>()
+                                                        .playPause(
+                                                            !state.isPlaying!);
+                                              },
+                                              icon: FaIcon(
+                                                !state.isPlaying!
+                                                    ? FontAwesomeIcons.pause
+                                                    : FontAwesomeIcons.play,
+                                                color: AppColors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                : const LoadingIndicator(),
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        state.name!,
-                        style: AppTheme.themeData.textTheme.displayMedium,
-                      ),
-                      Text(
-                        state.controller == null
-                            ? ''
-                            : videoDuration(state.controller!.value.duration),
-                        style: AppTheme.themeData.textTheme.displayMedium,
-                      )
-                    ],
-                  ),
+                  state.source == Source.cache
+                      ? const SizedBox()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              state.name!,
+                              style: AppTheme.themeData.textTheme.displayMedium,
+                            ),
+                            Text(
+                              state.controller == null
+                                  ? ''
+                                  : videoDuration(
+                                      state.controller!.value.duration),
+                              style: AppTheme.themeData.textTheme.displayMedium,
+                            )
+                          ],
+                        ),
                   DefaultTabController(
                     length: 2,
                     child: Column(
@@ -161,14 +176,17 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    VideoPlayerScreen(
-                                                        video: state
-                                                            .files![index]
-                                                            .path!)));
+                                        state.source == Source.cache
+                                            ? ConnectionMessage
+                                                .buildErrorSnackbar(context)
+                                            : Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        VideoPlayerScreen(
+                                                            video: state
+                                                                .files![index]
+                                                                .path!)));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),

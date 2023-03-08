@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lifestyle/data/models/status.dart';
@@ -25,12 +26,14 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   final TextEditingController nameController = TextEditingController();
 
-  void init(String name) {
+  Future<void> init(String name) async {
+    final src = await db.isConnected();
     nameController.text = name;
 
     emit(state.copyWith(
       status: Status.loaded(),
       nameController: nameController,
+      source: src,
     ));
   }
 
