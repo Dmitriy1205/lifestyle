@@ -10,7 +10,7 @@ class HealthState extends Equatable {
   final bool? isPlaying;
   final bool? isFullScreen;
   final String? name;
-  final Source? source;
+  final bool? isConnected;
 
   const HealthState({
     this.status,
@@ -22,7 +22,7 @@ class HealthState extends Equatable {
     this.isPlaying,
     this.isFullScreen,
     this.name,
-    this.source,
+    this.isConnected,
   });
 
   HealthState copyWith({
@@ -35,7 +35,7 @@ class HealthState extends Equatable {
     bool? isPlaying,
     bool? isFullScreen,
     String? name,
-    Source? source,
+    bool? isConnected,
   }) {
     return HealthState(
       status: status ?? this.status,
@@ -47,7 +47,7 @@ class HealthState extends Equatable {
       isPlaying: isPlaying ?? this.isPlaying,
       isFullScreen: isFullScreen ?? this.isFullScreen,
       name: name ?? this.name,
-      source: source ?? this.source,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -62,6 +62,6 @@ class HealthState extends Equatable {
         isPlaying,
         isFullScreen,
         name,
-        source,
+        isConnected,
       ];
 }

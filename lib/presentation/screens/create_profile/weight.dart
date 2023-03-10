@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,7 @@ class WeightScreen extends StatelessWidget {
   final Function()? edit;
   final bool fromProfile;
   final int? weight;
-  final Source? source;
+  final bool? disconnected;
 
   WeightScreen({
     Key? key,
@@ -24,7 +23,7 @@ class WeightScreen extends StatelessWidget {
     this.edit,
     this.fromProfile = false,
     this.weight,
-    this.source,
+    this.disconnected,
   }) : super(key: key);
   final List _items = List.generate(80, (index) => 40 + index);
 
@@ -104,8 +103,8 @@ class WeightScreen extends StatelessWidget {
               },
               onTapPrev: controlToPrev,
               onEdit: () {
-                return source == Source.cache
-                    ? ConnectionMessage.buildErrorSnackbar(context)
+                return !disconnected!
+                    ? ConnectionMessage.buildDisconnectedSnackbar(context)
                     : context
                         .read<WeightCubit>()
                         .accept(state.weight!)

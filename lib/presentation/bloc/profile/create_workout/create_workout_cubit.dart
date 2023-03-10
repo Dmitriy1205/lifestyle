@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lifestyle/common/constants/constants.dart';
 import 'package:lifestyle/data/models/exercises.dart';
 import 'package:lifestyle/data/models/workout.dart';
@@ -21,6 +22,7 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
     required this.db,
     required this.auth,
     required this.storage,
+    required this.connectionChecker,
   }) : super(CreateWorkoutState(status: Status.initial())) {
     init();
   }
@@ -29,9 +31,34 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
   final TextEditingController descController = TextEditingController();
   final TextEditingController recomController = TextEditingController();
   final DataRepository db;
+  final InternetConnectionChecker connectionChecker;
   final AuthRepository auth;
   final StorageRepository storage;
   List<Group> group = [];
+
+  StreamSubscription<InternetConnectionStatus>? _subscription;
+
+  Future<void> init() async {
+    emit(state.copyWith(status: Status.loading()));
+    bool isConnected = await connectionChecker.hasConnection;
+
+    _subscription = connectionChecker.onStatusChange.listen(
+      (InternetConnectionStatus status) {
+        switch (status) {
+          case InternetConnectionStatus.connected:
+            isConnected = true;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+          case InternetConnectionStatus.disconnected:
+            isConnected = false;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+        }
+      },
+    );
+
+    await initControllers(isConnected);
+  }
 
   void addExercise(Exercises exercise) {
     group.add(Group(
@@ -40,14 +67,13 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
     emit(state.copyWith(status: Status.loaded(), group: group));
   }
 
-  Future<void> init() async {
-    final src = await db.isConnected();
+  Future<void> initControllers(bool connected) async {
     emit(state.copyWith(
       status: Status.loaded(),
       nameController: nameController,
       descController: descController,
       recomController: recomController,
-      source: src,
+      isConnected: connected,
     ));
   }
 
@@ -124,6 +150,7 @@ class CreateWorkoutCubit extends Cubit<CreateWorkoutState> {
     nameController.dispose();
     descController.dispose();
     recomController.dispose();
+    _subscription?.cancel();
     return super.close();
   }
 }

@@ -6,7 +6,7 @@ class ProfileState extends Equatable {
   final String? email;
   final ProfileModel? profile;
   final String? image;
-  final Source? source;
+  final bool? isConnected;
 
   const ProfileState({
     this.status,
@@ -14,7 +14,7 @@ class ProfileState extends Equatable {
     this.email,
     this.profile,
     this.image,
-    this.source,
+    this.isConnected,
   });
 
   ProfileState copyWith({
@@ -23,7 +23,7 @@ class ProfileState extends Equatable {
     String? email,
     ProfileModel? profile,
     String? image,
-    Source? source,
+    bool? isConnected,
   }) {
     return ProfileState(
       status: status ?? this.status,
@@ -31,7 +31,7 @@ class ProfileState extends Equatable {
       email: email ?? this.email,
       profile: profile ?? this.profile,
       image: image ?? this.image,
-      source: source ?? this.source,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -42,6 +42,6 @@ class ProfileState extends Equatable {
         email,
         profile,
         image,
-        source,
+        isConnected,
       ];
 }

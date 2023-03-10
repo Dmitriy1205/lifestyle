@@ -1,4 +1,3 @@
-import 'package:cloud_firestore_platform_interface/src/source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,14 +15,14 @@ class GenderScreen extends StatelessWidget {
   final Future<void> Function()? controlToNext;
   final bool fromProfile;
   final String? current;
-  final Source? source;
+  final bool? disconnected;
 
   const GenderScreen({
     Key? key,
     this.controlToNext,
     this.fromProfile = false,
     this.current,
-    this.source,
+    this.disconnected,
   }) : super(key: key);
 
   @override
@@ -121,8 +120,8 @@ class GenderScreen extends StatelessWidget {
                           .then((value) => controlToNext!());
                     },
               onEdit: () {
-                return source == Source.cache
-                    ? ConnectionMessage.buildErrorSnackbar(context)
+                return !disconnected!
+                    ? ConnectionMessage.buildDisconnectedSnackbar(context)
                     : context
                         .read<GenderCubit>()
                         .accept(state.genderName!)

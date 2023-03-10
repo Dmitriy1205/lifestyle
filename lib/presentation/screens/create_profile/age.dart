@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +13,7 @@ class AgeScreen extends StatelessWidget {
   final Function()? controlToPrev;
   final bool fromProfile;
   final int? age;
-  final Source? source;
+  final bool? disconnected;
 
   AgeScreen({
     Key? key,
@@ -22,7 +21,7 @@ class AgeScreen extends StatelessWidget {
     this.controlToPrev,
     this.fromProfile = false,
     this.age,
-    this.source,
+    this.disconnected,
   }) : super(key: key);
 
   final List _items = List.generate(43, (index) => 18 + index);
@@ -81,8 +80,8 @@ class AgeScreen extends StatelessWidget {
               },
               onTapPrev: controlToPrev,
               onEdit: () {
-                return source == Source.cache
-                    ? ConnectionMessage.buildErrorSnackbar(context)
+                return !disconnected!
+                    ? ConnectionMessage.buildDisconnectedSnackbar(context)
                     : context
                         .read<AgeCubit>()
                         .accept(state.age!)

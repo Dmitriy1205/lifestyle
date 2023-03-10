@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../common/constants/constants.dart';
 import '../../../../data/models/exercises.dart';
@@ -21,14 +22,18 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
     required this.db,
     required this.auth,
     required this.storage,
+    required this.connectionChecker,
   }) : super(EditWorkoutState(status: Status.initial()));
   final DataRepository db;
   final AuthRepository auth;
   final StorageRepository storage;
+  final InternetConnectionChecker connectionChecker;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController recomController = TextEditingController();
   List<Group> group = [];
+
+  StreamSubscription<InternetConnectionStatus>? _subscription;
 
   Future<void> init(
     List<Group> exercises,
@@ -37,7 +42,35 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
     String recom,
     String category,
   ) async {
-    final src = await db.isConnected();
+    emit(state.copyWith(status: Status.loading()));
+    bool isConnected = await connectionChecker.hasConnection;
+
+    _subscription = connectionChecker.onStatusChange.listen(
+      (InternetConnectionStatus status) {
+        switch (status) {
+          case InternetConnectionStatus.connected:
+            isConnected = true;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+          case InternetConnectionStatus.disconnected:
+            isConnected = false;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+        }
+      },
+    );
+
+    await initFieleds(exercises, name, des, recom, category, isConnected);
+  }
+
+  Future<void> initFieleds(
+    List<Group> exercises,
+    String name,
+    String des,
+    String recom,
+    String category,
+    bool connection,
+  ) async {
     WorkoutCategory workoutCategory;
     nameController.text = name;
     descController.text = des;
@@ -55,7 +88,7 @@ class EditWorkoutCubit extends Cubit<EditWorkoutState> {
       descController: descController,
       recomController: recomController,
       category: workoutCategory,
-      source: src,
+      isConnected: connection,
     ));
   }
 

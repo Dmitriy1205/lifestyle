@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/presentation/widgets/loading_indicator.dart';
@@ -21,7 +20,12 @@ class SearchScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<SearchCubit>(),
       child: Scaffold(
-        body: BlocBuilder<SearchCubit, SearchState>(
+        body: BlocConsumer<SearchCubit, SearchState>(
+          listener: (context, state) {
+            if (state.isConnected! == false) {
+              ConnectionMessage.buildDisconnectedSnackbar(context);
+            }
+          },
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -38,7 +42,9 @@ class SearchScreen extends StatelessWidget {
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                         hintText: AppText.search),
                     onChanged: (String name) {
-                      context.read<SearchCubit>().searchFields(name);
+                      context
+                          .read<SearchCubit>()
+                          .searchFields(name, state.isConnected!);
                     },
                   ),
                   const SizedBox(
@@ -82,9 +88,9 @@ class SearchScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                     )
-                                                  : state.source == Source.cache
+                                                  : !state.isConnected!
                                                       ? ConnectionMessage
-                                                          .buildErrorSnackbar(
+                                                          .buildDisconnectedSnackbar(
                                                               context)
                                                       : Navigator.push(
                                                           context,

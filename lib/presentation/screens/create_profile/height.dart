@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +13,7 @@ class HeightScreen extends StatelessWidget {
   final Function()? controlToPrev;
   final bool fromProfile;
   final int? height;
-  final Source? source;
+  final bool? disconnected;
 
   HeightScreen({
     Key? key,
@@ -22,7 +21,7 @@ class HeightScreen extends StatelessWidget {
     this.controlToPrev,
     this.fromProfile = false,
     this.height,
-    this.source,
+    this.disconnected,
   }) : super(key: key);
   final List _items = List.generate(60, (index) => 140 + index);
 
@@ -102,8 +101,8 @@ class HeightScreen extends StatelessWidget {
               },
               onTapPrev: controlToPrev,
               onEdit: () {
-                return source == Source.cache
-                    ? ConnectionMessage.buildErrorSnackbar(context)
+                return !disconnected!
+                    ? ConnectionMessage.buildDisconnectedSnackbar(context)
                     : context
                         .read<HeightCubit>()
                         .accept(state.height!)

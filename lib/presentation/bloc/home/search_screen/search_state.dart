@@ -4,26 +4,26 @@ class SearchState extends Equatable {
   final Status? status;
   final TextEditingController? controller;
   final List<Files>? files;
-  final Source? source;
+  final bool? isConnected;
 
   const SearchState({
     this.status,
     this.controller,
     this.files,
-    this.source,
+    this.isConnected,
   });
 
   SearchState copyWith({
     Status? status,
     TextEditingController? controller,
     List<Files>? files,
-    Source? source,
+    bool? isConnected,
   }) {
     return SearchState(
       status: status ?? this.status,
       controller: controller ?? this.controller,
       files: files ?? this.files,
-      source: source ?? this.source,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -32,6 +32,6 @@ class SearchState extends Equatable {
         status,
         controller,
         files,
-        source,
+        isConnected,
       ];
 }

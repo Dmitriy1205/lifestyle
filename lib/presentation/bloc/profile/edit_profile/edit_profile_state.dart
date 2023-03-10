@@ -4,26 +4,26 @@ class EditProfileState extends Equatable {
   final Status? status;
   final File? image;
   final TextEditingController? nameController;
-  final Source? source;
+  final bool? isConnected;
 
   const EditProfileState({
     this.status,
     this.image,
     this.nameController,
-    this.source,
+    this.isConnected,
   });
 
   EditProfileState copyWith({
     final Status? status,
     File? image,
     TextEditingController? nameController,
-    Source? source,
+    bool? isConnected,
   }) {
     return EditProfileState(
       status: status ?? this.status,
       image: image ?? this.image,
       nameController: nameController ?? this.nameController,
-      source: source ?? this.source,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -32,6 +32,6 @@ class EditProfileState extends Equatable {
         status,
         image,
         nameController,
-        source,
+        isConnected,
       ];
 }

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,7 +30,12 @@ class _HealthDirectoryState extends State<HealthDirectory>
     return BlocProvider(
       create: (context) => sl<HealthCubit>(),
       child: Scaffold(
-        body: BlocBuilder<HealthCubit, HealthState>(
+        body: BlocConsumer<HealthCubit, HealthState>(
+          listener: (context, state) {
+            if (!state.isConnected!) {
+              ConnectionMessage.buildDisconnectedSnackbar(context);
+            }
+          },
           builder: (context, state) {
             if (state.status!.isLoading) {
               return const LoadingIndicator();
@@ -54,7 +58,7 @@ class _HealthDirectoryState extends State<HealthDirectory>
                       child: SizedBox(
                         height: 191,
                         width: MediaQuery.of(context).size.width,
-                        child: state.source == Source.cache
+                        child: !state.isConnected!
                             ? SizedBox(
                                 child: Center(
                                   child: Text(
@@ -119,7 +123,7 @@ class _HealthDirectoryState extends State<HealthDirectory>
                       ),
                     ),
                   ),
-                  state.source == Source.cache
+                  !state.isConnected!
                       ? const SizedBox()
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,9 +180,10 @@ class _HealthDirectoryState extends State<HealthDirectory>
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {
-                                        state.source == Source.cache
+                                        !state.isConnected!
                                             ? ConnectionMessage
-                                                .buildErrorSnackbar(context)
+                                                .buildDisconnectedSnackbar(
+                                                    context)
                                             : Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lifestyle/data/models/status.dart';
 
 import '../../../../common/constants/exceptions.dart';
@@ -17,23 +18,47 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final DataRepository db;
   final AuthRepository auth;
   final StorageRepository storage;
+  final InternetConnectionChecker connectionChecker;
 
   EditProfileCubit({
     required this.db,
     required this.auth,
     required this.storage,
+    required this.connectionChecker,
   }) : super(EditProfileState(status: Status.initial()));
 
   final TextEditingController nameController = TextEditingController();
 
+  StreamSubscription<InternetConnectionStatus>? _subscription;
+
   Future<void> init(String name) async {
-    final src = await db.isConnected();
+    emit(state.copyWith(status: Status.loading()));
+    bool isConnected = await connectionChecker.hasConnection;
+
+    _subscription = connectionChecker.onStatusChange.listen(
+      (InternetConnectionStatus status) {
+        switch (status) {
+          case InternetConnectionStatus.connected:
+            isConnected = true;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+          case InternetConnectionStatus.disconnected:
+            isConnected = false;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+        }
+      },
+    );
+    initController(name, isConnected);
+  }
+
+  Future<void> initController(String name, bool connection) async {
     nameController.text = name;
 
     emit(state.copyWith(
       status: Status.loaded(),
       nameController: nameController,
-      source: src,
+      isConnected: connection,
     ));
   }
 
@@ -63,7 +88,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   @override
   Future<void> close() {
     nameController.dispose();
-
+    _subscription?.cancel();
     return super.close();
   }
 }

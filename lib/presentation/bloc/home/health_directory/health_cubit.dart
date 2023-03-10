@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lifestyle/data/repositories/data_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -14,21 +16,47 @@ part 'health_state.dart';
 
 class HealthCubit extends Cubit<HealthState> {
   late VideoPlayerController controller;
+  final InternetConnectionChecker connectionChecker;
 
-  HealthCubit({required this.storage, required this.db})
-      : super(HealthState(status: Status.initial())) {
-    getExerciseVideos();
+  HealthCubit({
+    required this.storage,
+    required this.db,
+    required this.connectionChecker,
+  }) : super(HealthState(status: Status.initial())) {
+    init();
   }
 
   final StorageRepository storage;
   final DataRepository db;
   List<Files> exercises = [];
   List<Files> thumb = [];
+  StreamSubscription<InternetConnectionStatus>? _subscription;
 
-  Future<void> getExerciseVideos() async {
+  Future<void> init() async {
+    emit(state.copyWith(status: Status.loading()));
+    bool isConnected = await connectionChecker.hasConnection;
+
+    _subscription = connectionChecker.onStatusChange.listen(
+      (InternetConnectionStatus status) {
+        switch (status) {
+          case InternetConnectionStatus.connected:
+            isConnected = true;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+          case InternetConnectionStatus.disconnected:
+            isConnected = false;
+            emit(state.copyWith(isConnected: isConnected));
+            break;
+        }
+      },
+    );
+
+    await getExerciseVideos(isConnected);
+  }
+
+  Future<void> getExerciseVideos(bool connection) async {
     emit(state.copyWith(status: Status.loading()));
     try {
-      final src = await db.isConnected();
       List<Files> videos = await db.getFiles(source: 'video');
       List<Files> thumbnails = await db.getFiles(source: 'thumbnails');
       List<Files> articles = await db.getFiles(source: 'articles');
@@ -45,11 +73,14 @@ class HealthCubit extends Cubit<HealthState> {
             name: videos[0].name!,
             isPlaying: false,
             isFullScreen: false,
-            source:src,
+            isConnected: connection,
           ));
         }
       }
-      await initVideo(videos[0].path!, videos[0].name!);
+      if(connection){
+        await initVideo(videos[0].path!, videos[0].name!);
+      }
+
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }
@@ -109,7 +140,7 @@ class HealthCubit extends Cubit<HealthState> {
   @override
   Future<void> close() {
     controller.dispose();
-
+    _subscription?.cancel();
     return super.close();
   }
 }

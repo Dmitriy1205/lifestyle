@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,7 +30,8 @@ class EditWorkout extends StatefulWidget {
     required this.recommendation,
     required this.exercises,
     required this.id,
-    required this.image, required this.category,
+    required this.image,
+    required this.category,
   }) : super(key: key);
 
   @override
@@ -41,8 +41,13 @@ class EditWorkout extends StatefulWidget {
 class _EditWorkoutState extends State<EditWorkout> {
   @override
   void initState() {
-    context.read<EditWorkoutCubit>().init(widget.exercises, widget.name,
-        widget.description, widget.recommendation,widget.category,);
+    context.read<EditWorkoutCubit>().init(
+          widget.exercises,
+          widget.name,
+          widget.description,
+          widget.recommendation,
+          widget.category,
+        );
     super.initState();
   }
 
@@ -98,25 +103,25 @@ class _EditWorkoutState extends State<EditWorkout> {
             );
           },
           onButtonClick: () {
-            state.source == Source.cache
-                ? ConnectionMessage.buildErrorSnackbar(context)
+            !state.isConnected!
+                ? ConnectionMessage.buildDisconnectedSnackbar(context)
                 : context
-                .read<EditWorkoutCubit>()
-                .editExercise(
-                  Workout()
-                    ..name = state.nameController!.text
-                    ..description = state.descController!.text
-                    ..recommendation = state.recomController!.text
-                    ..exercises = state.group!
-                    ..id = widget.id
-                    ..category = state.categoryName,
-                  state.image,
-                  widget.image,
-                )
-                .then((value) {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            });
+                    .read<EditWorkoutCubit>()
+                    .editExercise(
+                      Workout()
+                        ..name = state.nameController!.text
+                        ..description = state.descController!.text
+                        ..recommendation = state.recomController!.text
+                        ..exercises = state.group!
+                        ..id = widget.id
+                        ..category = state.categoryName,
+                      state.image,
+                      widget.image,
+                    )
+                    .then((value) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  });
           },
           exerciseList: state.group == null
               ? const SizedBox()

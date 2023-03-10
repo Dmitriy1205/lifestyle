@@ -15,6 +15,7 @@ class AppText {
   static const String sendEmail = 'Send email';
   static const String noConnection = 'No internet connection';
   static const String checkYourConnection = 'Check Your Internet connection';
+  static const String connected = 'Internet connection restored';
 
   static const String confirmPassword = 'Confirm password';
   static const String email = 'Email';

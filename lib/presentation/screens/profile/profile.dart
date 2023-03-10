@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
@@ -52,8 +51,7 @@ class _ProfileState extends State<Profile> {
                         child: SizedBox(
                           height: 138,
                           width: 138,
-                          child: state.image == null ||
-                                  state.source == Source.cache
+                          child: state.image == null || !state.isConnected!
                               ? CircleAvatar(
                                   backgroundColor: AppColors.whiteShade,
                                   radius: 70,
@@ -101,9 +99,8 @@ class _ProfileState extends State<Profile> {
                                   create: (context) => sl<EditProfileCubit>(),
                                   child: EditProfile(
                                     userEmail: state.email!,
-                                    image: state.source == Source.cache
-                                        ? null
-                                        : state.image,
+                                    image:
+                                        !state.isConnected! ? null : state.image,
                                   ),
                                 ),
                               ),
@@ -154,8 +151,8 @@ class _ProfileState extends State<Profile> {
                         ),
                         ProfileMenuComponent(
                             tap: () {
-                              state.source == Source.cache
-                                  ? ConnectionMessage.buildErrorSnackbar(
+                              !state.isConnected!
+                                  ? ConnectionMessage.buildDisconnectedSnackbar(
                                       context)
                                   : BlocProvider.of<ProfileCubit>(context)
                                       .logout()
@@ -197,7 +194,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => GenderScreen(
                                   fromProfile: true,
                                   current: state.profile!.gender,
-                                  source: state.source,
+                                  disconnected: state.isConnected!,
                                 ),
                               ),
                             ).then(
@@ -220,7 +217,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => AgeScreen(
                                   fromProfile: true,
                                   age: state.profile!.age,
-                                  source:state.source,
+                                  disconnected: state.isConnected!,
                                 ),
                               ),
                             ).then(
@@ -241,10 +238,9 @@ class _ProfileState extends State<Profile> {
                               context,
                               MaterialPageRoute(
                                 builder: (_) => HeightScreen(
-                                  fromProfile: true,
-                                  height: state.profile!.height,
-                                  source:state.source
-                                ),
+                                    fromProfile: true,
+                                    height: state.profile!.height,
+                                    disconnected: state.isConnected!),
                               ),
                             ).then(
                                 (value) => context.read<ProfileCubit>().init());
@@ -266,7 +262,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => WeightScreen(
                                   weight: state.profile!.weight,
                                   fromProfile: true,
-                                  source:state.source,
+                                  disconnected: state.isConnected!,
                                 ),
                               ),
                             ).then(
@@ -289,7 +285,7 @@ class _ProfileState extends State<Profile> {
                                 builder: (_) => TagsScreen(
                                   fromProfile: true,
                                   topic: state.profile!.topics,
-                                  source: state.source,
+                                  disconnected: state.isConnected!,
                                 ),
                               ),
                             ).then(

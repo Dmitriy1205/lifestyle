@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lifestyle/data/repositories/auth_repository.dart';
 import 'package:lifestyle/presentation/bloc/create_profile/tags/tags_cubit.dart';
 import 'package:lifestyle/presentation/bloc/google_auth/google_auth_cubit.dart';
@@ -36,10 +37,23 @@ Future<void> init() async {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
+  // InternetConnectionChecker internetChecker =
+  //     InternetConnectionChecker.createInstance(
+  //   checkTimeout: const Duration(seconds: 1),
+  //   checkInterval: const Duration(seconds: 1),
+  // );
+
+  //Connection
+  sl.registerLazySingleton(() => InternetConnectionChecker.createInstance(
+        checkTimeout: const Duration(seconds: 1),
+        checkInterval: const Duration(seconds: 1),
+      ));
 
   //Repositories
   sl.registerLazySingleton(() => AuthRepository(auth: auth));
-  sl.registerLazySingleton(() => DataRepository(db: db));
+  sl.registerLazySingleton(() => DataRepository(
+        db: db,
+      ));
   sl.registerLazySingleton(() => StorageRepository(storage: storage));
 
   //Blocs
@@ -47,7 +61,8 @@ Future<void> init() async {
   sl.registerFactory(() => SignInCubit(authRepository: sl()));
   sl.registerFactory(() => SignUpCubit(authRepository: sl(), db: sl()));
   sl.registerFactory(() => GoogleAuthCubit(auth: sl()));
-  sl.registerFactory(() => ProfileCubit(auth: sl(), db: sl()));
+  sl.registerFactory(
+      () => ProfileCubit(auth: sl(), db: sl(), connectionChecker: sl()));
   sl.registerFactory(() => ResetPasswordCubit(authRepository: sl()));
   sl.registerFactory(() => WelcomeCubit());
   sl.registerFactory(() => GenderCubit(db: sl(), auth: sl()));
@@ -56,16 +71,21 @@ Future<void> init() async {
   sl.registerFactory(() => HeightCubit(db: sl(), auth: sl()));
   sl.registerFactory(() => WeightCubit(db: sl(), auth: sl()));
   sl.registerFactory(
-      () => CreateWorkoutCubit(db: sl(), auth: sl(), storage: sl()));
+      () => CreateWorkoutCubit(db: sl(), auth: sl(), storage: sl(), connectionChecker: sl()));
   sl.registerFactory(() => YourWorkoutCubit(db: sl(), auth: sl()));
   sl.registerFactory(
-      () => EditWorkoutCubit(db: sl(), auth: sl(), storage: sl()));
+      () => EditWorkoutCubit(db: sl(), auth: sl(), storage: sl(), connectionChecker: sl()));
   sl.registerFactory(() => ImagePickerCubit(auth: sl(), storage: sl()));
   sl.registerFactory(() => WorkoutCubit(db: sl()));
   sl.registerFactory(() => ExerciseBuilderCubit(storage: sl(), db: sl()));
-  sl.registerFactory(() => HealthCubit(storage: sl(), db: sl()));
+  sl.registerFactory(
+      () => HealthCubit(storage: sl(), db: sl(), connectionChecker: sl()));
   sl.registerFactory(() => VideoPlayerCubit());
-  sl.registerFactory(() => EditProfileCubit(db: sl(), auth: sl(), storage: sl()));
+  sl.registerFactory(
+      () => EditProfileCubit(db: sl(), auth: sl(), storage: sl(), connectionChecker: sl()));
   sl.registerFactory(() => HomeCubit());
-  sl.registerFactory(() => SearchCubit(db: sl()));
+  sl.registerFactory(() => SearchCubit(
+        db: sl(),
+        connectionChecker: sl(),
+      ));
 }

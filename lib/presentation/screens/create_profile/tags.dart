@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifestyle/common/constants/colors.dart';
@@ -16,7 +15,7 @@ class TagsScreen extends StatelessWidget {
   final Function()? edit;
   final bool fromProfile;
   final Map<String, dynamic>? topic;
-  final Source? source;
+  final bool? disconnected;
 
   const TagsScreen({
     Key? key,
@@ -24,7 +23,7 @@ class TagsScreen extends StatelessWidget {
     this.edit,
     this.fromProfile = false,
     this.topic,
-    this.source,
+    this.disconnected,
   }) : super(key: key);
 
   @override
@@ -37,8 +36,8 @@ class TagsScreen extends StatelessWidget {
             return CreateProfileBody(
               fromProfile: fromProfile,
               onEdit: () {
-                return source == Source.cache
-                    ? ConnectionMessage.buildErrorSnackbar(context)
+                return !disconnected!
+                    ? ConnectionMessage.buildDisconnectedSnackbar(context)
                     : context.read<TagsCubit>().accept(state.tags!).then(
                           (value) => Navigator.pop(context),
                         );

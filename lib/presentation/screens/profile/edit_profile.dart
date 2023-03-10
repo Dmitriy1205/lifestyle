@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -60,8 +59,8 @@ class _EditProfileState extends State<EditProfile> {
                   padding: const EdgeInsets.only(right: 20),
                   child: IconButton(
                     onPressed: () {
-                      state.source == Source.cache
-                          ? ConnectionMessage.buildErrorSnackbar(context)
+                      !state.isConnected!
+                          ? ConnectionMessage.buildDisconnectedSnackbar(context)
                           : context
                               .read<EditProfileCubit>()
                               .updateFields(
