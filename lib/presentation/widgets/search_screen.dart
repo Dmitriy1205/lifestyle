@@ -35,17 +35,20 @@ class SearchScreen extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      padding: const EdgeInsets.only(bottom: 25),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        color: AppColors.contrast,
-                        size: 30,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: AppColors.contrast,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),
