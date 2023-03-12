@@ -5,6 +5,7 @@ import 'home_state.dart';
 
 
 class HomeCubit extends Cubit<HomeState> {
+
   HomeCubit()
       : super(HomeState(status: Status.initial(), isSearch: false));
 

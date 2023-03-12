@@ -16,7 +16,7 @@ class SearchCubit extends Cubit<SearchState> {
   SearchCubit({
     required this.db,
     required this.connectionChecker,
-  }) : super(SearchState(status: Status.initial())) {
+  }) : super(SearchState(status: Status.initial(),isConnected: true)) {
     init();
   }
 
@@ -33,11 +33,11 @@ class SearchCubit extends Cubit<SearchState> {
         switch (status) {
           case InternetConnectionStatus.connected:
             isConnected = true;
-            emit(state.copyWith(isConnected: isConnected));
+            emit(state.copyWith(isConnected: isConnected,controller: nameController));
             break;
           case InternetConnectionStatus.disconnected:
             isConnected = false;
-            emit(state.copyWith(isConnected: isConnected));
+            emit(state.copyWith(isConnected: isConnected,controller: nameController));
             break;
         }
       },

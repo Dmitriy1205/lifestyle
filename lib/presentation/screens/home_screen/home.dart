@@ -33,9 +33,8 @@ class Home extends StatelessWidget {
                   child: Center(
                     child: IconButton(
                       onPressed: () {
-                        context
-                            .read<HomeCubit>()
-                            .isSearchShow(!state.isSearch!);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const SearchScreen()));
                       },
                       icon: const FaIcon(
                         FontAwesomeIcons.magnifyingGlass,
@@ -45,7 +44,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ],
-              bottom:!state.isSearch! ?  const TabBar(
+              bottom: const TabBar(
                 indicatorColor: AppColors.mainAccent,
                 indicatorPadding: EdgeInsets.symmetric(horizontal: 30),
                 indicatorWeight: 3,
@@ -58,30 +57,27 @@ class Home extends StatelessWidget {
                     AppText.workouts,
                   )
                 ],
-              ) :  const PreferredSize(preferredSize: Size(0, 0),
-              child: SizedBox(),),
+              ),
             ),
-            body: !state.isSearch!
-                ? Column(
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                    height: 20,
+                    color: AppColors.whiteShade,
+                  ),
+                ),
+                const Expanded(
+                  child: TabBarView(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          height: 20,
-                          color: AppColors.whiteShade,
-                        ),
-                      ),
-                      const Expanded(
-                        child: TabBarView(
-                          children: [
-                            HealthDirectory(),
-                            Workouts(),
-                          ],
-                        ),
-                      ),
+                      HealthDirectory(),
+                      Workouts(),
                     ],
-                  )
-                : const SearchScreen(),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

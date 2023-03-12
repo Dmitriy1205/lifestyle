@@ -28,11 +28,26 @@ class SearchScreen extends StatelessWidget {
           },
           builder: (context, state) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 45),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      padding: const EdgeInsets.only(bottom: 25),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.close_rounded,
+                        color: AppColors.contrast,
+                        size: 30,
+                      ),
+                    ),
                   ),
                   TextFormField(
                     controller: state.controller,
@@ -48,7 +63,7 @@ class SearchScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   state.status!.isLoading
                       ? const LoadingIndicator()
@@ -63,6 +78,7 @@ class SearchScreen extends StatelessWidget {
                           : Expanded(
                               child: ListView.builder(
                                 itemCount: state.files!.length,
+                                padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return state.files![index].type == 'null'
