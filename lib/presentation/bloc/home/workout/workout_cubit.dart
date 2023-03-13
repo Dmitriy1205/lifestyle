@@ -15,14 +15,10 @@ class WorkoutCubit extends Cubit<WorkoutState> {
   }
 
   final DataRepository db;
-  Future<void> refresh()async{
-    emit(state.copyWith(status: Status.loading()));
-    try {
-      getWorkouts();
-      emit(state.copyWith(status: Status.loaded()));
-    } on Exception catch (e) {
-      emit(state.copyWith(status: Status.error(e.toString())));
-    }
+
+  Future<void> refresh() async {
+    await Future.delayed(const Duration(seconds: 2));
+    getWorkouts();
   }
 
   Future<void> getWorkouts() async {

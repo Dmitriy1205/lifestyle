@@ -43,7 +43,7 @@ class _HealthDirectoryState extends State<HealthDirectory>
             return RefreshIndicator(
               backgroundColor: AppColors.whiteShade,
               onRefresh: () async {
-                await context.read<HealthCubit>().init();
+                await context.read<HealthCubit>().refresh();
               },
               child: Padding(
                 padding: const EdgeInsets.all(20.0),

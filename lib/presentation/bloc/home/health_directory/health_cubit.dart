@@ -22,7 +22,7 @@ class HealthCubit extends Cubit<HealthState> {
     required this.storage,
     required this.db,
     required this.connectionChecker,
-  }) : super(HealthState(status: Status.initial(),isConnected: true)) {
+  }) : super(HealthState(status: Status.initial(), isConnected: true)) {
     init();
   }
 
@@ -45,13 +45,20 @@ class HealthCubit extends Cubit<HealthState> {
             break;
           case InternetConnectionStatus.disconnected:
             isConnected = false;
-            emit(state.copyWith(isConnected: isConnected,));
+            emit(state.copyWith(
+              isConnected: isConnected,
+            ));
             break;
         }
       },
     );
 
     await getExerciseVideos(isConnected);
+  }
+
+  Future<void> refresh() async {
+    await Future.delayed(const Duration(seconds: 2));
+    init();
   }
 
   Future<void> getExerciseVideos(bool connection) async {
@@ -77,10 +84,9 @@ class HealthCubit extends Cubit<HealthState> {
           ));
         }
       }
-      if(connection){
+      if (connection) {
         await initVideo(videos[0].path!, videos[0].name!);
       }
-
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.error(e.toString())));
     }

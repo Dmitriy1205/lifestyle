@@ -36,7 +36,7 @@ class _WorkoutsState extends State<Workouts>
               strokeWidth: 3,
               onRefresh: () async {
 
-                await context.read<WorkoutCubit>().getWorkouts();
+                await context.read<WorkoutCubit>().refresh();
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
